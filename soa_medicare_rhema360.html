@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SOA Medicare - Rhema 360 Insurance</title>
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --azul: #1a4a7a;
+    --azul-claro: #2d6fad;
+    --dorado: #c8960c;
+    --gris: #f4f6f9;
+    --texto: #1a1a2e;
+    --borde: #c0cfe0;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Source Sans 3', sans-serif;
+    background: var(--gris);
+    color: var(--texto);
+    font-size: 18px;
+    line-height: 1.7;
+  }
+
+  .header {
+    background: var(--azul);
+    color: white;
+    text-align: center;
+    padding: 30px 20px 24px;
+    border-bottom: 6px solid var(--dorado);
+  }
+
+  .header h1 {
+    font-family: 'Merriweather', serif;
+    font-size: 2rem;
+    margin-bottom: 6px;
+  }
+
+  .header p {
+    font-size: 1.1rem;
+    opacity: 0.9;
+  }
+
+  .badge {
+    display: inline-block;
+    background: var(--dorado);
+    color: white;
+    font-size: 0.85rem;
+    font-weight: 700;
+    padding: 4px 14px;
+    border-radius: 20px;
+    margin-top: 10px;
+    letter-spacing: 0.5px;
+  }
+
+  .container {
+    max-width: 820px;
+    margin: 36px auto;
+    padding: 0 16px 60px;
+  }
+
+  .aviso {
+    background: #e8f4fd;
+    border-left: 5px solid var(--azul-claro);
+    border-radius: 8px;
+    padding: 18px 22px;
+    margin-bottom: 28px;
+    font-size: 1rem;
+    color: #1a3a5c;
+  }
+
+  .aviso strong { color: var(--azul); }
+
+  .seccion {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+    padding: 30px 32px;
+    margin-bottom: 24px;
+    border-top: 4px solid var(--azul-claro);
+  }
+
+  .seccion h2 {
+    font-family: 'Merriweather', serif;
+    font-size: 1.25rem;
+    color: var(--azul);
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--gris);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .seccion h2 .num {
+    background: var(--azul);
+    color: white;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.95rem;
+    font-family: 'Source Sans 3', sans-serif;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  .campo {
+    margin-bottom: 20px;
+  }
+
+  label {
+    display: block;
+    font-weight: 700;
+    font-size: 1.05rem;
+    color: var(--azul);
+    margin-bottom: 6px;
+  }
+
+  label span {
+    font-weight: 400;
+    color: #555;
+    font-size: 0.9rem;
+  }
+
+  input[type="text"],
+  input[type="date"],
+  input[type="time"],
+  input[type="tel"],
+  select,
+  textarea {
+    width: 100%;
+    padding: 14px 16px;
+    font-size: 1.1rem;
+    font-family: 'Source Sans 3', sans-serif;
+    border: 2px solid var(--borde);
+    border-radius: 8px;
+    color: var(--texto);
+    background: #fafbfd;
+    transition: border 0.2s;
+    appearance: none;
+  }
+
+  input:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: var(--azul-claro);
+    background: white;
+  }
+
+  .dos-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  @media (max-width: 600px) {
+    .dos-col { grid-template-columns: 1fr; }
+    .seccion { padding: 20px 18px; }
+    .header h1 { font-size: 1.5rem; }
+  }
+
+  /* Checkboxes grandes */
+  .check-lista {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .check-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    background: var(--gris);
+    border: 2px solid var(--borde);
+    border-radius: 10px;
+    padding: 14px 18px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 1.05rem;
+    font-weight: 600;
+  }
+
+  .check-item:hover {
+    border-color: var(--azul-claro);
+    background: #e8f4fd;
+  }
+
+  .check-item input[type="checkbox"] {
+    width: 26px;
+    height: 26px;
+    accent-color: var(--azul);
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+
+  .check-item.marcado {
+    border-color: var(--azul);
+    background: #ddeefa;
+  }
+
+  /* Radio method */
+  .radio-lista {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .radio-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--gris);
+    border: 2px solid var(--borde);
+    border-radius: 10px;
+    padding: 12px 20px;
+    cursor: pointer;
+    font-size: 1.05rem;
+    font-weight: 600;
+    transition: all 0.2s;
+  }
+
+  .radio-item:hover { border-color: var(--azul-claro); background: #e8f4fd; }
+  .radio-item input { width: 22px; height: 22px; accent-color: var(--azul); }
+
+  /* Disclosures */
+  .disclosure {
+    background: #f0f7ff;
+    border: 1px solid #b8d4f0;
+    border-radius: 10px;
+    padding: 20px 22px;
+  }
+
+  .disclosure ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .disclosure ul li {
+    padding: 6px 0 6px 28px;
+    position: relative;
+    font-size: 1rem;
+    color: #1a3a5c;
+    border-bottom: 1px solid #d0e4f4;
+  }
+
+  .disclosure ul li:last-child { border-bottom: none; }
+
+  .disclosure ul li::before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: var(--azul-claro);
+    font-weight: 700;
+  }
+
+  /* Firma canvas */
+  .firma-wrap {
+    border: 2px solid var(--borde);
+    border-radius: 10px;
+    background: white;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .firma-label {
+    background: var(--gris);
+    padding: 8px 14px;
+    font-size: 0.9rem;
+    color: #666;
+    border-bottom: 1px solid var(--borde);
+  }
+
+  canvas {
+    display: block;
+    width: 100%;
+    height: 160px;
+    cursor: crosshair;
+    touch-action: none;
+  }
+
+  .firma-btns {
+    display: flex;
+    gap: 10px;
+    padding: 10px 14px;
+    background: var(--gris);
+    border-top: 1px solid var(--borde);
+  }
+
+  .btn-limpiar {
+    background: white;
+    color: var(--azul);
+    border: 2px solid var(--azul);
+    padding: 8px 18px;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: 'Source Sans 3', sans-serif;
+  }
+
+  .btn-limpiar:hover { background: #e8f4fd; }
+
+  /* Submit */
+  .btn-submit {
+    width: 100%;
+    background: var(--azul);
+    color: white;
+    border: none;
+    padding: 20px;
+    font-size: 1.3rem;
+    font-weight: 700;
+    font-family: 'Source Sans 3', sans-serif;
+    border-radius: 12px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background 0.2s;
+    letter-spacing: 0.5px;
+  }
+
+  .btn-submit:hover { background: var(--azul-claro); }
+
+  .footer-form {
+    text-align: center;
+    margin-top: 18px;
+    font-size: 0.9rem;
+    color: #888;
+  }
+
+  @media print {
+    body { background: white; font-size: 14px; }
+    .header, .aviso { display: none; }
+    #confirmacion { display: block !important; box-shadow: none; padding: 0; }
+    #confirmacion .icono, #confirmacion h2, #confirmacion > p, button { display: none; }
+    #soa-imprimible { border: 1px solid #000; margin: 0; }
+  }
+  #confirmacion {
+    display: none;
+    background: white;
+    border-radius: 16px;
+    padding: 50px 40px;
+    text-align: center;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+  }
+
+  #confirmacion .icono { font-size: 4rem; margin-bottom: 16px; }
+  #confirmacion h2 { font-family: 'Merriweather', serif; color: var(--azul); font-size: 1.8rem; margin-bottom: 12px; }
+  #confirmacion p { font-size: 1.1rem; color: #555; }
+
+  .requerido { color: #c0392b; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>📋 Scope of Appointment (SOA)</h1>
+  <p>Alcance de la Cita — Medicare</p>
+
+</div>
+
+<div class="container">
+
+  <div class="aviso">
+    <strong>📌 Importante / Important:</strong> Este formulario es requerido por CMS antes de hablar con un agente de Medicare. 
+    Al firmarlo, usted autoriza al agente a discutir los productos seleccionados. 
+    <strong>No lo obliga a inscribirse en ningún plan.</strong><br>
+    <em>This form is required by CMS before speaking with a Medicare agent. Signing does NOT obligate you to enroll in any plan.</em>
+  </div>
+
+  <form id="soaForm">
+
+    <!-- SECCIÓN 1: Detalles de la Cita -->
+    <div class="seccion">
+      <h2><span class="num">1</span> Detalles de la Cita / Appointment Details</h2>
+
+      <div class="dos-col">
+        <div class="campo">
+          <label>Fecha / Date <span class="requerido">*</span></label>
+          <input type="date" name="fecha" required>
+        </div>
+        <div class="campo">
+          <label>Hora / Time <span class="requerido">*</span></label>
+          <input type="time" name="hora" required>
+        </div>
+      </div>
+
+      <div class="campo">
+        <label>Método / Method <span class="requerido">*</span></label>
+        <div class="radio-lista">
+          <label class="radio-item">
+            <input type="radio" name="metodo" value="Teléfono / Phone" required>
+            📞 Teléfono / Phone
+          </label>
+          <label class="radio-item">
+            <input type="radio" name="metodo" value="En Persona / In-Person">
+            🤝 En Persona / In-Person
+          </label>
+          <label class="radio-item">
+            <input type="radio" name="metodo" value="Virtual / Video">
+            💻 Virtual / Video
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECCIÓN 2: Productos Autorizados -->
+    <div class="seccion">
+      <h2><span class="num">2</span> Productos Autorizados / Authorized Products</h2>
+      <p style="margin-bottom:16px; color:#555;">Marque los productos que desea discutir / <em>Check the products you want to discuss:</em></p>
+
+      <div class="check-lista">
+        <label class="check-item" id="ci1">
+          <input type="checkbox" name="productos" value="Medicare Advantage (Part C)" onchange="toggleCheck('ci1',this)">
+          Medicare Advantage (Part C)
+        </label>
+        <label class="check-item" id="ci2">
+          <input type="checkbox" name="productos" value="Prescription Drug Plans (Part D)" onchange="toggleCheck('ci2',this)">
+          Prescription Drug Plans (Part D) — Medicamentos
+        </label>
+        <label class="check-item" id="ci3">
+          <input type="checkbox" name="productos" value="Medicare Supplement (Medigap)" onchange="toggleCheck('ci3',this)">
+          Medicare Supplement / Medigap
+        </label>
+        <label class="check-item" id="ci4">
+          <input type="checkbox" name="productos" value="Dental / Vision / Hearing" onchange="toggleCheck('ci4',this)">
+          Dental / Vision / Audición (Hearing)
+        </label>
+        <label class="check-item" id="ci5">
+          <input type="checkbox" name="productos" value="Hospital Indemnity" onchange="toggleCheck('ci5',this)">
+          Hospital Indemnity
+        </label>
+        <label class="check-item" id="ci6">
+          <input type="checkbox" name="productos" value="Otro / Other" onchange="toggleCheck('ci6',this)">
+          Otro / Other
+        </label>
+      </div>
+    </div>
+
+    <!-- SECCIÓN 3: Divulgaciones CMS -->
+    <div class="seccion">
+      <h2><span class="num">3</span> Divulgaciones CMS / CMS Disclosures</h2>
+      <div class="disclosure">
+        <ul>
+          <li>Este formulario NO lo obliga a inscribirse en ningún plan. / This form does NOT obligate you to enroll in any plan.</li>
+          <li>Su inscripción actual o futura en Medicare no será afectada. / Your current or future Medicare enrollment will not be affected.</li>
+          <li>El agente no trabaja directamente para el gobierno federal. / The agent does not work directly for the federal government.</li>
+          <li>Toda la información es confidencial. / All information is confidential.</li>
+          <li>Este formulario es solo para fines de documentación. / This form is for documentation purposes only.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- SECCIÓN 4: Firmas -->
+    <div class="seccion">
+      <h2><span class="num">4</span> Firmas / Signatures</h2>
+
+      <div class="campo">
+        <label>Firma del Beneficiario / Beneficiary Signature <span class="requerido">*</span><br>
+        <span>Firme con su dedo o mouse abajo / Sign with your finger or mouse below</span></label>
+        <div class="firma-wrap">
+          <div class="firma-label">✍️ Firme aquí / Sign here</div>
+          <canvas id="firmaBeneficiario" width="800" height="160"></canvas>
+          <div class="firma-btns">
+            <button type="button" class="btn-limpiar" onclick="limpiarFirma('firmaBeneficiario')">🗑️ Borrar / Clear</button>
+          </div>
+        </div>
+      </div>
+
+      <input type="hidden" name="agente_nombre" value="Daniel Paz Galvis — Rhema 360 Insurance">
+
+      <div class="campo">
+        <label>Firma del Agente / Agent Signature<br>
+        <span>Firme con su dedo o mouse abajo / Sign with your finger or mouse below</span></label>
+        <div class="firma-wrap">
+          <div class="firma-label">✍️ Firme aquí / Sign here</div>
+          <canvas id="firmaAgente" width="800" height="160"></canvas>
+          <div class="firma-btns">
+            <button type="button" class="btn-limpiar" onclick="limpiarFirma('firmaAgente')">🗑️ Borrar / Clear</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <button type="submit" class="btn-submit">✅ Enviar SOA / Submit SOA</button>
+    <div class="footer-form">
+      Rhema 360 Insurance | (407) 692-4342 | rhema360insurance@gmail.com | Orlando, FL
+    </div>
+
+  </form>
+
+  <!-- Confirmación -->
+  <div id="confirmacion">
+    <div class="icono">✅</div>
+    <h2>¡SOA Recibido! / SOA Received!</h2>
+    <p>Gracias. Nuestro agente se comunicará con usted pronto.<br>
+    <em>Thank you. Our agent will contact you soon.</em></p>
+    <p style="margin-top:12px; font-weight:700; color: #1a4a7a;">📞 (407) 692-4342</p>
+
+    <!-- Resumen imprimible -->
+    <div id="soa-imprimible" style="margin-top:30px; text-align:left; border:2px solid #1a4a7a; border-radius:12px; padding:30px; background:white;">
+      
+      <div style="text-align:center; margin-bottom:24px; border-bottom:2px solid #1a4a7a; padding-bottom:16px;">
+        <h3 style="font-family:'Merriweather',serif; color:#1a4a7a; font-size:1.3rem;">Scope of Appointment (SOA) / Alcance de la Cita</h3>
+        <p style="color:#555; font-size:0.95rem;">Rhema 360 Insurance | Orlando, FL | (407) 692-4342</p>
+      </div>
+
+      <table style="width:100%; border-collapse:collapse; font-size:1rem;">
+        <tr style="background:#f4f6f9;">
+          <td style="padding:10px 14px; font-weight:700; color:#1a4a7a; width:40%;">Fecha / Date:</td>
+          <td style="padding:10px 14px;" id="r-fecha">—</td>
+        </tr>
+        <tr>
+          <td style="padding:10px 14px; font-weight:700; color:#1a4a7a;">Hora / Time:</td>
+          <td style="padding:10px 14px;" id="r-hora">—</td>
+        </tr>
+        <tr style="background:#f4f6f9;">
+          <td style="padding:10px 14px; font-weight:700; color:#1a4a7a;">Método / Method:</td>
+          <td style="padding:10px 14px;" id="r-metodo">—</td>
+        </tr>
+        <tr>
+          <td style="padding:10px 14px; font-weight:700; color:#1a4a7a;">Productos / Products:</td>
+          <td style="padding:10px 14px;" id="r-productos">—</td>
+        </tr>
+        <tr style="background:#f4f6f9;">
+          <td style="padding:10px 14px; font-weight:700; color:#1a4a7a;">Agente / Agent:</td>
+          <td style="padding:10px 14px;">Daniel Paz Galvis — Rhema 360 Insurance</td>
+        </tr>
+        <tr>
+          <td style="padding:10px 14px; font-weight:700; color:#1a4a7a;">Fecha de envío / Submitted:</td>
+          <td style="padding:10px 14px;" id="r-timestamp">—</td>
+        </tr>
+      </table>
+
+      <div style="margin-top:24px;">
+        <p style="font-weight:700; color:#1a4a7a; margin-bottom:8px;">Firma del Beneficiario / Beneficiary Signature:</p>
+        <div style="border:1px solid #c0cfe0; border-radius:8px; background:#fafbfd; padding:8px;">
+          <img id="r-firma" src="" style="max-width:100%; height:100px; display:block;">
+        </div>
+      </div>
+
+      <div style="margin-top:20px; background:#f0f7ff; border-radius:8px; padding:14px; font-size:0.9rem; color:#1a3a5c;">
+        <strong>Divulgación CMS:</strong> Al firmar este formulario usted autoriza al agente a discutir los productos seleccionados. 
+        Esto NO lo obliga a inscribirse en ningún plan. Su estado actual de Medicare no será afectado. 
+        Toda la información es confidencial.
+      </div>
+    </div>
+
+    <button onclick="window.print()" style="margin-top:24px; background:#1a4a7a; color:white; border:none; padding:16px 40px; font-size:1.1rem; font-weight:700; border-radius:10px; cursor:pointer; font-family:'Source Sans 3',sans-serif;">
+      🖨️ Imprimir SOA / Print SOA
+    </button>
+  </div>
+
+</div>
+
+<script>
+// ---- Firma digital ----
+function initCanvas(id) {
+  const canvas = document.getElementById(id);
+  const ctx = canvas.getContext('2d');
+  canvas.width = canvas.offsetWidth * window.devicePixelRatio;
+  canvas.height = 160 * window.devicePixelRatio;
+  ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+  ctx.strokeStyle = '#1a4a7a';
+  ctx.lineWidth = 2.5;
+  ctx.lineCap = 'round';
+
+  let drawing = false;
+  let lastX = 0, lastY = 0;
+
+  function getPos(e) {
+    const rect = canvas.getBoundingClientRect();
+    const scaleX = canvas.offsetWidth / rect.width;
+    const scaleY = 160 / rect.height;
+    if (e.touches) {
+      return {
+        x: (e.touches[0].clientX - rect.left) * scaleX,
+        y: (e.touches[0].clientY - rect.top) * scaleY
+      };
+    }
+    return {
+      x: (e.clientX - rect.left) * scaleX,
+      y: (e.clientY - rect.top) * scaleY
+    };
+  }
+
+  canvas.addEventListener('mousedown', e => { drawing = true; const p = getPos(e); lastX = p.x; lastY = p.y; });
+  canvas.addEventListener('mousemove', e => {
+    if (!drawing) return;
+    const p = getPos(e);
+    ctx.beginPath();
+    ctx.moveTo(lastX, lastY);
+    ctx.lineTo(p.x, p.y);
+    ctx.stroke();
+    lastX = p.x; lastY = p.y;
+  });
+  canvas.addEventListener('mouseup', () => drawing = false);
+  canvas.addEventListener('mouseleave', () => drawing = false);
+
+  canvas.addEventListener('touchstart', e => { e.preventDefault(); drawing = true; const p = getPos(e); lastX = p.x; lastY = p.y; });
+  canvas.addEventListener('touchmove', e => {
+    e.preventDefault();
+    if (!drawing) return;
+    const p = getPos(e);
+    ctx.beginPath();
+    ctx.moveTo(lastX, lastY);
+    ctx.lineTo(p.x, p.y);
+    ctx.stroke();
+    lastX = p.x; lastY = p.y;
+  });
+  canvas.addEventListener('touchend', () => drawing = false);
+}
+
+function limpiarFirma(id) {
+  const canvas = document.getElementById(id);
+  const ctx = canvas.getContext('2d');
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+}
+
+function toggleCheck(id, cb) {
+  document.getElementById(id).classList.toggle('marcado', cb.checked);
+}
+
+// Init
+initCanvas('firmaBeneficiario');
+initCanvas('firmaAgente');
+
+// Submit
+document.getElementById('soaForm').addEventListener('submit', async function(e) {
+  e.preventDefault();
+
+  // Validar al menos un producto
+  const productos = [...document.querySelectorAll('input[name="productos"]:checked')].map(c => c.value);
+  if (productos.length === 0) {
+    alert('Por favor seleccione al menos un producto / Please select at least one product.');
+    return;
+  }
+
+  const btn = document.querySelector('.btn-submit');
+  btn.textContent = '⏳ Enviando...';
+  btn.disabled = true;
+
+  // Recopilar datos del formulario
+  const form = document.getElementById('soaForm');
+  const fecha = form.fecha.value;
+  const hora = form.hora.value;
+  const metodo = form.metodo ? form.metodo.value : '';
+  const agente = form.agente_nombre.value;
+  const firmaBenef = document.getElementById('firmaBeneficiario').toDataURL();
+  const firmaAgente = document.getElementById('firmaAgente').toDataURL();
+
+  const datos = {
+    fecha,
+    hora,
+    metodo,
+    productos: productos.join(', '),
+    agente,
+    firma_beneficiario: firmaBenef !== 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg==' ? 'Firmado' : 'Sin firma',
+    timestamp: new Date().toLocaleString('es-US', {timeZone: 'America/New_York'})
+  };
+
+  // Enviar al webhook de Make.com
+  const WEBHOOK_URL = 'https://hook.us2.make.com/4r83rzg1jswugr2f4e8we8uq0haiokkp';
+
+  try {
+    await fetch(WEBHOOK_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(datos),
+      mode: 'no-cors'
+    });
+  } catch (err) {
+    console.log('Webhook enviado');
+  }
+
+  // Mostrar confirmación con datos
+  document.getElementById('r-fecha').textContent = fecha;
+  document.getElementById('r-hora').textContent = hora;
+  document.getElementById('r-metodo').textContent = metodo;
+  document.getElementById('r-productos').textContent = productos.join(', ');
+  document.getElementById('r-timestamp').textContent = datos.timestamp;
+  document.getElementById('r-firma').src = firmaBenef;
+
+  document.getElementById('soaForm').style.display = 'none';
+  document.getElementById('confirmacion').style.display = 'block';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
+// Resize canvas on window resize
+window.addEventListener('resize', () => {
+  initCanvas('firmaBeneficiario');
+  initCanvas('firmaAgente');
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,1051 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Programa de Referidos | Rhema 360 Insurance</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --purple: #7c3aed;
+      --purple-dark: #5b21b6;
+      --purple-light: #c4b5fd;
+      --purple-pale: #faf5ff;
+      --gold: #d97706;
+      --dark: #1e1b4b;
+      --text: #1e293b;
+      --muted: #64748b;
+      --white: #ffffff;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      color: var(--text);
+      background: var(--white);
+      overflow-x: hidden;
+    }
+
+    /* HERO */
+    .hero {
+      background: linear-gradient(135deg, #1e1b4b 0%, #5b21b6 50%, #7c3aed 100%);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      width: 700px; height: 700px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(196,181,253,0.15) 0%, transparent 70%);
+      top: -200px; right: -200px;
+      animation: float 8s ease-in-out infinite;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      width: 500px; height: 500px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(217,119,6,0.12) 0%, transparent 70%);
+      bottom: -100px; left: -100px;
+      animation: float 10s ease-in-out infinite reverse;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-20px) rotate(5deg); }
+    }
+
+    /* Decorative circles */
+    .deco {
+      position: absolute;
+      border: 1px solid rgba(196,181,253,0.2);
+      border-radius: 50%;
+      animation: spin 20s linear infinite;
+    }
+    .deco-1 { width: 300px; height: 300px; top: 10%; left: 5%; }
+    .deco-2 { width: 200px; height: 200px; top: 60%; right: 10%; animation-direction: reverse; }
+
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    /* NAV */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem 4rem;
+      position: relative;
+      z-index: 10;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      text-decoration: none;
+    }
+
+    .logo img {
+      height: 50px;
+      filter: brightness(0) invert(1);
+    }
+
+    .logo-text {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      color: var(--white);
+      line-height: 1.2;
+    }
+
+    .logo-text span {
+      display: block;
+      font-size: 0.7rem;
+      font-family: 'DM Sans', sans-serif;
+      color: var(--purple-light);
+      font-weight: 400;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .nav-cta {
+      background: var(--gold);
+      color: var(--white);
+      padding: 0.75rem 1.75rem;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: all 0.3s;
+      box-shadow: 0 4px 20px rgba(217,119,6,0.4);
+    }
+
+    .nav-cta:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(217,119,6,0.5);
+    }
+
+    /* HERO CONTENT */
+    .hero-content {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      padding: 3rem 4rem 5rem;
+      position: relative;
+      z-index: 5;
+      gap: 4rem;
+    }
+
+    .hero-text { flex: 1; }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(196,181,253,0.2);
+      border: 1px solid rgba(196,181,253,0.4);
+      color: var(--purple-light);
+      padding: 0.5rem 1.2rem;
+      border-radius: 50px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+      animation: fadeInUp 0.6s ease both;
+    }
+
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.5rem, 5vw, 4.5rem);
+      color: var(--white);
+      line-height: 1.05;
+      margin-bottom: 1.5rem;
+      animation: fadeInUp 0.6s ease 0.1s both;
+    }
+
+    .hero h1 em {
+      font-style: normal;
+      color: var(--gold);
+      position: relative;
+    }
+
+    .hero h1 em::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--gold);
+      opacity: 0.5;
+      border-radius: 2px;
+    }
+
+    .hero p {
+      font-size: 1.1rem;
+      color: rgba(255,255,255,0.8);
+      line-height: 1.8;
+      max-width: 500px;
+      margin-bottom: 2.5rem;
+      animation: fadeInUp 0.6s ease 0.2s both;
+    }
+
+    /* REWARD CARDS */
+    .reward-cards {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 2.5rem;
+      animation: fadeInUp 0.6s ease 0.3s both;
+      flex-wrap: wrap;
+    }
+
+    .reward-card {
+      background: rgba(255,255,255,0.1);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 16px;
+      padding: 1.2rem 1.5rem;
+      text-align: center;
+      flex: 1;
+      min-width: 120px;
+    }
+
+    .reward-icon { font-size: 1.8rem; margin-bottom: 0.4rem; }
+    .reward-value {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      color: var(--gold);
+      display: block;
+    }
+    .reward-label {
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.7);
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      animation: fadeInUp 0.6s ease 0.4s both;
+    }
+
+    .btn-primary {
+      background: var(--gold);
+      color: var(--white);
+      padding: 1rem 2rem;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1rem;
+      transition: all 0.3s;
+      box-shadow: 0 4px 20px rgba(217,119,6,0.4);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 30px rgba(217,119,6,0.5);
+    }
+
+    /* FORM CARD */
+    .form-card {
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(20px);
+      border-radius: 24px;
+      padding: 2.5rem;
+      width: 400px;
+      flex-shrink: 0;
+      animation: fadeInUp 0.6s ease 0.5s both;
+      box-shadow: 0 30px 80px rgba(0,0,0,0.3);
+    }
+
+    .form-card h3 {
+      font-family: 'Playfair Display', serif;
+      color: var(--dark);
+      font-size: 1.5rem;
+      margin-bottom: 0.4rem;
+    }
+
+    .form-card p {
+      color: var(--muted);
+      font-size: 0.85rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .form-group {
+      margin-bottom: 1rem;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--dark);
+      margin-bottom: 0.4rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .form-group input,
+    .form-group select {
+      width: 100%;
+      padding: 0.85rem 1rem;
+      border: 2px solid #e2e8f0;
+      border-radius: 12px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem;
+      color: var(--text);
+      outline: none;
+      transition: border-color 0.3s;
+      background: #f8fafc;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus {
+      border-color: var(--purple);
+      background: white;
+    }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin: 1.25rem 0;
+      color: var(--muted);
+      font-size: 0.8rem;
+    }
+
+    .divider::before, .divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: #e2e8f0;
+    }
+
+    .form-group input.referido,
+    .form-group select.referido {
+      border-color: var(--purple-light);
+      background: var(--purple-pale);
+    }
+
+    .form-submit {
+      width: 100%;
+      padding: 1rem;
+      background: linear-gradient(135deg, var(--purple-dark), var(--purple));
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      margin-top: 0.5rem;
+    }
+
+    .form-submit:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(124,58,237,0.4);
+    }
+
+    .form-note {
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.75rem;
+      margin-top: 0.75rem;
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* HOW IT WORKS */
+    .how {
+      padding: 5rem 4rem;
+      background: var(--purple-pale);
+      text-align: center;
+    }
+
+    .section-label {
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--purple);
+      margin-bottom: 1rem;
+    }
+
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 3vw, 2.5rem);
+      color: var(--dark);
+      margin-bottom: 1rem;
+      line-height: 1.2;
+    }
+
+    .section-desc {
+      color: var(--muted);
+      font-size: 1rem;
+      line-height: 1.8;
+      max-width: 600px;
+      margin: 0 auto 3rem;
+    }
+
+    .steps {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      position: relative;
+    }
+
+    .steps::before {
+      content: '';
+      position: absolute;
+      top: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60%;
+      height: 2px;
+      background: linear-gradient(90deg, var(--purple-light), var(--gold));
+      opacity: 0.4;
+    }
+
+    .step {
+      background: white;
+      border-radius: 20px;
+      padding: 2rem 1.5rem;
+      width: 200px;
+      text-align: center;
+      box-shadow: 0 4px 20px rgba(124,58,237,0.08);
+      transition: all 0.3s;
+      position: relative;
+      z-index: 2;
+    }
+
+    .step:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 40px rgba(124,58,237,0.15);
+    }
+
+    .step-num {
+      width: 56px;
+      height: 56px;
+      background: linear-gradient(135deg, var(--purple-dark), var(--purple));
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      color: white;
+      margin: 0 auto 1.25rem;
+      box-shadow: 0 8px 20px rgba(124,58,237,0.3);
+    }
+
+    .step h4 {
+      color: var(--dark);
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      font-size: 1rem;
+    }
+
+    .step p {
+      color: var(--muted);
+      font-size: 0.85rem;
+      line-height: 1.5;
+    }
+
+    /* BENEFITS */
+    .benefits {
+      padding: 5rem 4rem;
+    }
+
+    .benefits-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: center;
+      max-width: 1100px;
+      margin: 3rem auto 0;
+    }
+
+    .benefit-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .benefit-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      padding: 1.25rem;
+      border-radius: 16px;
+      transition: all 0.3s;
+      border: 2px solid transparent;
+    }
+
+    .benefit-item:hover {
+      background: var(--purple-pale);
+      border-color: var(--purple-light);
+    }
+
+    .benefit-icon {
+      width: 48px;
+      height: 48px;
+      background: linear-gradient(135deg, var(--purple-dark), var(--purple));
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      flex-shrink: 0;
+    }
+
+    .benefit-item h4 {
+      color: var(--dark);
+      font-weight: 600;
+      margin-bottom: 0.3rem;
+    }
+
+    .benefit-item p {
+      color: var(--muted);
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+
+    .share-box {
+      background: linear-gradient(135deg, var(--purple-dark), var(--purple));
+      border-radius: 24px;
+      padding: 3rem;
+      text-align: center;
+      color: white;
+    }
+
+    .share-box h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .share-box p {
+      color: rgba(255,255,255,0.8);
+      margin-bottom: 2rem;
+      line-height: 1.6;
+    }
+
+    .share-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .share-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      padding: 0.9rem 1.5rem;
+      border-radius: 12px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: all 0.3s;
+      color: white;
+    }
+
+    .share-btn:hover {
+      transform: translateY(-3px);
+      filter: brightness(1.1);
+    }
+
+    .share-whatsapp { background: #25d366; }
+    .share-facebook { background: #1877f2; }
+    .share-sms { background: var(--gold); }
+    .share-copy {
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.3);
+    }
+
+    /* TESTIMONIALS */
+    .testimonials {
+      background: var(--dark);
+      padding: 5rem 4rem;
+      text-align: center;
+    }
+
+    .testimonials .section-label { color: var(--purple-light); }
+    .testimonials .section-title { color: white; }
+    .testimonials .section-desc { color: rgba(255,255,255,0.6); }
+
+    .testimonial-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-top: 3rem;
+      max-width: 1000px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .testimonial-card {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(196,181,253,0.2);
+      border-radius: 20px;
+      padding: 2rem;
+      text-align: left;
+      transition: all 0.3s;
+    }
+
+    .testimonial-card:hover {
+      background: rgba(124,58,237,0.15);
+      border-color: var(--purple-light);
+      transform: translateY(-5px);
+    }
+
+    .stars {
+      color: var(--gold);
+      font-size: 1.1rem;
+      margin-bottom: 1rem;
+    }
+
+    .testimonial-card p {
+      color: rgba(255,255,255,0.85);
+      font-size: 0.95rem;
+      line-height: 1.7;
+      margin-bottom: 1.25rem;
+      font-style: italic;
+    }
+
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .author-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--purple), var(--gold));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      color: white;
+      font-size: 0.9rem;
+    }
+
+    .author-name {
+      font-weight: 600;
+      color: white;
+      font-size: 0.9rem;
+    }
+
+    .author-city {
+      color: rgba(255,255,255,0.5);
+      font-size: 0.8rem;
+    }
+
+    /* FAQ */
+    .faq {
+      padding: 5rem 4rem;
+      background: var(--purple-pale);
+    }
+
+    .faq-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.25rem;
+      margin-top: 3rem;
+      max-width: 1000px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .faq-item {
+      background: white;
+      border-radius: 16px;
+      padding: 1.5rem;
+      border: 2px solid #e2e8f0;
+      transition: all 0.3s;
+    }
+
+    .faq-item:hover {
+      border-color: var(--purple);
+      box-shadow: 0 8px 25px rgba(124,58,237,0.1);
+    }
+
+    .faq-item h4 {
+      color: var(--dark);
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.5rem;
+    }
+
+    .faq-item h4::before {
+      content: '?';
+      background: var(--purple);
+      color: white;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      font-weight: 700;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .faq-item p {
+      color: var(--muted);
+      font-size: 0.9rem;
+      line-height: 1.6;
+      padding-left: 1.75rem;
+    }
+
+    /* FOOTER */
+    footer {
+      background: var(--dark);
+      padding: 2rem 4rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    footer p { color: rgba(255,255,255,0.5); font-size: 0.85rem; }
+
+    footer a {
+      color: var(--purple-light);
+      text-decoration: none;
+      font-size: 0.85rem;
+    }
+
+    .footer-links { display: flex; gap: 1.5rem; }
+
+    /* RESPONSIVE */
+    @media (max-width: 900px) {
+      nav, .how, .benefits, .testimonials, .faq, footer {
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+      }
+
+      .hero-content {
+        flex-direction: column;
+        padding: 2rem 1.5rem 3rem;
+      }
+
+      .form-card { width: 100%; }
+
+      .benefits-grid, .faq-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .steps::before { display: none; }
+
+      footer {
+        flex-direction: column;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="deco deco-1"></div>
+  <div class="deco deco-2"></div>
+
+  <nav>
+    <a href="https://rhema360.com" class="logo">
+      <img src="../rhema-logo.png" alt="Rhema 360 Insurance" onerror="this.style.display='none'"/>
+      <div class="logo-text">
+        Rhema 360 Insurance
+        <span>Orlando, Florida</span>
+      </div>
+    </a>
+    <a href="#formulario" class="nav-cta">Referir Ahora</a>
+  </nav>
+
+  <div class="hero-content">
+    <div class="hero-text">
+      <div class="hero-badge">🎁 Programa de Referidos</div>
+      <h1>Refiere y<br/><em>Gana Juntos</em></h1>
+      <p>¿Conoces a alguien que necesite seguro de salud, Medicare o ACA? Refiérelo a Rhema 360 Insurance y recibe recompensas por tu ayuda.</p>
+
+      <div class="reward-cards">
+        <div class="reward-card">
+          <div class="reward-icon">🎁</div>
+          <span class="reward-value">Gratis</span>
+          <div class="reward-label">Asesoría para tu referido</div>
+        </div>
+        <div class="reward-card">
+          <div class="reward-icon">⭐</div>
+          <span class="reward-value">VIP</span>
+          <div class="reward-label">Atención prioritaria</div>
+        </div>
+        <div class="reward-card">
+          <div class="reward-icon">🤝</div>
+          <span class="reward-value">100%</span>
+          <div class="reward-label">Comisión por referido</div>
+        </div>
+      </div>
+
+      <div class="hero-buttons">
+        <a href="#formulario" class="btn-primary">Referir a alguien ahora</a>
+      </div>
+    </div>
+
+    <!-- FORM -->
+    <div class="form-card" id="formulario">
+      <h3>Enviar un Referido</h3>
+      <p>Completa el formulario y nos encargamos del resto</p>
+
+      <form action="https://formsubmit.co/rhema360insurance@gmail.com" method="POST">
+        <input type="hidden" name="_subject" value="Nuevo Referido - Rhema 360 Insurance"/>
+        <input type="hidden" name="_next" value="https://rhema360.com/referidos/gracias.html"/>
+
+        <div class="divider">Tus datos</div>
+
+        <div class="form-group">
+          <label>Tu nombre</label>
+          <input type="text" name="tu_nombre" placeholder="Daniel Paz" required/>
+        </div>
+        <div class="form-group">
+          <label>Tu teléfono / WhatsApp</label>
+          <input type="tel" name="tu_telefono" placeholder="(407) 000-0000" required/>
+        </div>
+
+        <div class="divider">Datos del referido</div>
+
+        <div class="form-group">
+          <label>Nombre del referido</label>
+          <input type="text" name="nombre_referido" placeholder="Nombre completo" required class="referido"/>
+        </div>
+        <div class="form-group">
+          <label>Teléfono del referido</label>
+          <input type="tel" name="telefono_referido" placeholder="(407) 000-0000" required class="referido"/>
+        </div>
+        <div class="form-group">
+          <label>¿Qué necesita?</label>
+          <select name="necesita" class="referido" required>
+            <option value="" disabled selected>Selecciona una opción</option>
+            <option>Medicare (65+ años)</option>
+            <option>Seguro de Salud ACA / Marketplace</option>
+            <option>Seguro Dental / Visión</option>
+            <option>No sé, necesita orientación</option>
+          </select>
+        </div>
+
+        <button type="submit" class="form-submit">Enviar Referido →</button>
+      </form>
+      <p class="form-note">🔒 Tu información es 100% confidencial</p>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how">
+  <div class="section-label">¿Cómo funciona?</div>
+  <h2 class="section-title">Simple, rápido y fácil</h2>
+  <p class="section-desc">Referir a alguien toma menos de 2 minutos. Nosotros nos encargamos de todo lo demás.</p>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <h4>Refieres</h4>
+      <p>Completa el formulario con los datos de tu referido</p>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <h4>Contactamos</h4>
+      <p>Nuestro equipo llama a tu referido en menos de 24 horas</p>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <h4>Asesoramos</h4>
+      <p>Le encontramos el mejor plan de seguro sin costo</p>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <h4>¡Ganas!</h4>
+      <p>Tú y tu referido reciben beneficios exclusivos</p>
+    </div>
+  </div>
+</section>
+
+<!-- BENEFITS + SHARE -->
+<section class="benefits">
+  <div class="section-label">Beneficios</div>
+  <h2 class="section-title">¿Por qué referir a Rhema 360?</h2>
+
+  <div class="benefits-grid">
+    <div class="benefit-list">
+      <div class="benefit-item">
+        <div class="benefit-icon">🌎</div>
+        <div>
+          <h4>Atención 100% en Español</h4>
+          <p>Todo el proceso en tu idioma — sin barreras, sin confusiones</p>
+        </div>
+      </div>
+      <div class="benefit-item">
+        <div class="benefit-icon">💰</div>
+        <div>
+          <h4>Sin Costo para tu Referido</h4>
+          <p>Nuestra asesoría es completamente gratis para el cliente</p>
+        </div>
+      </div>
+      <div class="benefit-item">
+        <div class="benefit-icon">⚡</div>
+        <div>
+          <h4>Respuesta en 24 Horas</h4>
+          <p>Contactamos a tu referido rápidamente para no perder tiempo</p>
+        </div>
+      </div>
+      <div class="benefit-item">
+        <div class="benefit-icon">🏆</div>
+        <div>
+          <h4>Agentes Certificados</h4>
+          <p>Equipo licenciado y certificado en Medicare, ACA y más</p>
+        </div>
+      </div>
+      <div class="benefit-item">
+        <div class="benefit-icon">📍</div>
+        <div>
+          <h4>Basados en Orlando, FL</h4>
+          <p>Conocemos el mercado local y los planes disponibles en tu área</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="share-box">
+      <h3>¡Comparte con tus amigos!</h3>
+      <p>Ayuda a tu comunidad compartiendo esta página. Cada referido es una familia que obtiene el seguro que merece.</p>
+
+      <div class="share-buttons">
+        <a href="https://wa.me/?text=Hola!%20Te%20recomiendo%20a%20Rhema%20360%20Insurance%20en%20Orlando.%20Te%20ayudan%20con%20Medicare%20y%20seguro%20de%20salud%20gratis%20y%20en%20español.%20Visita:%20https://rhema360.com/referidos"
+           target="_blank" class="share-btn share-whatsapp">
+          📱 Compartir por WhatsApp
+        </a>
+        <a href="https://www.facebook.com/sharer/sharer.php?u=https://rhema360.com/referidos"
+           target="_blank" class="share-btn share-facebook">
+          👍 Compartir en Facebook
+        </a>
+        <a href="sms:?body=Te%20recomiendo%20Rhema%20360%20Insurance%20para%20tu%20seguro%20de%20salud%20en%20Orlando.%20Gratis%20y%20en%20español:%20https://rhema360.com/referidos"
+           class="share-btn share-sms">
+          💬 Enviar por SMS
+        </a>
+        <button onclick="navigator.clipboard.writeText('https://rhema360.com/referidos').then(()=>alert('¡Link copiado!'))"
+                class="share-btn share-copy" style="border:none;cursor:pointer;">
+          🔗 Copiar Link
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials">
+  <div class="section-label">Testimonios</div>
+  <h2 class="section-title" style="color:white">Lo que dicen nuestros clientes</h2>
+  <p class="section-desc">Familias de Orlando que encontraron su plan ideal con Rhema 360</p>
+
+  <div class="testimonial-grid">
+    <div class="testimonial-card">
+      <div class="stars">★★★★★</div>
+      <p>"Referí a mi mamá de 67 años y en menos de una semana ya tenía su Medicare Advantage. El proceso fue facilísimo y en español. ¡Gracias Rhema 360!"</p>
+      <div class="testimonial-author">
+        <div class="author-avatar">MR</div>
+        <div>
+          <div class="author-name">María R.</div>
+          <div class="author-city">Orlando, FL</div>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial-card">
+      <div class="stars">★★★★★</div>
+      <p>"Me ayudaron a encontrar un plan de salud para toda mi familia por $0 de prima. No lo podía creer. Los recomiendo 100% a toda la comunidad latina."</p>
+      <div class="testimonial-author">
+        <div class="author-avatar">JC</div>
+        <div>
+          <div class="author-name">José C.</div>
+          <div class="author-city">Kissimmee, FL</div>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial-card">
+      <div class="stars">★★★★★</div>
+      <p>"Daniel me explicó todo sobre Medicare en español, paso a paso. Ahora tengo cobertura dental y visión incluida. ¡Excelente servicio!"</p>
+      <div class="testimonial-author">
+        <div class="author-avatar">LP</div>
+        <div>
+          <div class="author-name">Luisa P.</div>
+          <div class="author-city">Sanford, FL</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq">
+  <div class="section-label" style="text-align:center">Preguntas Frecuentes</div>
+  <h2 class="section-title" style="text-align:center">¿Tienes dudas?</h2>
+
+  <div class="faq-grid">
+    <div class="faq-item">
+      <h4>¿Hay algún costo por referir?</h4>
+      <p>No, el programa de referidos es completamente gratuito para ti y para tu referido.</p>
+    </div>
+    <div class="faq-item">
+      <h4>¿Cuándo contactan a mi referido?</h4>
+      <p>Nuestro equipo contacta a tu referido dentro de las siguientes 24 horas hábiles.</p>
+    </div>
+    <div class="faq-item">
+      <h4>¿Cuántas personas puedo referir?</h4>
+      <p>¡Sin límite! Puedes referir a todos tus familiares y amigos que necesiten seguro.</p>
+    </div>
+    <div class="faq-item">
+      <h4>¿Qué tipo de seguros manejan?</h4>
+      <p>Medicare Advantage, Medicare Supplement, Parte D, ACA/Marketplace, dental y visión.</p>
+    </div>
+    <div class="faq-item">
+      <h4>¿Atienden en español?</h4>
+      <p>Sí, todo nuestro equipo es bilingüe. Atendemos 100% en español e inglés.</p>
+    </div>
+    <div class="faq-item">
+      <h4>¿En qué áreas trabajan?</h4>
+      <p>Principalmente Orlando y toda el área de Central Florida, incluyendo Kissimmee, Sanford y alrededores.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2025 Rhema 360 Insurance, LLC · Orlando, FL 32828</p>
+  <div class="footer-links">
+    <a href="tel:+14076035896">(407) 603-5896</a>
+    <a href="mailto:rhema360insurance@gmail.com">rhema360insurance@gmail.com</a>
+    <a href="https://rhema360.com">rhema360.com</a>
+  </div>
+</footer>
+
+</body>
+</html>

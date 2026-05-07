@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Medicare Orlando FL — Planes Medicare Advantage y Suplementos | Rhema Insurance</title>
+  <meta name="description" content="Planes Medicare en Orlando, Florida. Medicare Advantage, Suplementos Medigap y Part D (medicamentos). Asesoría gratuita en español con Daniel Paz. Llama: (407) 603-5896." />
+  <meta name="keywords" content="Medicare Orlando, Medicare Advantage Florida, Suplemento Medicare Orlando, Medigap Florida, Medicare Part D Orlando, seguro Medicare hispanos Orlando" />
+  <link rel="canonical" href="https://rhema360.com/medicare" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Medicare Orlando FL — Rhema Insurance" />
+  <meta property="og:description" content="Asesoría Medicare gratuita en español. Medicare Advantage, Suplementos y Part D en Orlando, FL." />
+  <meta property="og:url" content="https://rhema360.com/medicare" />
+  <meta property="og:type" content="website" />
+
+  <!-- Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "InsuranceAgency",
+    "name": "Rhema Insurance LLC",
+    "url": "https://rhema360.com",
+    "telephone": "+14076035896",
+    "email": "rhema360insurance@gmail.com",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Orlando",
+      "addressRegion": "FL",
+      "postalCode": "32828",
+      "addressCountry": "US"
+    },
+    "areaServed": "Orlando, Florida",
+    "description": "Agencia de seguros especializada en Medicare para la comunidad hispana en Orlando, Florida.",
+    "openingHours": ["Mo-Fr 09:00-18:00", "Sa 10:00-15:00"]
+  }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --primary: #1a3a5c;
+      --accent:  #1a7a5c;
+      --gold:    #f5a623;
+      --light:   #f4f7fb;
+      --white:   #ffffff;
+      --text:    #1c2b3a;
+      --muted:   #5a7184;
+      --radius:  16px;
+    }
+
+    body { font-family: 'DM Sans', sans-serif; color: var(--text); background: var(--white); line-height: 1.6; }
+    h1, h2, h3, h4 { font-family: 'Sora', sans-serif; }
+    a { text-decoration: none; color: inherit; }
+
+    /* TOPBAR */
+    .topbar {
+      background: var(--primary);
+      color: #fff;
+      text-align: center;
+      padding: 10px 20px;
+      font-size: 0.85rem;
+      font-weight: 500;
+    }
+    .topbar a { color: var(--gold); font-weight: 700; }
+
+    /* NAV */
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 40px;
+      background: var(--white);
+      border-bottom: 1px solid #e8eef4;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    }
+    .nav-logo img { height: 44px; }
+    .nav-links { display: flex; gap: 28px; font-size: 0.9rem; font-weight: 500; }
+    .nav-links a { color: var(--muted); transition: color .2s; }
+    .nav-links a:hover { color: var(--primary); }
+    .nav-cta {
+      background: var(--accent);
+      color: #fff;
+      padding: 10px 22px;
+      border-radius: 50px;
+      font-weight: 700;
+      font-size: 0.9rem;
+      transition: transform .2s, box-shadow .2s;
+    }
+    .nav-cta:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(26,122,92,0.35); }
+
+    /* HERO */
+    .hero {
+      background: linear-gradient(135deg, var(--primary) 0%, #0a2540 100%);
+      color: #fff;
+      padding: 80px 40px 90px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(26,122,92,0.18) 0%, transparent 70%);
+      top: -120px; right: -120px;
+      border-radius: 50%;
+    }
+    .hero::after {
+      content: '';
+      position: absolute;
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(245,166,35,0.1) 0%, transparent 70%);
+      bottom: -80px; left: -80px;
+      border-radius: 50%;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: rgba(245,166,35,0.2);
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      padding: 6px 18px;
+      border-radius: 50px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+      position: relative;
+    }
+    .hero h1 {
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 800;
+      line-height: 1.15;
+      margin-bottom: 20px;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+      position: relative;
+    }
+    .hero h1 em { color: var(--gold); font-style: normal; }
+    .hero p {
+      font-size: 1.1rem;
+      color: rgba(255,255,255,0.82);
+      max-width: 580px;
+      margin: 0 auto 36px;
+      position: relative;
+    }
+    .hero-btns { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; position: relative; }
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+      padding: 15px 32px;
+      border-radius: 50px;
+      font-weight: 700;
+      font-size: 1rem;
+      transition: transform .2s, box-shadow .2s;
+      display: inline-flex; align-items: center; gap: 8px;
+    }
+    .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(26,122,92,0.5); }
+    .btn-secondary {
+      background: rgba(255,255,255,0.12);
+      color: #fff;
+      border: 2px solid rgba(255,255,255,0.3);
+      padding: 15px 32px;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 1rem;
+      transition: background .2s;
+    }
+    .btn-secondary:hover { background: rgba(255,255,255,0.22); }
+
+    .hero-stats {
+      display: flex;
+      justify-content: center;
+      gap: 48px;
+      margin-top: 56px;
+      flex-wrap: wrap;
+      position: relative;
+    }
+    .stat { text-align: center; }
+    .stat-num { font-family: 'Sora', sans-serif; font-size: 2rem; font-weight: 800; color: var(--gold); }
+    .stat-label { font-size: 0.8rem; color: rgba(255,255,255,0.65); margin-top: 4px; }
+
+    /* SECTION */
+    section { padding: 72px 40px; }
+    .section-label {
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+    .section-title {
+      font-size: clamp(1.6rem, 3vw, 2.4rem);
+      font-weight: 800;
+      color: var(--primary);
+      margin-bottom: 16px;
+      line-height: 1.2;
+    }
+    .section-title em { color: var(--accent); font-style: normal; }
+    .section-sub { color: var(--muted); font-size: 1rem; max-width: 580px; }
+    .container { max-width: 1100px; margin: 0 auto; }
+
+    /* PARTS GRID */
+    .parts-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 24px;
+      margin-top: 48px;
+    }
+    .part-card {
+      border-radius: var(--radius);
+      padding: 32px 28px;
+      border: 2px solid transparent;
+      transition: transform .2s, box-shadow .2s, border-color .2s;
+    }
+    .part-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(0,0,0,0.1); }
+    .part-card.a { background: #e8f4fd; border-color: #b8d8f5; }
+    .part-card.b { background: #e8fdf5; border-color: #b8f0da; }
+    .part-card.c { background: #fef9e8; border-color: #f5e4b0; }
+    .part-card.d { background: #fdeee8; border-color: #f5c8b0; }
+    .part-letter {
+      font-family: 'Sora', sans-serif;
+      font-size: 2.5rem;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+    .part-card.a .part-letter { color: #1a6a9a; }
+    .part-card.b .part-letter { color: #1a7a5c; }
+    .part-card.c .part-letter { color: #b87a08; }
+    .part-card.d .part-letter { color: #b84a18; }
+    .part-card h3 { font-size: 1.1rem; font-weight: 700; color: var(--primary); margin-bottom: 10px; }
+    .part-card p { font-size: 0.88rem; color: var(--muted); line-height: 1.7; }
+    .part-tag {
+      display: inline-block;
+      padding: 3px 12px;
+      border-radius: 50px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      margin-top: 14px;
+    }
+    .part-card.a .part-tag { background: #1a6a9a; color: #fff; }
+    .part-card.b .part-tag { background: #1a7a5c; color: #fff; }
+    .part-card.c .part-tag { background: #b87a08; color: #fff; }
+    .part-card.d .part-tag { background: #b84a18; color: #fff; }
+
+    /* ADVANTAGE VS SUPLEMENTO */
+    .compare { background: var(--light); }
+    .compare-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+      margin-top: 48px;
+    }
+    .compare-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 36px 32px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.07);
+      position: relative;
+      overflow: hidden;
+    }
+    .compare-card.featured {
+      border: 2px solid var(--accent);
+    }
+    .compare-badge {
+      position: absolute;
+      top: 16px; right: 16px;
+      background: var(--accent);
+      color: #fff;
+      padding: 4px 14px;
+      border-radius: 50px;
+      font-size: 0.72rem;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+    .compare-card h3 { font-size: 1.4rem; font-weight: 800; color: var(--primary); margin-bottom: 8px; }
+    .compare-card .subtitle { font-size: 0.88rem; color: var(--muted); margin-bottom: 24px; }
+    .compare-list { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+    .compare-list li {
+      font-size: 0.9rem;
+      color: var(--text);
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+    .compare-list li .ico { color: var(--accent); font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+    .compare-list li .ico.red { color: #c0392b; }
+    .compare-price {
+      margin-top: 28px;
+      padding-top: 20px;
+      border-top: 1px solid #eef2f6;
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+    .compare-price strong { color: var(--primary); font-size: 1.1rem; }
+
+    /* WHO QUALIFIES */
+    .qualify-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+      margin-top: 40px;
+    }
+    .qualify-card {
+      background: var(--light);
+      border-radius: var(--radius);
+      padding: 28px 22px;
+      text-align: center;
+      transition: transform .2s, box-shadow .2s;
+    }
+    .qualify-card:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(0,0,0,0.09); }
+    .qualify-card .icon { font-size: 2.4rem; margin-bottom: 14px; }
+    .qualify-card h3 { font-size: 0.98rem; font-weight: 700; color: var(--primary); margin-bottom: 8px; }
+    .qualify-card p { font-size: 0.84rem; color: var(--muted); }
+
+    /* PROCESS */
+    .process { background: var(--primary); color: #fff; }
+    .process .section-label { color: var(--gold); }
+    .process .section-title { color: #fff; }
+    .process .section-title em { color: var(--gold); }
+    .process .section-sub { color: rgba(255,255,255,0.7); }
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 24px;
+      margin-top: 48px;
+    }
+    .step {
+      text-align: center;
+      padding: 32px 20px;
+      background: rgba(255,255,255,0.07);
+      border-radius: var(--radius);
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    .step-num {
+      width: 48px; height: 48px;
+      background: var(--gold);
+      color: var(--primary);
+      border-radius: 50%;
+      font-family: 'Sora', sans-serif;
+      font-weight: 800;
+      font-size: 1.2rem;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 16px;
+    }
+    .step h4 { font-size: 1rem; font-weight: 700; color: #fff; margin-bottom: 8px; }
+    .step p { font-size: 0.85rem; color: rgba(255,255,255,0.65); }
+
+    /* TIMELINE — cuando inscribirse */
+    .timeline { background: var(--light); }
+    .timeline-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 24px;
+      margin-top: 48px;
+    }
+    .timeline-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 28px;
+      border-left: 5px solid var(--accent);
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    }
+    .timeline-card h3 { font-size: 1rem; font-weight: 700; color: var(--primary); margin-bottom: 8px; }
+    .timeline-card p { font-size: 0.88rem; color: var(--muted); }
+    .timeline-date {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      padding: 3px 14px;
+      border-radius: 50px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    /* FAQ */
+    .faq-list { display: flex; flex-direction: column; gap: 16px; margin-top: 40px; max-width: 800px; }
+    .faq-item {
+      background: var(--light);
+      border-radius: var(--radius);
+      padding: 24px 28px;
+    }
+    .faq-item h4 {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 10px;
+      display: flex; align-items: flex-start; gap: 10px;
+    }
+    .faq-item h4::before {
+      content: 'P';
+      background: var(--accent);
+      color: #fff;
+      font-size: 0.7rem;
+      padding: 2px 7px;
+      border-radius: 4px;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .faq-item p { font-size: 0.9rem; color: var(--muted); padding-left: 28px; }
+
+    /* CTA FINAL */
+    .cta-final {
+      background: linear-gradient(135deg, var(--accent) 0%, #0f5a3c 100%);
+      color: #fff;
+      text-align: center;
+      padding: 80px 40px;
+    }
+    .cta-final h2 { font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 800; margin-bottom: 16px; }
+    .cta-final p { font-size: 1.05rem; opacity: 0.9; margin-bottom: 36px; max-width: 560px; margin-left: auto; margin-right: auto; }
+    .cta-btns { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+    .btn-white {
+      background: #fff;
+      color: var(--accent);
+      padding: 15px 32px;
+      border-radius: 50px;
+      font-weight: 800;
+      font-size: 1rem;
+      transition: transform .2s, box-shadow .2s;
+    }
+    .btn-white:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.2); }
+    .btn-outline-white {
+      border: 2px solid rgba(255,255,255,0.6);
+      color: #fff;
+      padding: 15px 32px;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 1rem;
+      transition: background .2s;
+    }
+    .btn-outline-white:hover { background: rgba(255,255,255,0.15); }
+
+    /* FOOTER */
+    footer {
+      background: #0c1f33;
+      color: rgba(255,255,255,0.6);
+      padding: 40px;
+      text-align: center;
+      font-size: 0.85rem;
+    }
+    footer a { color: var(--gold); }
+    footer .footer-logo { margin-bottom: 16px; }
+    footer .footer-logo img { height: 36px; filter: brightness(0) invert(1); opacity: 0.8; }
+    footer p { margin-bottom: 8px; }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      nav { padding: 14px 20px; }
+      .nav-links { display: none; }
+      section { padding: 56px 20px; }
+      .hero { padding: 60px 20px 70px; }
+      .compare-grid { grid-template-columns: 1fr; }
+      .hero-stats { gap: 28px; }
+      footer { padding: 32px 20px; }
+      .cta-final { padding: 60px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TOPBAR -->
+  <div class="topbar">
+    Inscripciones Medicare: Oct 15 – Dic 7 &nbsp;|&nbsp; Cumple 65 años? Actúa dentro de 3 meses &nbsp;|&nbsp;
+    <a href="tel:+14076035896">(407) 603-5896</a>
+  </div>
+
+  <!-- NAV -->
+  <nav>
+    <a class="nav-logo" href="https://rhema360.com">
+      <img src="https://rhema360.com/rhema-logo.png" alt="Rhema Insurance Logo" />
+    </a>
+    <div class="nav-links">
+      <a href="https://rhema360.com/#productos">Productos</a>
+      <a href="https://rhema360.com/aca-marketplace">ACA / Marketplace</a>
+      <a href="https://rhema360.com/#nosotros">Nosotros</a>
+      <a href="https://rhema360.com/#contacto">Contacto</a>
+    </div>
+    <a class="nav-cta" href="tel:+14076035896">📞 Llamar Ahora</a>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-badge">Medicare — Orlando, Florida</div>
+    <h1>Entiende tu Medicare<br/>y elige el plan <em>correcto</em></h1>
+    <p>Asesoría Medicare 100% gratuita y en español. Daniel Paz compara todos los planes disponibles en Orlando para que pagues menos y recibas más cobertura.</p>
+    <div class="hero-btns">
+      <a class="btn-primary" href="tel:+14076035896">📞 Hablar con Daniel</a>
+      <a class="btn-secondary" href="https://wa.me/14076035896?text=Hola%2C%20quiero%20informaci%C3%B3n%20sobre%20Medicare">💬 WhatsApp</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat">
+        <div class="stat-num">$0</div>
+        <div class="stat-label">Costo de consultoría</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">65+</div>
+        <div class="stat-label">Edad de elegibilidad</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">100%</div>
+        <div class="stat-label">Atención en español</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">500+</div>
+        <div class="stat-label">Familias asesoradas</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LAS PARTES DE MEDICARE -->
+  <section>
+    <div class="container">
+      <div class="section-label">Lo básico</div>
+      <h2 class="section-title">Las <em>4 partes</em> de Medicare</h2>
+      <p class="section-sub">Medicare tiene diferentes partes que cubren distintos servicios. Daniel te explica cuál necesitas según tu situación.</p>
+      <div class="parts-grid">
+        <div class="part-card a">
+          <div class="part-letter">A</div>
+          <h3>Hospital</h3>
+          <p>Cubre hospitalizaciones, cuidado en asilos de enfermería (skilled nursing), hospicio y cuidado en el hogar después de hospitalización.</p>
+          <span class="part-tag">Mayormente gratis</span>
+        </div>
+        <div class="part-card b">
+          <div class="part-letter">B</div>
+          <h3>Médico</h3>
+          <p>Cubre visitas al médico, especialistas, servicios ambulatorios, equipos médicos, exámenes preventivos y procedimientos de diagnóstico.</p>
+          <span class="part-tag">Prima mensual</span>
+        </div>
+        <div class="part-card c">
+          <div class="part-letter">C</div>
+          <h3>Medicare Advantage</h3>
+          <p>Plan privado que combina Parte A + B. Muchos planes incluyen dental, visión, audición y medicamentos. Puede tener $0 de prima.</p>
+          <span class="part-tag">Desde $0/mes</span>
+        </div>
+        <div class="part-card d">
+          <div class="part-letter">D</div>
+          <h3>Medicamentos</h3>
+          <p>Cubre medicamentos recetados. Se agrega a Medicare Original (A+B) o viene incluida en muchos planes Medicare Advantage.</p>
+          <span class="part-tag">Plan de drogas</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ADVANTAGE VS SUPLEMENTO -->
+  <section class="compare">
+    <div class="container">
+      <div class="section-label">Elige lo mejor para ti</div>
+      <h2 class="section-title">Medicare Advantage <em>vs.</em> Suplemento Medicare</h2>
+      <p class="section-sub">Dos caminos para complementar tu Medicare Original. Daniel te ayuda a elegir según tu salud y presupuesto.</p>
+      <div class="compare-grid">
+        <div class="compare-card featured">
+          <div class="compare-badge">Popular</div>
+          <h3>Medicare Advantage</h3>
+          <p class="subtitle">Plan todo-en-uno administrado por aseguradoras privadas aprobadas por Medicare.</p>
+          <ul class="compare-list">
+            <li><span class="ico">✓</span> Prima desde $0 al mes</li>
+            <li><span class="ico">✓</span> Incluye dental, visión y audición</li>
+            <li><span class="ico">✓</span> Muchos incluyen Part D (medicamentos)</li>
+            <li><span class="ico">✓</span> Beneficios extras: transporte, gym, OTC</li>
+            <li><span class="ico red">○</span> Red de médicos más limitada</li>
+            <li><span class="ico red">○</span> Copagos por visitas y servicios</li>
+          </ul>
+          <div class="compare-price">Prima promedio: <strong>$0 – $50/mes</strong></div>
+        </div>
+        <div class="compare-card">
+          <h3>Suplemento Medicare</h3>
+          <p class="subtitle">Póliza privada que cubre los "huecos" (copagos y deducibles) del Medicare Original.</p>
+          <ul class="compare-list">
+            <li><span class="ico">✓</span> Acceso a cualquier médico que acepte Medicare</li>
+            <li><span class="ico">✓</span> Cubre la mayoría de copagos y deducibles</li>
+            <li><span class="ico">✓</span> Ideal si viajas frecuentemente</li>
+            <li><span class="ico">✓</span> Costos más predecibles</li>
+            <li><span class="ico red">○</span> Prima mensual más alta</li>
+            <li><span class="ico red">○</span> No incluye medicamentos (Part D separado)</li>
+          </ul>
+          <div class="compare-price">Prima promedio: <strong>$100 – $250/mes</strong></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- QUIÉN CALIFICA -->
+  <section>
+    <div class="container">
+      <div class="section-label">Elegibilidad</div>
+      <h2 class="section-title">¿Quién califica para <em>Medicare?</em></h2>
+      <p class="section-sub">Más personas de las que crees son elegibles. Verifica tu situación gratis con Daniel.</p>
+      <div class="qualify-grid">
+        <div class="qualify-card">
+          <div class="icon">🎂</div>
+          <h3>65 años o más</h3>
+          <p>La mayoría de personas califican automáticamente al cumplir 65 años si han trabajado y pagado impuestos por 10+ años.</p>
+        </div>
+        <div class="qualify-card">
+          <div class="icon">♿</div>
+          <h3>Discapacidad (SSDI)</h3>
+          <p>Si llevas 24 meses recibiendo Seguro Social por Discapacidad, calificas para Medicare antes de los 65.</p>
+        </div>
+        <div class="qualify-card">
+          <div class="icon">🏥</div>
+          <h3>Enfermedad Renal</h3>
+          <p>Personas con insuficiencia renal terminal (ESRD) que requieren diálisis o trasplante califican a cualquier edad.</p>
+        </div>
+        <div class="qualify-card">
+          <div class="icon">🌍</div>
+          <h3>Residentes Legales</h3>
+          <p>Residentes permanentes que han vivido legalmente en EE.UU. por 5+ años y cumplen los requisitos de trabajo.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROCESO -->
+  <section class="process">
+    <div class="container">
+      <div class="section-label">Simple y rápido</div>
+      <h2 class="section-title">Encuentra tu plan Medicare en <em>4 pasos</em></h2>
+      <p class="section-sub">Sin confusión, sin papelería innecesaria. Daniel te guía en tu idioma.</p>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <h4>Revisamos tu situación</h4>
+          <p>Llamas o escribes por WhatsApp. Daniel recopila tu información médica básica, medicamentos y presupuesto.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <h4>Comparamos planes</h4>
+          <p>Daniel compara todos los planes Medicare Advantage y Suplementos disponibles en Orlando para tu caso.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <h4>Elegimos juntos</h4>
+          <p>Te presentamos las mejores opciones en lenguaje claro. Sin presión, con toda la información que necesitas.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <h4>Te inscribimos</h4>
+          <p>Manejamos toda la inscripción. Tu nueva cobertura empieza en la fecha acordada sin complicaciones.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CUÁNDO INSCRIBIRSE -->
+  <section class="timeline">
+    <div class="container">
+      <div class="section-label">Períodos Importantes</div>
+      <h2 class="section-title">¿Cuándo puedes <em>inscribirte?</em></h2>
+      <p class="section-sub">Hay momentos clave para inscribirte en Medicare sin penalizaciones. Daniel te ayuda a no perderlos.</p>
+      <div class="timeline-grid">
+        <div class="timeline-card">
+          <div class="timeline-date">3 meses antes/después de cumplir 65</div>
+          <h3>Período Inicial de Inscripción (IEP)</h3>
+          <p>Tienes una ventana de 7 meses al cumplir 65 años. Inscribirte tarde puede resultar en penalizaciones de por vida.</p>
+        </div>
+        <div class="timeline-card">
+          <div class="timeline-date">Oct 15 – Dic 7</div>
+          <h3>Inscripción Abierta Anual (AEP)</h3>
+          <p>Período para cambiar tu plan Medicare Advantage o Part D. Los cambios entran en vigor el 1 de enero.</p>
+        </div>
+        <div class="timeline-card">
+          <div class="timeline-date">Ene 1 – Mar 31</div>
+          <h3>Período de Inscripción Abierta de MA</h3>
+          <p>Si ya tienes Medicare Advantage, puedes cambiarte a otro plan MA o regresar a Medicare Original.</p>
+        </div>
+        <div class="timeline-card">
+          <div class="timeline-date">Todo el año</div>
+          <h3>Período Especial (SEP)</h3>
+          <p>Ciertos eventos como mudanza, pérdida de cobertura laboral o elegibilidad para Medicaid te permiten cambiar planes.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section>
+    <div class="container">
+      <div class="section-label">Preguntas Frecuentes</div>
+      <h2 class="section-title">Lo que más nos <em>preguntan</em></h2>
+      <div class="faq-list">
+        <div class="faq-item">
+          <h4>¿Cuánto cuesta Medicare?</h4>
+          <p>Medicare Parte A generalmente es gratis si trabajaste 10+ años. Parte B tiene una prima mensual estándar (~$175/mes en 2025). Con Medicare Advantage puedes obtener cobertura adicional desde $0 de prima extra.</p>
+        </div>
+        <div class="faq-item">
+          <h4>¿Puedo tener Medicare si trabajo y tengo seguro del empleador?</h4>
+          <p>Sí. Si tu empleador tiene 20+ empleados, tu seguro de trabajo es primario y Medicare secundario. Si tiene menos de 20 empleados, Medicare es primario. Daniel puede explicarte cómo coordinar los beneficios.</p>
+        </div>
+        <div class="faq-item">
+          <h4>¿Qué pasa si no me inscribo en Medicare cuando cumplo 65?</h4>
+          <p>Si no tienes cobertura de un empleador activo, pueden aplicarse penalizaciones de por vida a tus primas de Parte B y Parte D. Es importante inscribirse durante tu Período Inicial.</p>
+        </div>
+        <div class="faq-item">
+          <h4>¿Medicare cubre medicamentos?</h4>
+          <p>Medicare Original (Partes A y B) no cubre medicamentos ambulatorios. La Parte D o un plan Medicare Advantage con Part D incluida sí cubre medicamentos recetados. Daniel puede comparar formularios para encontrar el plan que cubre tus medicamentos específicos.</p>
+        </div>
+        <div class="faq-item">
+          <h4>¿El servicio de asesoría tiene algún costo?</h4>
+          <p>Absolutamente ninguno. En Rhema Insurance asesoramos, comparamos e inscribimos sin cobrarle nada al cliente. Somos agentes licenciados compensados por las aseguradoras.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA FINAL -->
+  <section class="cta-final">
+    <h2>¿Listo para entender tu Medicare?</h2>
+    <p>Habla hoy con Daniel — tu consulta es gratuita, en español, y sin presión.</p>
+    <div class="cta-btns">
+      <a class="btn-white" href="tel:+14076035896">📞 Llamar: (407) 603-5896</a>
+      <a class="btn-outline-white" href="https://wa.me/14076035896?text=Hola%2C%20quiero%20informaci%C3%B3n%20sobre%20Medicare">💬 WhatsApp</a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">
+      <img src="https://rhema360.com/rhema-logo.png" alt="Rhema Insurance" />
+    </div>
+    <p>📍 Orlando, FL 32828 &nbsp;|&nbsp; 📞 <a href="tel:+14076035896">(407) 603-5896</a> &nbsp;|&nbsp; 📧 <a href="mailto:rhema360insurance@gmail.com">rhema360insurance@gmail.com</a></p>
+    <p>Lun–Vie 9am–6pm · Sáb 10am–3pm</p>
+    <p style="margin-top:16px;">© 2025 Rhema Insurance LLC · Orlando, FL · Agente licenciado en Florida<br/>
+    No somos representantes del gobierno federal ni estatal. <a href="https://rhema360.com">rhema360.com</a></p>
+  </footer>
+
+</body>
+</html>

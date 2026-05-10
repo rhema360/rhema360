@@ -404,10 +404,22 @@ document.getElementById('soaForm').addEventListener('submit', async function(e) 
 
   // Send to webhook
   // Google Apps Script — email con firmas
-  var APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyiJieaWvDt6SZY6UX_WLSMGdMjXR4Baj-0H_5-OrB1kP-hXoehP5rpDi-X4cO8zeUJ/exec';
+  var APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxD72SoMNCGQvZJrbW81-c2j1Jz-WUwWROTy57jk1q1gvYrHIDxnpL-29F_M9LoTdDE/exec';
   // Make.com webhook — WhatsApp + Google Sheets
   var MAKE_WEBHOOK_URL = 'https://hook.us2.make.com/4r83rzg1jswugr2f4e8we8uq0haiokkp';
 
+  // Payload para Make.com (sin firma - evita limite de WhatsApp)
+  var payloadMake = JSON.stringify({
+    fecha: fecha,
+    hora: hora,
+    metodo: metodo,
+    productos: productos.join(', '),
+    agente: agente,
+    firma_beneficiario: 'Firmado digitalmente',
+    timestamp: timestamp
+  });
+  
+  // Payload para Apps Script (con firma completa)
   var payload = JSON.stringify({
     fecha: fecha,
     hora: hora,
@@ -419,25 +431,49 @@ document.getElementById('soaForm').addEventListener('submit', async function(e) 
     timestamp: timestamp
   });
 
+  // Enviar a Make.com (WhatsApp + Sheets) via no-cors
   try {
-    // Enviar a Google Apps Script (email con firmas)
-    await fetch(APPS_SCRIPT_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: payload,
-      mode: 'cors'
-    });
-  } catch(err) { console.log('Apps Script sent'); }
-
-  try {
-    // Enviar a Make.com (WhatsApp + Sheets)
     await fetch(MAKE_WEBHOOK_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: payload,
+      body: payloadMake,
       mode: 'no-cors'
     });
   } catch(err) { console.log('Make webhook sent'); }
+
+  // Enviar a Google Apps Script via iframe (evita CORS)
+  var ifrm = document.createElement('iframe');
+  ifrm.name = 'soa-submit-frame';
+  ifrm.style.display = 'none';
+  document.body.appendChild(ifrm);
+
+  var frm = document.createElement('form');
+  frm.method = 'POST';
+  frm.action = APPS_SCRIPT_URL;
+  frm.target = 'soa-submit-frame';
+  frm.enctype = 'application/x-www-form-urlencoded';
+
+  var fields = {
+    fecha: fecha,
+    hora: hora,
+    metodo: metodo,
+    productos: productos.join ? productos.join(', ') : productos,
+    agente: agente,
+    timestamp: timestamp,
+    firma_beneficiario: firmaBenef,
+    firma_agente: firmaAgt
+  };
+
+  for (var key in fields) {
+    var inp = document.createElement('input');
+    inp.type = 'hidden';
+    inp.name = key;
+    inp.value = fields[key];
+    frm.appendChild(inp);
+  }
+
+  document.body.appendChild(frm);
+  frm.submit();
 
   document.getElementById('soaForm').style.display = 'none';
   document.getElementById('confirmacion').style.display = 'block';

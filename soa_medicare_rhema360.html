@@ -403,23 +403,41 @@ document.getElementById('soaForm').addEventListener('submit', async function(e) 
   document.getElementById('pdf-firma-agente').src = firmaAgt;
 
   // Send to webhook
-  var WEBHOOK_URL = 'https://hook.us2.make.com/4r83rzg1jswugr2f4e8we8uq0haiokkp';
+  // Google Apps Script — email con firmas
+  var APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyiJieaWvDt6SZY6UX_WLSMGdMjXR4Baj-0H_5-OrB1kP-hXoehP5rpDi-X4cO8zeUJ/exec';
+  // Make.com webhook — WhatsApp + Google Sheets
+  var MAKE_WEBHOOK_URL = 'https://hook.us2.make.com/4r83rzg1jswugr2f4e8we8uq0haiokkp';
+
+  var payload = JSON.stringify({
+    fecha: fecha,
+    hora: hora,
+    metodo: metodo,
+    productos: productos.join(', '),
+    agente: agente,
+    firma_beneficiario: firmaBenef,
+    firma_agente: firmaAgt,
+    timestamp: timestamp
+  });
+
   try {
-    await fetch(WEBHOOK_URL, {
+    // Enviar a Google Apps Script (email con firmas)
+    await fetch(APPS_SCRIPT_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        fecha: fecha,
-        hora: hora,
-        metodo: metodo,
-        productos: productos.join(', '),
-        agente: agente,
-        firma_beneficiario: 'Firmado digitalmente',
-        timestamp: timestamp
-      }),
+      body: payload,
+      mode: 'cors'
+    });
+  } catch(err) { console.log('Apps Script sent'); }
+
+  try {
+    // Enviar a Make.com (WhatsApp + Sheets)
+    await fetch(MAKE_WEBHOOK_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: payload,
       mode: 'no-cors'
     });
-  } catch(err) { console.log('Webhook sent'); }
+  } catch(err) { console.log('Make webhook sent'); }
 
   document.getElementById('soaForm').style.display = 'none';
   document.getElementById('confirmacion').style.display = 'block';

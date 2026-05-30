@@ -518,7 +518,7 @@ h1.hero-h1 em { color:var(--gold2); font-style:italic; }
 .fbadge { font-size:9px; font-weight:700; letter-spacing:1px; padding:4px 11px; border-radius:4px; background:rgba(255,255,255,.06); color:rgba(255,255,255,.34); text-transform:uppercase; }
 
 /* ── FLOAT ── */
-.floatbtn-wrap { position:fixed; bottom:28px; right:28px; z-index:800; }
+.floatbtn-wrap { position:fixed; bottom:28px; right:28px; z-index:800; display:flex; flex-direction:column; align-items:flex-end; gap:12px; }
 .floatbtn {
   width:68px; height:68px; border-radius:50%;
   background:linear-gradient(135deg, var(--teal), var(--teal2));
@@ -532,8 +532,52 @@ h1.hero-h1 em { color:var(--gold2); font-style:italic; }
   50% { box-shadow:0 8px 36px rgba(0,184,154,.7), 0 0 0 14px rgba(0,184,154,0); }
 }
 .floatbtn:hover { transform:scale(1.12); }
-.float-lbl { position:absolute; right:80px; top:50%; transform:translateY(-50%); background:var(--ink); color:#fff; font-size:13px; font-weight:700; white-space:nowrap; padding:10px 18px; border-radius:24px; box-shadow:0 6px 20px rgba(0,0,0,.35); opacity:0; pointer-events:none; transition:opacity .2s; }
+.float-lbl { position:absolute; right:80px; bottom:0; background:var(--ink); color:#fff; font-size:13px; font-weight:700; white-space:nowrap; padding:10px 18px; border-radius:24px; box-shadow:0 6px 20px rgba(0,0,0,.35); opacity:0; pointer-events:none; transition:opacity .2s; }
 .floatbtn-wrap:hover .float-lbl { opacity:1; }
+/* WhatsApp float button */
+.wa-floatbtn {
+  width:68px; height:68px; border-radius:50%;
+  background:#25D366;
+  display:flex; align-items:center; justify-content:center;
+  box-shadow:0 8px 28px rgba(37,211,102,.55); transition:all .25s;
+  animation:waring 3s ease infinite;
+  flex-shrink:0;
+}
+@keyframes waring {
+  0%,100% { box-shadow:0 8px 28px rgba(37,211,102,.55), 0 0 0 0 rgba(37,211,102,.3); }
+  50% { box-shadow:0 8px 36px rgba(37,211,102,.7), 0 0 0 14px rgba(37,211,102,0); }
+}
+.wa-floatbtn:hover { transform:scale(1.12); }
+.wa-lbl { position:absolute; right:80px; bottom:80px; background:#128C7E; color:#fff; font-size:13px; font-weight:700; white-space:nowrap; padding:10px 18px; border-radius:24px; box-shadow:0 6px 20px rgba(0,0,0,.35); opacity:0; pointer-events:none; transition:opacity .2s; }
+.wa-floatbtn:hover ~ .wa-lbl, .wa-lbl:hover { opacity:1; }
+/* Lead form section */
+.lead-sec { background:var(--navy); padding:64px 0; }
+.lead-grid { display:grid; grid-template-columns:1fr 1fr; gap:56px; align-items:center; }
+.lead-badge { display:inline-block; background:rgba(0,184,154,.15); border:1px solid var(--teal); color:var(--teal); padding:5px 16px; border-radius:50px; font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:.06em; margin-bottom:16px; }
+.lead-h2 { font-family:var(--display); font-size:clamp(1.8rem,3.5vw,2.6rem); font-weight:700; color:#fff; line-height:1.2; margin-bottom:14px; }
+.lead-h2 em { color:var(--gold); font-style:italic; }
+.lead-sub { color:rgba(255,255,255,.65); font-size:.97rem; line-height:1.75; margin-bottom:24px; }
+.lead-perks { list-style:none; display:flex; flex-direction:column; gap:10px; }
+.lead-perks li { display:flex; align-items:center; gap:10px; color:rgba(255,255,255,.82); font-size:.9rem; }
+.lead-perks li::before { content:'✓'; background:var(--teal); color:#fff; width:20px; height:20px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; flex-shrink:0; }
+.lead-form { background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.1); border-radius:20px; padding:36px 32px; backdrop-filter:blur(8px); }
+.lead-form h3 { font-family:var(--display); font-size:1.4rem; color:#fff; margin-bottom:6px; }
+.lead-form p { font-size:.85rem; color:rgba(255,255,255,.55); margin-bottom:24px; }
+.lf-group { display:flex; flex-direction:column; gap:6px; margin-bottom:16px; }
+.lf-label { font-size:.78rem; font-weight:700; color:rgba(255,255,255,.5); text-transform:uppercase; letter-spacing:.05em; }
+.lf-input { padding:13px 16px; background:rgba(255,255,255,.07); border:1.5px solid rgba(255,255,255,.12); border-radius:10px; font-family:var(--text); font-size:.95rem; color:#fff; outline:none; transition:border-color .2s; width:100%; }
+.lf-input::placeholder { color:rgba(255,255,255,.3); }
+.lf-input:focus { border-color:var(--teal); background:rgba(0,184,154,.08); }
+.lf-select { padding:13px 16px; background:rgba(255,255,255,.07); border:1.5px solid rgba(255,255,255,.12); border-radius:10px; font-family:var(--text); font-size:.95rem; color:#fff; outline:none; transition:border-color .2s; width:100%; cursor:pointer; }
+.lf-select option { background:#0b1e2f; color:#fff; }
+.lf-select:focus { border-color:var(--teal); }
+.lf-btn { width:100%; padding:15px; background:linear-gradient(135deg,var(--teal),var(--teal2)); color:#fff; border:none; border-radius:50px; font-family:var(--text); font-size:1rem; font-weight:700; cursor:pointer; margin-top:8px; transition:all .25s; }
+.lf-btn:hover { transform:translateY(-2px); box-shadow:0 8px 24px rgba(0,184,154,.5); }
+.lf-note { text-align:center; font-size:.78rem; color:rgba(255,255,255,.35); margin-top:12px; }
+.lf-success { display:none; text-align:center; padding:32px 20px; }
+.lf-success .s-icon { font-size:3rem; margin-bottom:12px; }
+.lf-success h4 { color:#fff; font-size:1.2rem; margin-bottom:8px; }
+.lf-success p { color:rgba(255,255,255,.6); font-size:.9rem; }
 
 /* ── RESPONSIVE ── */
 @media(max-width:1024px) {
@@ -556,6 +600,7 @@ h1.hero-h1 em { color:var(--gold2); font-style:italic; }
   .nav-links,.nav-end .btn{display:none;}
   .hamb{display:flex;}
   .float-lbl{display:none;}
+  .lead-grid{grid-template-columns:1fr;}
 }
 @media(max-width:480px) {
   .hero-btns,.cta-btns,.abtns{flex-direction:column;}
@@ -974,6 +1019,63 @@ h1.hero-h1 em { color:var(--gold2); font-style:italic; }
   </div>
 </section>
 
+<!-- LEAD CAPTURE FORM -->
+<section class="lead-sec" id="cotizar">
+  <div class="container">
+    <div class="lead-grid">
+      <div class="fade-l">
+        <div class="lead-badge">Cotización Express</div>
+        <h2 class="lead-h2">Recibe tu cotización<br/>en <em>menos de 24 horas</em></h2>
+        <p class="lead-sub">Deja tus datos y Daniel te contactará personalmente para revisar tu caso, comparar opciones y encontrar el mejor plan para ti y tu familia.</p>
+        <ul class="lead-perks">
+          <li>Consulta 100% gratuita — sin ningún costo</li>
+          <li>Atención en español con Daniel Paz</li>
+          <li>Respuesta garantizada en menos de 24 horas</li>
+          <li>Sin compromiso — solo información</li>
+        </ul>
+      </div>
+      <div class="fade-r">
+        <div class="lead-form" id="lf-wrap">
+          <h3>Solicita tu cotización gratis</h3>
+          <p>Completa el formulario y Daniel te llama personalmente.</p>
+          <form id="lead-form" action="https://formsubmit.co/rhema360insurance@gmail.com" method="POST">
+            <input type="hidden" name="_subject" value="Nueva Cotización — Rhema Insurance" />
+            <input type="hidden" name="_captcha" value="false" />
+            <input type="hidden" name="_template" value="box" />
+            <div class="lf-group">
+              <label class="lf-label">Tu nombre *</label>
+              <input class="lf-input" type="text" name="nombre" placeholder="Ej: María García" required />
+            </div>
+            <div class="lf-group">
+              <label class="lf-label">Teléfono / WhatsApp *</label>
+              <input class="lf-input" type="tel" name="telefono" placeholder="(407) 000-0000" required />
+            </div>
+            <div class="lf-group">
+              <label class="lf-label">¿Qué seguro necesitas?</label>
+              <select class="lf-select" name="tipo_seguro">
+                <option value="">Selecciona una opción</option>
+                <option value="ACA / Marketplace ($0/mes)">ACA / Marketplace — desde $0/mes</option>
+                <option value="Medicare">Medicare (65+ años)</option>
+                <option value="Seguro de Vida">Seguro de Vida</option>
+                <option value="Dental y Visión">Dental y Visión</option>
+                <option value="No sé / orientación">No sé — necesito orientación</option>
+              </select>
+            </div>
+            <button class="lf-btn" type="submit">Enviar Solicitud → Daniel me llama</button>
+            <p class="lf-note">🔒 Tu información es privada y nunca se comparte con terceros.</p>
+          </form>
+          <div class="lf-success" id="lf-success">
+            <div class="s-icon">✅</div>
+            <h4>¡Solicitud recibida!</h4>
+            <p>Daniel te contactará en menos de 24 horas.<br/>También puedes escribirle por WhatsApp ahora mismo.</p>
+            <a href="https://wa.me/14076035896?text=Hola%20Daniel%2C%20acabo%20de%20enviar%20mi%20solicitud%20de%20cotización" style="display:inline-block;margin-top:16px;padding:12px 28px;background:#25D366;color:#fff;border-radius:50px;font-weight:700;font-size:.9rem;">💬 Escribir por WhatsApp</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- CHATBOT -->
 <section class="chat-sec" id="chatbot">
   <div class="cg cg1"></div><div class="cg cg2"></div>
@@ -1147,16 +1249,42 @@ h1.hero-h1 em { color:var(--gold2); font-style:italic; }
   </div>
 </footer>
 
-<!-- FLOAT BUTTON -->
+<!-- FLOAT BUTTONS -->
 <div class="floatbtn-wrap">
+  <a class="wa-floatbtn" href="https://wa.me/14076035896?text=Hola%20Daniel%2C%20quiero%20informaci%C3%B3n%20sobre%20seguros" target="_blank" rel="noopener" aria-label="WhatsApp">
+    <svg width="34" height="34" viewBox="0 0 24 24" fill="#fff"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  </a>
   <div class="float-lbl">💬 Cotizar gratis ahora</div>
-  <button class="floatbtn" onclick="scrollChat()">💬</button>
+  <button class="floatbtn" onclick="scrollChat()" aria-label="Cotizar gratis">💬</button>
 </div>
 
 <script>
 function scrollChat() {
   document.getElementById('chatbot').scrollIntoView({behavior:'smooth'});
 }
+
+// Lead form — AJAX submit so page doesn't redirect
+document.getElementById('lead-form').addEventListener('submit', function(e) {
+  e.preventDefault();
+  var form = this;
+  var btn = form.querySelector('.lf-btn');
+  btn.textContent = 'Enviando…';
+  btn.disabled = true;
+  fetch(form.action, {
+    method: 'POST',
+    body: new FormData(form),
+    headers: { 'Accept': 'application/json' }
+  }).then(function() {
+    document.getElementById('lf-wrap').querySelector('h3').style.display = 'none';
+    document.getElementById('lf-wrap').querySelector('p').style.display = 'none';
+    form.style.display = 'none';
+    document.getElementById('lf-success').style.display = 'block';
+  }).catch(function() {
+    btn.textContent = 'Enviar Solicitud → Daniel me llama';
+    btn.disabled = false;
+    alert('Hubo un error. Por favor llama directamente al (407) 603-5896.');
+  });
+});
 
 // Scroll reveal
 var obs = new IntersectionObserver(function(entries) {

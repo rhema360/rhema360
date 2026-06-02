@@ -569,7 +569,9 @@ section { padding: 100px 40px; }
 .bio-card:hover { transform:translateY(-4px); }
 .bio-card::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg,var(--gold),var(--gold-light)); }
 .bio-card-glow { position:absolute; top:-80px; right:-80px; width:240px; height:240px; background:radial-gradient(circle,rgba(201,150,58,0.1) 0%,transparent 70%); pointer-events:none; }
-.bio-img-wrap { width:90px; height:90px; background:linear-gradient(135deg,var(--gold),var(--gold-light)); border-radius:24px; display:flex; align-items:center; justify-content:center; font-family:'Syne',sans-serif; font-weight:800; font-size:30px; color:var(--navy); margin-bottom:22px; box-shadow:0 12px 32px var(--gold-glow); position:relative; }
+.bio-img-wrap { width:120px; height:120px; border-radius:24px; margin-bottom:22px; box-shadow:0 12px 32px var(--gold-glow); position:relative; overflow:hidden; border:3px solid var(--gold); }
+.bio-img-wrap img { width:100%; height:100%; object-fit:cover; object-position:center top; display:block; }
+.bio-img-wrap-fallback { width:120px; height:120px; background:linear-gradient(135deg,var(--gold),var(--gold-light)); border-radius:24px; display:flex; align-items:center; justify-content:center; font-family:'Syne',sans-serif; font-weight:800; font-size:36px; color:var(--navy); margin-bottom:22px; box-shadow:0 12px 32px var(--gold-glow); }
 .bio-name { font-family:'Syne',sans-serif; font-weight:800; font-size:28px; margin-bottom:4px; }
 .bio-role { font-size:14px; color:var(--gold); font-weight:500; margin-bottom:20px; }
 .bio-text-p { font-size:15px; color:var(--muted); line-height:1.75; margin-bottom:24px; }
@@ -1026,7 +1028,9 @@ footer { background:var(--navy-mid); border-top:1px solid var(--border); padding
     <div class="bio-grid">
       <div class="bio-card reveal">
         <div class="bio-card-glow"></div>
-        <div class="bio-img-wrap">DP</div>
+        <div class="bio-img-wrap">
+          <img src="download.webp" alt="Daniel Paz Galvis — Asesor de Seguros" onerror="this.parentElement.outerHTML='<div class=\'bio-img-wrap-fallback\'>DP</div>'">
+        </div>
         <div class="bio-name">Daniel Paz Galvis</div>
         <div class="bio-role">Fundador · Agente Licenciado en Florida</div>
         <p class="bio-text-p">Ayudo a familias hispanas a encontrar la mejor cobertura en 45 estados — sin jerga complicada y siempre en su idioma. También soy fundador de Rhema Tax, lo que me da una perspectiva única para maximizar tus beneficios fiscales y de cobertura al mismo tiempo.</p>

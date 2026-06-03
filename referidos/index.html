@@ -12,6 +12,8 @@
   <meta property="og:description" content="Refiere a tus amigos y familiares a Rhema Insurance. Atención en español, asesoría gratuita en Orlando, FL." />
   <meta property="og:url" content="https://www.rhema360.com/referidos/" />
   <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://www.rhema360.com/rhema-logo.png" />
+  <meta property="og:site_name" content="Rhema Insurance" />
 
   <!-- Meta Pixel -->
   <script>
@@ -25,6 +27,7 @@
   'https://connect.facebook.net/en_US/fbevents.js');
   fbq('init', '1334558204818640');
   fbq('track', 'PageView');
+  fbq('track', 'ViewContent', {content_name: 'Programa Referidos', content_category: 'Insurance'});
   </script>
   <noscript><img height="1" width="1" style="display:none"
   src="https://www.facebook.com/tr?id=1334558204818640&ev=PageView&noscript=1"
@@ -295,6 +298,8 @@
     .share-btn.facebook:hover { box-shadow: 0 6px 20px rgba(24,119,242,0.45); }
     .share-btn.copy { background: rgba(255,255,255,0.15); color: #fff; border: 2px solid rgba(255,255,255,0.3); }
     .share-btn.copy:hover { background: rgba(255,255,255,0.25); }
+    .share-btn.instagram { background: linear-gradient(135deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); color: #fff; }
+    .share-btn.instagram:hover { box-shadow: 0 6px 20px rgba(220,39,67,0.45); }
 
     /* FORM */
     .form-section { background: var(--light); }
@@ -563,6 +568,9 @@
               <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
               Compartir en Facebook
             </a>
+            <button class="share-btn instagram" onclick="shareInstagram()">
+              📷 Compartir en Instagram
+            </button>
             <button class="share-btn copy" onclick="copyLink()">
               🔗 Copiar enlace
             </button>
@@ -678,6 +686,10 @@
   </footer>
 
   <script>
+    function handleSubmit(e) {
+      fbq('track', 'Lead', {content_name: 'Referido', content_category: 'Referral', value: 0, currency: 'USD'});
+    }
+
     function copyLink() {
       navigator.clipboard.writeText('https://rhema360.com').then(() => {
         const btn = document.querySelector('.share-btn.copy');
@@ -685,6 +697,28 @@
         btn.textContent = '✓ Copiado!';
         setTimeout(() => { btn.textContent = original; }, 2000);
       });
+    }
+
+    function shareInstagram() {
+      fbq('track', 'Share', {content_name: 'Instagram Share', content_category: 'Social'});
+      const shareData = {
+        title: 'Rhema Insurance — Seguros en Español',
+        text: '¡Obtén tu seguro de salud desde $0/mes! Asesoría gratis en español con Daniel de Rhema Insurance. 📞 (407) 603-5896',
+        url: 'https://rhema360.com'
+      };
+      if (navigator.share) {
+        navigator.share(shareData).catch(() => {});
+      } else {
+        const text = '¡Conoces a alguien sin seguro de salud? Rhema Insurance ayuda a familias hispanas desde $0/mes. Consulta gratis en español: https://rhema360.com 📞 (407) 603-5896 #RhemaInsurance #SegurosDeSalud #Orlando';
+        navigator.clipboard.writeText(text).then(() => {
+          const btn = document.querySelector('.share-btn.instagram');
+          const original = btn.innerHTML;
+          btn.textContent = '✓ Texto copiado — pégalo en Instagram!';
+          setTimeout(() => { btn.innerHTML = original; }, 3000);
+        }).catch(() => {
+          window.open('https://www.instagram.com/rhema360insurance', '_blank');
+        });
+      }
     }
 
     // Show thank-you message if redirected back with ?gracias=1

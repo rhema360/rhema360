@@ -13,6 +13,8 @@
   <meta property="og:description" content="Planes de salud ACA/Marketplace en Orlando FL. Atención en español. Muchos califican para $0/mes." />
   <meta property="og:url" content="https://www.rhema360.com/aca-marketplace/" />
   <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://www.rhema360.com/rhema-logo.png" />
+  <meta property="og:site_name" content="Rhema Insurance" />
 
   <!-- Meta Pixel -->
   <script>
@@ -26,6 +28,7 @@
   'https://connect.facebook.net/en_US/fbevents.js');
   fbq('init', '1334558204818640');
   fbq('track', 'PageView');
+  fbq('track', 'ViewContent', {content_name: 'ACA Marketplace', content_category: 'Insurance'});
   </script>
   <noscript><img height="1" width="1" style="display:none"
   src="https://www.facebook.com/tr?id=1334558204818640&ev=PageView&noscript=1"
@@ -514,7 +517,7 @@
       <a href="https://rhema360.com/#nosotros">Nosotros</a>
       <a href="https://rhema360.com/#contacto">Contacto</a>
     </div>
-    <a class="nav-cta" href="tel:+14076035896">📞 Llamar Ahora</a>
+    <a class="nav-cta" href="tel:+14076035896" onclick="fbq('track','Contact')">📞 Llamar Ahora</a>
   </nav>
 
   <!-- HERO -->
@@ -523,8 +526,8 @@
     <h1>Seguro de Salud desde <em>$0 al mes</em><br/>en Orlando, Florida</h1>
     <p>Muchas familias hispanas en Orlando califican para planes ACA con subsidios del gobierno. Sin costo de consultoría. Atención en español.</p>
     <div class="hero-btns">
-      <a class="btn-primary" href="https://rhema360.com/#chatbot">💬 Verificar si Califico</a>
-      <a class="btn-secondary" href="tel:+14076035896">📞 (407) 603-5896</a>
+      <a class="btn-primary" href="https://rhema360.com/#chatbot" onclick="fbq('track','Lead',{content_name:'ACA Marketplace',content_category:'Insurance Lead',value:0,currency:'USD'})">💬 Verificar si Califico</a>
+      <a class="btn-secondary" href="tel:+14076035896" onclick="fbq('track','Contact')">📞 (407) 603-5896</a>
     </div>
     <div class="hero-stats">
       <div class="stat">
@@ -732,8 +735,8 @@
     <h2>¿Listo para proteger a tu familia hoy?</h2>
     <p>Habla con Daniel — tu consulta es completamente gratuita y en español.</p>
     <div class="cta-btns">
-      <a class="btn-white" href="https://rhema360.com/#chatbot">💬 Cotizar en 5 Minutos</a>
-      <a class="btn-outline-white" href="tel:+14076035896">📞 (407) 603-5896</a>
+      <a class="btn-white" href="https://rhema360.com/#chatbot" onclick="fbq('track','Lead',{content_name:'ACA CTA Final',content_category:'Insurance Lead',value:0,currency:'USD'})">💬 Cotizar en 5 Minutos</a>
+      <a class="btn-outline-white" href="tel:+14076035896" onclick="fbq('track','Contact')">📞 (407) 603-5896</a>
     </div>
   </section>
 

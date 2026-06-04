@@ -1662,6 +1662,18 @@ function submitQuote() {
       _template: 'table'
     })
   }).catch(() => {});
+  fetch('https://hook.us2.make.com/r9nlep3ganv5jm09lta3ujg88f6ye8i7', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({
+      nombre: nombre || 'No proporcionado',
+      telefono: tel || 'No proporcionado',
+      email: email || 'No proporcionado',
+      tipo_seguro: tipo,
+      familia: fam,
+      fuente: 'Formulario Web - rhema360.com'
+    })
+  }).catch(() => {});
   const msg = `Hola! Vi su página y quiero una cotización de ${tipo}. Mi nombre es ${nombre || 'cliente'} y mi teléfono es ${tel || 'pendiente'}.`;
   setTimeout(() => {
     window.open(`https://wa.me/14076035896?text=${encodeURIComponent(msg)}`, '_blank');

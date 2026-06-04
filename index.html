@@ -1641,12 +1641,27 @@ document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 function submitQuote() {
   const nombre = document.getElementById('f-nombre').value;
   const tel = document.getElementById('f-tel').value;
+  const email = document.getElementById('f-email').value;
   const tipo = document.getElementById('f-tipo').value;
+  const fam = document.getElementById('f-fam').value;
   const btn = document.querySelector('.form-submit');
   btn.textContent = '✅ ¡Enviado! Daniel te contacta en 24h';
   btn.style.background = 'linear-gradient(135deg, #2ECC71, #27AE60)';
   btn.style.color = 'white';
   fbq('track', 'Lead', {content_name: tipo, content_category: 'Insurance Lead', value: 0, currency: 'USD'});
+  fetch('https://formsubmit.co/ajax/rhema360insurance@gmail.com', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json', 'Accept': 'application/json'},
+    body: JSON.stringify({
+      _subject: `🛡️ Nueva cotización: ${tipo} — ${nombre || 'Cliente'}`,
+      Nombre: nombre || 'No proporcionado',
+      Teléfono: tel || 'No proporcionado',
+      Email: email || 'No proporcionado',
+      'Tipo de seguro': tipo,
+      'Personas en familia': fam,
+      _template: 'table'
+    })
+  }).catch(() => {});
   const msg = `Hola! Vi su página y quiero una cotización de ${tipo}. Mi nombre es ${nombre || 'cliente'} y mi teléfono es ${tel || 'pendiente'}.`;
   setTimeout(() => {
     window.open(`https://wa.me/14076035896?text=${encodeURIComponent(msg)}`, '_blank');

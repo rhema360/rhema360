@@ -1,0 +1,1482 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Canal YT Hispanos USA — Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=IBM+Plex+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  /* ── Reset & Base ── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg:       #0a0b0d;
+    --surface:  #111318;
+    --border:   #1e2129;
+    --dim:      #2a2d38;
+    --muted:    #4a4f63;
+    --text:     #c8ccd8;
+    --bright:   #e8ecf4;
+    --accent:   #7c6af7;
+    --green:    #22c55e;
+    --yellow:   #f59e0b;
+    --red:      #ef4444;
+    --cyan:     #06b6d4;
+    --pink:     #ec4899;
+
+    --glow-0: #7c6af7;
+    --glow-1: #06b6d4;
+    --glow-2: #22c55e;
+    --glow-3: #f59e0b;
+    --glow-4: #ec4899;
+    --glow-5: #f97316;
+    --glow-6: #a855f7;
+    --glow-7: #14b8a6;
+
+    --radius: 8px;
+    --font-ui: 'Syne', sans-serif;
+    --font-mono: 'IBM Plex Mono', monospace;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-ui);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ── Scrollbar ── */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--dim); border-radius: 3px; }
+
+  /* ── Layout ── */
+  .container { max-width: 960px; margin: 0 auto; padding: 0 20px 80px; }
+
+  /* ── Header ── */
+  .header {
+    padding: 48px 0 32px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 32px;
+  }
+  .header-tag {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .header-title {
+    font-size: clamp(28px, 5vw, 44px);
+    font-weight: 800;
+    color: var(--bright);
+    line-height: 1.1;
+    margin-bottom: 10px;
+  }
+  .header-sub {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--muted);
+  }
+  .header-sub span { color: var(--green); }
+
+  /* ── Global Progress Bar ── */
+  .global-progress {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px 24px;
+    margin-bottom: 32px;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+  }
+  .gp-circle { flex-shrink: 0; }
+  .gp-info { flex: 1; }
+  .gp-label {
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 4px;
+    font-family: var(--font-mono);
+  }
+  .gp-title { font-size: 20px; font-weight: 700; color: var(--bright); }
+  .gp-bar-wrap {
+    height: 4px;
+    background: var(--dim);
+    border-radius: 2px;
+    margin-top: 10px;
+    overflow: hidden;
+  }
+  .gp-bar {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), var(--cyan));
+    border-radius: 2px;
+    transition: width 0.4s ease;
+  }
+  .gp-tasks {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 6px;
+  }
+
+  /* SVG Circle */
+  .svg-circle { transform: rotate(-90deg); }
+  .circle-bg { fill: none; stroke: var(--dim); stroke-width: 4; }
+  .circle-fg {
+    fill: none;
+    stroke: url(#grad);
+    stroke-width: 4;
+    stroke-linecap: round;
+    transition: stroke-dashoffset 0.5s ease;
+  }
+  .circle-text {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    font-weight: 600;
+    fill: var(--bright);
+    text-anchor: middle;
+    dominant-baseline: middle;
+    transform: rotate(90deg);
+  }
+
+  /* ── Canal Config ── */
+  .config-panel {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px 24px;
+    margin-bottom: 32px;
+  }
+  .config-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    user-select: none;
+  }
+  .config-title {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--cyan);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+  .config-body { margin-top: 16px; }
+  .config-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+  .config-field label {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .config-field input {
+    width: 100%;
+    background: var(--dim);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 8px 10px;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--bright);
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .config-field input:focus { border-color: var(--accent); }
+  .config-field input::placeholder { color: var(--muted); }
+  .config-save {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 16px;
+    cursor: pointer;
+    transition: opacity 0.2s;
+  }
+  .config-save:hover { opacity: 0.85; }
+  .config-saved {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--green);
+    margin-left: 10px;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .config-saved.show { opacity: 1; }
+
+  /* ── Phase Navigation ── */
+  .phase-nav {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 28px;
+    flex-wrap: wrap;
+  }
+  .phase-dot {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 2px solid var(--dim);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--muted);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .phase-dot:hover { border-color: var(--text); color: var(--text); }
+  .phase-dot.active { color: #fff; border-color: transparent; }
+  .phase-dot.done { border-color: transparent; }
+
+  /* ── Phase Cards ── */
+  .phase {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    margin-bottom: 16px;
+    overflow: hidden;
+    transition: box-shadow 0.3s;
+    scroll-margin-top: 20px;
+  }
+  .phase:hover { box-shadow: 0 0 0 1px var(--dim); }
+
+  .phase-header {
+    padding: 20px 24px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    user-select: none;
+  }
+  .phase-num {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: var(--muted);
+    min-width: 40px;
+  }
+  .phase-meta { flex: 1; }
+  .phase-name {
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--bright);
+    margin-bottom: 3px;
+  }
+  .phase-timeline {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--muted);
+  }
+  .phase-stats {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .phase-badge {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    padding: 3px 8px;
+    border-radius: 4px;
+    border: 1px solid var(--dim);
+    color: var(--muted);
+  }
+  .phase-chevron {
+    width: 20px;
+    height: 20px;
+    color: var(--muted);
+    transition: transform 0.3s;
+  }
+  .phase.open .phase-chevron { transform: rotate(180deg); }
+  .phase-mini-bar {
+    width: 60px;
+    height: 3px;
+    background: var(--dim);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .phase-mini-fill {
+    height: 100%;
+    border-radius: 2px;
+    transition: width 0.3s;
+  }
+
+  /* Glow accent per phase */
+  .phase[data-phase="0"] { --phase-color: var(--glow-0); }
+  .phase[data-phase="1"] { --phase-color: var(--glow-1); }
+  .phase[data-phase="2"] { --phase-color: var(--glow-2); }
+  .phase[data-phase="3"] { --phase-color: var(--glow-3); }
+  .phase[data-phase="4"] { --phase-color: var(--glow-4); }
+  .phase[data-phase="5"] { --phase-color: var(--glow-5); }
+  .phase[data-phase="6"] { --phase-color: var(--glow-6); }
+  .phase[data-phase="7"] { --phase-color: var(--glow-7); }
+
+  .phase.open {
+    box-shadow: 0 0 24px -8px var(--phase-color),
+                0 0 0 1px color-mix(in srgb, var(--phase-color) 30%, transparent);
+  }
+  .phase-header .phase-num { color: var(--phase-color); }
+  .phase-mini-fill { background: var(--phase-color); }
+
+  /* ── Phase Body ── */
+  .phase-body { display: none; padding: 0 24px 24px; }
+  .phase.open .phase-body { display: block; }
+
+  /* ── KPIs ── */
+  .kpi-strip {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+  }
+  .kpi {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 10px 14px;
+    min-width: 120px;
+  }
+  .kpi-val {
+    font-family: var(--font-mono);
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--bright);
+    margin-bottom: 2px;
+  }
+  .kpi-label {
+    font-size: 11px;
+    color: var(--muted);
+  }
+
+  /* ── Prompts ── */
+  .prompts-section { margin-bottom: 20px; }
+  .prompts-title {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 10px;
+  }
+  .prompt-card {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    margin-bottom: 8px;
+    overflow: hidden;
+  }
+  .prompt-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 14px;
+    cursor: pointer;
+    user-select: none;
+    transition: background 0.15s;
+  }
+  .prompt-header:hover { background: var(--surface); }
+  .prompt-icon {
+    font-size: 14px;
+    flex-shrink: 0;
+    opacity: 0.7;
+  }
+  .prompt-label {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text);
+    flex: 1;
+  }
+  .prompt-preview {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 240px;
+  }
+  .prompt-arrow {
+    font-size: 10px;
+    color: var(--muted);
+    transition: transform 0.2s;
+    flex-shrink: 0;
+  }
+  .prompt-card.open .prompt-arrow { transform: rotate(180deg); }
+  .prompt-body { display: none; }
+  .prompt-card.open .prompt-body { display: block; }
+  .prompt-text {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    line-height: 1.7;
+    color: var(--text);
+    background: #06080b;
+    border-top: 1px solid var(--border);
+    padding: 16px;
+    white-space: pre-wrap;
+    position: relative;
+  }
+  .prompt-copy {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    background: var(--dim);
+    border: 1px solid var(--border);
+    color: var(--muted);
+    border-radius: 4px;
+    padding: 3px 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .prompt-copy:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .prompt-copy.copied { background: var(--green); color: #fff; border-color: var(--green); }
+
+  /* ── Tasks ── */
+  .tasks-section {}
+  .tasks-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+  .tasks-title {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .tasks-clear {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--muted);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 2px 6px;
+    border-radius: 3px;
+    transition: color 0.2s;
+  }
+  .tasks-clear:hover { color: var(--red); }
+
+  .task-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border);
+    cursor: pointer;
+    transition: opacity 0.2s;
+  }
+  .task-item:last-child { border-bottom: none; }
+  .task-item:hover { opacity: 0.85; }
+  .task-check {
+    width: 16px;
+    height: 16px;
+    border: 1.5px solid var(--dim);
+    border-radius: 3px;
+    flex-shrink: 0;
+    margin-top: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+  }
+  .task-item.done .task-check {
+    background: var(--phase-color, var(--accent));
+    border-color: var(--phase-color, var(--accent));
+  }
+  .task-check svg { display: none; }
+  .task-item.done .task-check svg { display: block; }
+  .task-text {
+    font-size: 13px;
+    color: var(--text);
+    line-height: 1.5;
+    transition: color 0.2s;
+  }
+  .task-item.done .task-text {
+    color: var(--muted);
+    text-decoration: line-through;
+    text-decoration-color: var(--dim);
+  }
+  .task-tag {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    padding: 2px 5px;
+    border-radius: 3px;
+    background: var(--dim);
+    color: var(--muted);
+    flex-shrink: 0;
+    margin-top: 3px;
+    white-space: nowrap;
+  }
+  .tag-ia   { background: color-mix(in srgb, var(--accent) 15%, transparent); color: var(--accent); }
+  .tag-make { background: color-mix(in srgb, var(--cyan) 15%, transparent); color: var(--cyan); }
+  .tag-yt   { background: color-mix(in srgb, var(--red) 15%, transparent); color: var(--red); }
+  .tag-neg  { background: color-mix(in srgb, var(--green) 15%, transparent); color: var(--green); }
+
+  /* ── Footer ── */
+  .footer {
+    text-align: center;
+    padding: 40px 0 20px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--muted);
+    border-top: 1px solid var(--border);
+    margin-top: 48px;
+  }
+  .footer span { color: var(--accent); }
+
+  /* ── Responsive ── */
+  @media (max-width: 600px) {
+    .global-progress { flex-direction: column; align-items: flex-start; gap: 14px; }
+    .kpi-strip { gap: 8px; }
+    .kpi { min-width: 100px; }
+    .prompt-preview { display: none; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- Header -->
+  <header class="header">
+    <div class="header-tag">// sistema activo</div>
+    <h1 class="header-title">Canal YouTube<br>Hispanos USA</h1>
+    <div class="header-sub">Meta: <span>$5,000+/mes</span> · 4-7 hrs/semana · IA + Make.com</div>
+  </header>
+
+  <!-- Global Progress -->
+  <div class="global-progress">
+    <div class="gp-circle">
+      <svg width="72" height="72" viewBox="0 0 72 72" class="svg-circle">
+        <defs>
+          <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" style="stop-color:#7c6af7"/>
+            <stop offset="100%" style="stop-color:#06b6d4"/>
+          </linearGradient>
+        </defs>
+        <circle class="circle-bg" cx="36" cy="36" r="30"/>
+        <circle class="circle-fg" id="global-ring" cx="36" cy="36" r="30"
+          stroke-dasharray="188.5" stroke-dashoffset="188.5"/>
+        <text class="circle-text" x="36" y="36" id="global-pct">0%</text>
+      </svg>
+    </div>
+    <div class="gp-info">
+      <div class="gp-label">// progreso total</div>
+      <div class="gp-title" id="gp-title-text">Empezando...</div>
+      <div class="gp-bar-wrap"><div class="gp-bar" id="gp-bar" style="width:0%"></div></div>
+      <div class="gp-tasks" id="gp-tasks">0 / 0 tareas completadas</div>
+    </div>
+  </div>
+
+  <!-- Canal Config -->
+  <div class="config-panel">
+    <div class="config-header" onclick="toggleConfig()">
+      <span class="config-title">// config del canal</span>
+      <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" id="config-chev" style="color:var(--muted);transition:transform .3s"><polyline points="6 9 12 15 18 9"/></svg>
+    </div>
+    <div class="config-body" id="config-body" style="display:none">
+      <div class="config-grid">
+        <div class="config-field">
+          <label>Nombre del canal</label>
+          <input type="text" id="cfg-nombre" placeholder="ej: Vive USA Today">
+        </div>
+        <div class="config-field">
+          <label>Nicho elegido</label>
+          <input type="text" id="cfg-nicho" placeholder="ej: Finanzas para hispanos">
+        </div>
+        <div class="config-field">
+          <label>Tema principal</label>
+          <input type="text" id="cfg-tema" placeholder="ej: Crédito, impuestos, ITIN">
+        </div>
+        <div class="config-field">
+          <label>Avatar objetivo</label>
+          <input type="text" id="cfg-avatar" placeholder="ej: Migrante 25-40 años, Texas">
+        </div>
+        <div class="config-field">
+          <label>Meta mes 6</label>
+          <input type="text" id="cfg-meta6" placeholder="ej: $1,000/mes">
+        </div>
+        <div class="config-field">
+          <label>Meta mes 12</label>
+          <input type="text" id="cfg-meta12" placeholder="ej: $5,000/mes">
+        </div>
+      </div>
+      <button class="config-save" onclick="saveConfig()">Guardar config</button>
+      <span class="config-saved" id="config-saved">✓ guardado</span>
+    </div>
+  </div>
+
+  <!-- Phase Nav -->
+  <div class="phase-nav" id="phase-nav"></div>
+
+  <!-- Phases -->
+  <div id="phases-container"></div>
+
+  <footer class="footer">
+    Construido con <span>IA</span> · Automatizado con <span>Make.com</span> · Tu canal, tu reglas
+  </footer>
+</div>
+
+<script>
+// ── Data ──────────────────────────────────────────────────────────────────────
+
+const PHASES = [
+  {
+    id: 0,
+    name: "Fundación & Branding",
+    timeline: "Semana 1-2",
+    kpis: [
+      { val: "Canal listo", label: "YouTube configurado" },
+      { val: "Logo + banner", label: "Identidad visual" },
+      { val: "3 herramientas", label: "IA conectadas" },
+      { val: "Nicho definido", label: "Con datos reales" }
+    ],
+    prompts: [
+      {
+        label: "Prompt: Elegir nicho con datos",
+        icon: "🎯",
+        text: `Soy hispano viviendo en [CIUDAD, ESTADO]. Quiero crear un canal de YouTube faceless en spanglish para otros hispanos en USA.
+
+Analiza estos 5 posibles nichos y dame un ranking basado en:
+1. Competencia actual en YouTube en español (¿hay canales dominantes?)
+2. Monetización potencial (CPM estimado, afiliados disponibles)
+3. Problemas REALES que tiene mi comunidad (dolor vs. entretenimiento)
+4. Longevidad del contenido (¿va a seguir siendo relevante en 3 años?)
+
+Nichos a analizar:
+- Finanzas personales para inmigrantes (crédito, ITIN, impuestos)
+- Beneficios del gobierno que muchos no conocen
+- Cómo navegar el sistema de salud en USA
+- Emprendimiento y negocios formales (LLC, permisos)
+- Bienes raíces para hispanos de clase media
+
+Para cada nicho dame: score 1-10, CPM estimado, 3 canales competidores, y 1 idea de video que podría viral.
+
+Recomienda el nicho con más oportunidad RIGHT NOW para alguien que empieza desde cero.`
+      }
+    ],
+    tasks: [
+      { text: "Crear cuenta Google dedicada al canal (no mezclar con personal)", tag: "yt" },
+      { text: "Crear canal en YouTube → Configurar nombre, handle @, descripción", tag: "yt" },
+      { text: "Definir nicho usando el prompt de IA + validar en YouTube Studio tendencias", tag: "ia" },
+      { text: "Crear logo con IA (Midjourney / DALL·E / Canva AI) — simple, legible en miniatura", tag: "ia" },
+      { text: "Diseñar banner del canal y foto de perfil (2560×1440px banner, 800×800 foto)", tag: "ia" },
+      { text: "Configurar canal: banner, descripción, links, trailer del canal (30 seg)", tag: "yt" },
+      { text: "Crear cuentas: ElevenLabs (voz IA), CapCut / DaVinci (edición), Canva Pro", tag: "ia" },
+      { text: "Setup Make.com: crear cuenta, explorar templates de automatización", tag: "make" },
+      { text: "Crear hoja de Google Sheets: tracker de videos, métricas, ingresos", tag: "ia" },
+      { text: "Definir paleta de colores + tipografía + estilo visual del canal", tag: "ia" }
+    ]
+  },
+  {
+    id: 1,
+    name: "Estrategia de Contenido",
+    timeline: "Semana 3-4",
+    kpis: [
+      { val: "30+ ideas", label: "Videos validados" },
+      { val: "3 pilares", label: "Contenido definidos" },
+      { val: "90 días", label: "Calendario editorial" },
+      { val: "Avatar", label: "Documentado" }
+    ],
+    prompts: [
+      {
+        label: "Prompt: Definir avatar del suscriptor",
+        icon: "👤",
+        text: `Mi canal de YouTube es sobre [NICHO ELEGIDO] para hispanos en USA.
+
+Crea un avatar detallado de mi suscriptor ideal con:
+
+DEMOGRAFÍA:
+- Edad, género, país de origen, estado donde vive
+- Tiempo en USA, estatus migratorio más común
+- Nivel de inglés, nivel educativo, ingreso familiar
+
+PSICOGRAFÍA:
+- 5 miedos principales relacionados con [NICHO]
+- 5 deseos/metas que quiere lograr
+- 3 frustraciones con el contenido actual en YouTube
+- ¿Qué tipo de creadores sigue? ¿Por qué?
+- ¿Cuándo y cómo consume YouTube? (mañana, noche, celular)
+
+DECISIONES DE CONTENIDO:
+- ¿Qué títulos lo hacen hacer clic?
+- ¿Qué thumbnail llama su atención?
+- ¿Prefiere videos cortos (Shorts) o largos (10+ min)?
+- ¿Qué nivel de spanglish maneja?
+
+MONETIZACIÓN:
+- ¿Qué productos/servicios ya compra online?
+- ¿Cuánto pagaría por un curso o membresía relacionado?
+- ¿Qué afiliados tienen sentido para él/ella?
+
+Nombre del avatar: ___
+Frase que define su vida: "___"`
+      },
+      {
+        label: "Prompt: 30 ideas de videos virales",
+        icon: "💡",
+        text: `Eres un experto en YouTube Hispano USA. Mi canal es sobre [NICHO ELEGIDO].
+Mi avatar es: [DESCRIPCIÓN CORTA DEL AVATAR]
+
+Genera 30 ideas de videos organizadas en 3 pilares de contenido (10 por pilar).
+
+Para cada idea dame:
+- Título optimizado para YouTube SEO (incluye número o emoción)
+- Formato: tutorial / lista / historia / comparación / caso real
+- Duración estimada: corto (5-8 min) / medio (10-15 min) / largo (20+ min)
+- ¿Por qué haría clic mi avatar? (1 frase)
+- Monetización potencial: AdSense / afiliado / curso propio
+
+Ejemplos de formatos de título que funcionan:
+- "5 errores que cometen los hispanos con [TEMA] (y cómo evitarlos)"
+- "Hice [ACCIÓN] por 30 días y esto pasó..."
+- "Lo que nadie te dice sobre [TEMA] en USA"
+- "De [SITUACIÓN A] a [SITUACIÓN B] en [TIEMPO]"
+
+Agrupa las 30 ideas en 3 pilares:
+Pilar 1: [Educativo/Problema]
+Pilar 2: [Inspiracional/Caso real]
+Pilar 3: [Actualidad/Trending]`
+      }
+    ],
+    tasks: [
+      { text: "Documentar avatar en Google Sheets usando el prompt de IA", tag: "ia" },
+      { text: "Definir 3 pilares de contenido del canal (educativo, emocional, trending)", tag: "ia" },
+      { text: "Generar 30 ideas de videos con el prompt — guardar en tracker", tag: "ia" },
+      { text: "Validar top 10 ideas: buscar en YouTube si ya existen y qué views tienen", tag: "yt" },
+      { text: "Usar Google Trends + vidIQ/TubeBuddy para validar keywords del nicho", tag: "yt" },
+      { text: "Crear calendario editorial: 1 video largo/semana + 2-3 Shorts/semana", tag: "ia" },
+      { text: "Definir estructura estándar de video (intro 30s, gancho, contenido, CTA)", tag: "ia" },
+      { text: "Elegir los primeros 4 videos a producir (los de más potencial viral)", tag: "ia" }
+    ]
+  },
+  {
+    id: 2,
+    name: "Análisis de Competencia",
+    timeline: "Semana 5",
+    kpis: [
+      { val: "5 canales", label: "Analizados en detalle" },
+      { val: "3+ gaps", label: "Oportunidades reales" },
+      { val: "Top 10", label: "Videos del nicho mapeados" },
+      { val: "Diferenciador", label: "Definido claramente" }
+    ],
+    prompts: [
+      {
+        label: "Prompt: Análisis de competencia en YouTube",
+        icon: "🔍",
+        text: `Analiza estos 5 canales de YouTube del nicho [NICHO ELEGIDO] para hispanos en USA:
+
+Canal 1: [URL o nombre]
+Canal 2: [URL o nombre]
+Canal 3: [URL o nombre]
+Canal 4: [URL o nombre]
+Canal 5: [URL o nombre]
+
+Para cada canal dame:
+1. Suscriptores / Views promedio / Frecuencia de publicación
+2. Sus 3 videos con más views (tema y por qué crees que funcionaron)
+3. Estilo de thumbnail (colores, texto, cara o no, emociones)
+4. Tono de voz: formal, casual, spanglish, solo español
+5. ¿Qué hace MUY bien? ¿Qué hace mal o ignora?
+
+Después del análisis dame:
+- GAPS: 3 temas o ángulos que NINGÚN canal está cubriendo bien
+- DIFERENCIACIÓN: ¿Cómo podría mi canal ser distinto y mejor?
+- THUMBNAILS: ¿Qué estilo de thumbnail domina el nicho?
+- PRIMER VIDEO VIRAL: Basado en los gaps, ¿cuál sería el mejor primer video?`
+      },
+      {
+        label: "Prompt: Validar ideas con datos reales",
+        icon: "📊",
+        text: `Tengo estas 10 ideas de videos para mi canal de [NICHO ELEGIDO].
+Ayúdame a priorizar cuáles producir primero basándote en datos de YouTube.
+
+Para cada idea, evalúa:
+1. DEMANDA: ¿La gente busca esto? (keywords relacionados, volumen estimado)
+2. COMPETENCIA: ¿Cuántos videos ya existen sobre este tema con >50k views?
+3. CPM POTENCIAL: ¿Qué advertiser categories aplican? ¿CPM alto o bajo?
+4. EVERGREEN vs TRENDING: ¿Seguirá siendo relevante en 2 años?
+5. PUNTUACIÓN TOTAL (1-10)
+
+Ideas a evaluar:
+[PEGAR AQUÍ TUS 10 IDEAS DEL PROMPT ANTERIOR]
+
+Al final dame un ranking final:
+🥇 Producir PRIMERO (más fácil de rankear + mayor potencial)
+🥈 Producir segundo
+🥉 Guardar para cuando tengas audiencia
+❌ Descartar por ahora (¿por qué?)`
+      }
+    ],
+    tasks: [
+      { text: "Identificar 5-10 canales competidores en el nicho (usar vidIQ / TubeBuddy)", tag: "yt" },
+      { text: "Analizar sus top 10 videos: tema, views, CTR estimado, thumbnail style", tag: "yt" },
+      { text: "Correr el prompt de análisis de competencia con los datos reales", tag: "ia" },
+      { text: "Documentar 3 gaps de contenido identificados en Google Sheets", tag: "ia" },
+      { text: "Correr el prompt de validación con tus 10 mejores ideas", tag: "ia" },
+      { text: "Definir el diferenciador único del canal (ángulo, formato, tono)", tag: "ia" },
+      { text: "Elegir el PRIMER video a producir basado en el ranking del prompt", tag: "ia" }
+    ]
+  },
+  {
+    id: 3,
+    name: "Producción de Contenido",
+    timeline: "Semana 6-8",
+    kpis: [
+      { val: "4 videos", label: "Al mes publicados" },
+      { val: ">40%", label: "Retención promedio" },
+      { val: ">5%", label: "CTR objetivo" },
+      { val: "<3 hrs", label: "Por video producido" }
+    ],
+    prompts: [
+      {
+        label: "Prompt: Script completo para video",
+        icon: "📝",
+        text: `Escríbeme un script completo para un video de YouTube de [8-12 minutos].
+
+DATOS DEL VIDEO:
+- Título: [TÍTULO DEL VIDEO]
+- Nicho: [NICHO ELEGIDO]
+- Avatar: [DESCRIPCIÓN CORTA DEL AVATAR]
+- Objetivo: [Educar / Inspirar / Entretener / Vender]
+
+ESTRUCTURA OBLIGATORIA:
+
+[00:00-00:30] GANCHO (Hook)
+Empieza con la promesa o el dato más impactante. Fórmula: "Si [situación del avatar], entonces [promesa]. Y en este video te voy a explicar exactamente cómo."
+
+[00:30-01:00] INTRO RÁPIDA
+Preséntate brevemente. CTA a suscribirse. Anticipa los puntos clave.
+
+[01:00-08:00] CONTENIDO PRINCIPAL
+Divide en 3-5 secciones con títulos en pantalla.
+Para cada sección: explicación simple → ejemplo real → tip accionable
+
+[08:00-09:00] RECAP
+Resumen rápido de los puntos clave en bullets.
+
+[09:00-09:30] CTA FINAL
+- Suscribirse
+- Ver el siguiente video: [TEMA RELACIONADO]
+- Comentar: "¿A ti también te pasó esto?"
+
+ESTILO:
+- Spanglish casual pero profesional
+- Frases cortas (máx 20 palabras)
+- Ejemplos reales con números ($, %, fechas)
+- Cada 90 segundos incluir un pattern interrupt (pregunta, stat, historia)
+- Ningún párrafo más de 3 oraciones`
+      },
+      {
+        label: "Prompt: Títulos y thumbnails optimizados",
+        icon: "🖼️",
+        text: `Para el video sobre [TEMA], genérame:
+
+5 OPCIONES DE TÍTULO (optimizados para YouTube SEO):
+- Incluir keyword principal al inicio
+- Entre 45-60 caracteres idealmente
+- Generar curiosidad o urgencia
+- Usar números cuando aplique
+
+Para cada título dame: keyword principal, emoción que activa, score estimado CTR (1-10)
+
+3 CONCEPTOS DE THUMBNAIL:
+Para cada concepto:
+- Fondo: color, estilo, elementos visuales
+- Texto en thumbnail: máximo 4 palabras, fuente grande
+- Emoción de la cara (si aplica): sorpresa, urgencia, satisfacción
+- Por qué funcionaría: qué hace que el viewer haga clic
+
+DESCRIPCIÓN DEL VIDEO (para SEO):
+- Párrafo 1 (150 palabras): resumen del video con keyword principal
+- Lista de timestamps (si aplica)
+- Links relevantes (CTA a afiliados, recursos, siguiente video)
+- 15 tags de búsqueda separados por coma
+- Hashtags: #hispanos #youtube #[nicho] (max 5)
+
+TARJETAS Y PANTALLAS FINALES:
+- ¿Qué video sugerir al final?
+- ¿Cuándo activar la tarjeta de suscripción?`
+      }
+    ],
+    tasks: [
+      { text: "Escribir script del video 1 usando el prompt de IA (ajustar voz/tono)", tag: "ia" },
+      { text: "Generar voz IA con ElevenLabs: elegir voz, ajustar velocidad y tono", tag: "ia" },
+      { text: "Crear o conseguir imágenes/clips B-roll (Pexels, Pixabay, Canva)", tag: "ia" },
+      { text: "Editar video en CapCut o DaVinci: captions automáticos, música, cortes", tag: "ia" },
+      { text: "Diseñar thumbnail en Canva: A/B test con 2 versiones", tag: "ia" },
+      { text: "Optimizar título, descripción y tags usando el segundo prompt", tag: "ia" },
+      { text: "Subir video en YouTube Studio: agregar capítulos, tarjetas, pantalla final", tag: "yt" },
+      { text: "Crear 2-3 Shorts del video largo (reutilizar momentos clave)", tag: "ia" },
+      { text: "Programar publicación: Martes o Jueves 9-11am EST (pico de audiencia hispana)", tag: "yt" }
+    ]
+  },
+  {
+    id: 4,
+    name: "Automatización con Make.com",
+    timeline: "Semana 9-10",
+    kpis: [
+      { val: "3+ flows", label: "Make.com activos" },
+      { val: "<4 hrs", label: "Trabajo/semana" },
+      { val: "Auto-post", label: "Redes sociales" },
+      { val: "0 manual", label: "Repurposing" }
+    ],
+    prompts: [
+      {
+        label: "Prompt: Diseñar sistema de automatización",
+        icon: "⚡",
+        text: `Soy creador de contenido de YouTube (nicho: [NICHO]). Actualmente invierto 6+ horas/semana en tareas repetitivas.
+
+Diseña un sistema de automatización con Make.com que reduzca mi trabajo a 3 horas/semana.
+
+TAREAS A AUTOMATIZAR:
+1. Cuando publico un video en YouTube → publicar automáticamente en Facebook, Instagram, TikTok y Twitter con texto adaptado a cada red
+2. Cuando un video supera X views → alertarme por WhatsApp/email y duplicar la producción de ese tema
+3. Cada lunes → generar reporte semanal automático: views, suscriptores, ingresos, y videos programados
+4. Cuando alguien comenta en YouTube → filtrar comentarios positivos y guardar en Sheets para testimoniales
+5. Extraer audio del video y transcribir automáticamente para crear artículo de blog (SEO)
+
+Para cada automatización dame:
+- Módulos de Make.com necesarios (paso a paso)
+- APIs/conexiones requeridas
+- Dificultad (fácil/medio/difícil)
+- Tiempo de setup estimado
+- Ahorro de tiempo semanal
+
+¿Qué otras automatizaciones recomiendas para un canal de YouTube de contenido educativo hispano?`
+      }
+    ],
+    tasks: [
+      { text: "Setup Make.com Flow 1: YouTube → Redes Sociales (FB, IG, TikTok, Twitter)", tag: "make" },
+      { text: "Setup Make.com Flow 2: Alert cuando video supera umbral de views", tag: "make" },
+      { text: "Setup Make.com Flow 3: Reporte semanal automático → Google Sheets + email", tag: "make" },
+      { text: "Conectar YouTube API con Make.com (OAuth, webhook triggers)", tag: "make" },
+      { text: "Automatizar transcripción de video → artículo de blog (Make + GPT + WordPress)", tag: "make" },
+      { text: "Automatizar creación de Shorts: extraer clips top de videos largos", tag: "ia" },
+      { text: "Crear template de descripción automática con variables (título, fecha, links)", tag: "make" },
+      { text: "Testear todos los flows con un video real, documentar cualquier error", tag: "make" }
+    ]
+  },
+  {
+    id: 5,
+    name: "SEO & Distribución",
+    timeline: "Mes 3-4",
+    kpis: [
+      { val: "10k+", label: "Views/mes" },
+      { val: ">8%", label: "CTR objetivo" },
+      { val: "1k+", label: "Suscriptores" },
+      { val: "Top 5", label: "Búsquedas nicho" }
+    ],
+    prompts: [
+      {
+        label: "Prompt: Estrategia SEO YouTube completa",
+        icon: "🔎",
+        text: `Eres experto en SEO de YouTube para audiencias hispanas en USA.
+Mi canal es sobre [NICHO]. Mi video es: [TÍTULO DEL VIDEO].
+
+Necesito una estrategia SEO completa:
+
+KEYWORD RESEARCH:
+- Keyword principal (alta búsqueda, competencia media)
+- 5 keywords secundarias (long-tail, más fáciles de rankear)
+- 3 keywords en inglés que mi audiencia también busca
+- Volumen de búsqueda estimado y competencia (1-10)
+
+OPTIMIZACIÓN ON-PAGE:
+- Título optimizado (incluye keyword, máx 60 chars)
+- Meta descripción del video (primeras 2 líneas se ven en búsqueda)
+- Tags: 10 tags ordenados por importancia
+- Nombre del archivo antes de subir: keyword-separada-con-guiones.mp4
+- Capítulos (timestamps) que incluyan keywords
+
+ESTRATEGIA DE DISTRIBUCIÓN:
+Para cada plataforma, dame el texto/formato ideal:
+- YouTube Community Post (para notificar al canal)
+- Facebook (texto largo, más formal)
+- Instagram (caption + hashtags relevantes para hispanos)
+- TikTok (hook + texto + hashtags trending)
+- WhatsApp Status (corto, conversacional)
+- Pinterest (descripción + keywords para búsqueda)
+
+LINK BUILDING PARA YOUTUBE:
+- ¿Dónde puedo embeber este video para conseguir views externos?
+- 3 subreddits o grupos de Facebook donde compartirlo
+- ¿Cómo crear un video de respuesta a otro popular del nicho?`
+      }
+    ],
+    tasks: [
+      { text: "Instalar vidIQ o TubeBuddy: analizar keywords del nicho con datos reales", tag: "yt" },
+      { text: "Auditar los primeros 4 videos: optimizar títulos, descripciones, tags", tag: "yt" },
+      { text: "Crear estrategia de Shorts: 1 Short/día de contenido reciclado", tag: "ia" },
+      { text: "Distribuir cada video en 5 plataformas usando el prompt de SEO", tag: "make" },
+      { text: "Crear playlist temáticas en el canal (mejora sesión y watch time)", tag: "yt" },
+      { text: "Buscar 3 colaboraciones: canales del nicho con 5k-50k subs para cross-promo", tag: "neg" },
+      { text: "Activar Community Posts: compartir behind the scenes, encuestas, polls", tag: "yt" },
+      { text: "Analizar YouTube Analytics: qué videos tienen mejor retención y replicar", tag: "yt" },
+      { text: "Hacer A/B test de thumbnails (YouTube permite cambiarlos sin bajar el video)", tag: "yt" }
+    ]
+  },
+  {
+    id: 6,
+    name: "Monetización",
+    timeline: "Mes 4-8",
+    kpis: [
+      { val: "1,000 subs", label: "YPP activado" },
+      { val: "$500-1k", label: "Primer mes YPP" },
+      { val: "$3k+", label: "Con afiliados" },
+      { val: "$5k+", label: "Con producto propio" }
+    ],
+    prompts: [
+      {
+        label: "Prompt: Estrategia de monetización multi-stream",
+        icon: "💰",
+        text: `Mi canal de YouTube tiene [X subs] y genera [X views/mes] en el nicho [NICHO].
+Promedio de duración de video: [X minutos]. Audiencia: hispanos en USA, [RANGO DE EDAD].
+
+Diseña una estrategia de monetización en capas para los próximos 6 meses:
+
+CAPA 1 — AdSense (mes 1-2 de monetización):
+- CPM esperado para mi nicho y audiencia
+- Ingresos estimados con mis métricas actuales
+- ¿Qué tipo de videos tienen mayor CPM en mi nicho?
+
+CAPA 2 — Marketing de Afiliados (mes 2+):
+- 5 programas de afiliados específicos para hispanos en USA (con el nicho [NICHO])
+- Comisión promedio por venta
+- ¿En qué parte del video/descripción colocar los links?
+- Template de disclosure legal en español
+
+CAPA 3 — Membresías / Patreon (mes 4+):
+- ¿Qué beneficios ofrecer a $5, $15, $29/mes?
+- ¿Cómo lanzar la membresía a mi audiencia existente?
+- Email de lanzamiento para suscriptores
+
+CAPA 4 — Producto digital propio (mes 6+):
+- Idea de curso/ebook/template basado en mi nicho y audiencia
+- Precio sugerido (psicología de precios para hispanos)
+- Funnel simple: video gratuito → lead magnet → email → venta
+
+PROYECCIONES:
+¿Qué ingresos podría generar con [X subs] y [X views/mes] usando todas las capas?`
+      }
+    ],
+    tasks: [
+      { text: "Verificar requisitos YPP: 1,000 subs + 4,000 hrs watch time (o 10M Shorts)", tag: "yt" },
+      { text: "Aplicar a YouTube Partner Program cuando cumplas los requisitos", tag: "yt" },
+      { text: "Identificar 5 programas de afiliados del nicho (Amazon, ShareASale, Impact)", tag: "neg" },
+      { text: "Agregar links de afiliados a los 10 videos con más views (y descripción futura)", tag: "neg" },
+      { text: "Correr el prompt de monetización con tus datos reales", tag: "ia" },
+      { text: "Crear lead magnet (PDF, checklist, template) relacionado con el nicho", tag: "ia" },
+      { text: "Configurar email marketing: ConvertKit / MailChimp → secuencia de bienvenida 5 emails", tag: "ia" },
+      { text: "Diseñar membresía de YouTube o Patreon con 3 tiers de precios", tag: "neg" },
+      { text: "Explorar patrocinios: marcas que anuncian a hispanos en USA (financieras, remesas, VPN)", tag: "neg" }
+    ]
+  },
+  {
+    id: 7,
+    name: "Escala & Expansión",
+    timeline: "Mes 9-12",
+    kpis: [
+      { val: "$10k+", label: "Meta mes 12" },
+      { val: "2+ canales", label: "O idiomas" },
+      { val: "Equipo", label: "Editor + VA" },
+      { val: "<4 hrs", label: "Tu trabajo/semana" }
+    ],
+    prompts: [
+      {
+        label: "Prompt: Plan de escala y canal en inglés",
+        icon: "🚀",
+        text: `Mi canal de YouTube en spanglish tiene [X subs], [X views/mes] e ingresos de $[X]/mes.
+El canal es sobre [NICHO] para hispanos en USA.
+
+Quiero escalar a $10,000+/mes en los próximos 6 meses. Ayúdame a crear un plan:
+
+ESCALA DEL CANAL ACTUAL:
+- ¿Cuántos videos/semana debería publicar para maximizar crecimiento?
+- ¿Qué sistemas puedo delegar primero? (sin perder calidad)
+- Perfil del editor de video ideal (¿dónde encontrarlo?, ¿cuánto pagar?)
+- Perfil del VA ideal para el canal (tareas, salario, herramientas)
+- ¿Cómo transferir el "estilo" del canal a un equipo sin perder la voz?
+
+EXPANSIÓN A CANAL EN INGLÉS:
+- ¿Vale la pena doblar el canal al inglés o crear uno nuevo?
+- CPM comparativo: español vs. inglés en el nicho [NICHO]
+- Estrategia para adaptar contenido (no solo traducir, sino reimaginar)
+- ¿Cuándo es el momento correcto para expandirse al inglés?
+- Automatización: ¿puede IA traducir + adaptar + doblar los videos?
+
+DIVERSIFICACIÓN DE INGRESOS:
+- Masterclass / curso avanzado: tema, precio, plataforma (Kajabi, Teachable, Gumroad)
+- Newsletter de pago: ¿tiene sentido para mi audiencia hispana?
+- Consultoría 1:1: ¿cómo monetizar expertise sin crear más contenido?
+- Agencia de contenido hispano: usar mi sistema para ayudar a otras marcas
+
+PROYECCIÓN FINANCIERA:
+Con [X subs] actuales, dame un modelo financiero realista para llegar a $10k/mes:
+- Fuente 1: AdSense (estimado)
+- Fuente 2: Afiliados (estimado)
+- Fuente 3: Producto propio (estimado)
+- Fuente 4: Patrocinios (estimado)
+- Total y en qué mes es alcanzable`
+      }
+    ],
+    tasks: [
+      { text: "Documentar todos los sistemas del canal en un SOP (Standard Operating Procedure)", tag: "ia" },
+      { text: "Contratar editor de video freelance: Workana, Upwork, o comunidades hispanas", tag: "neg" },
+      { text: "Contratar VA para: thumbnails, Shorts, comentarios, distribución en redes", tag: "neg" },
+      { text: "Evaluar expansión a inglés: analizar CPM diferencial y esfuerzo requerido", tag: "ia" },
+      { text: "Si el inglés tiene sentido: crear canal 2 y adaptar los 5 mejores videos", tag: "ia" },
+      { text: "Lanzar curso digital: definir tema, estructura, grabar, subir a Teachable/Gumroad", tag: "neg" },
+      { text: "Crear página de patrocinios: media kit, métricas, precios, email de pitch", tag: "neg" },
+      { text: "Establecer meta mensual de ingresos y rastrear en Google Sheets (dashboard financiero)", tag: "ia" },
+      { text: "Reinvertir 20% de ingresos en herramientas, publicidad o equipo", tag: "neg" }
+    ]
+  }
+];
+
+// ── State ─────────────────────────────────────────────────────────────────────
+
+const STORAGE_KEY = 'yt-hispanos-v1';
+
+function loadState() {
+  try {
+    return JSON.parse(localStorage.getItem(STORAGE_KEY)) || { tasks: {}, config: {} };
+  } catch { return { tasks: {}, config: {} }; }
+}
+
+function saveState(state) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+}
+
+let state = loadState();
+
+// ── Helpers ───────────────────────────────────────────────────────────────────
+
+function taskKey(phaseId, taskIdx) { return `p${phaseId}_t${taskIdx}`; }
+
+function getPhaseProgress(phase) {
+  const total = phase.tasks.length;
+  const done = phase.tasks.filter((_, i) => state.tasks[taskKey(phase.id, i)]).length;
+  return { done, total, pct: total ? Math.round(done / total * 100) : 0 };
+}
+
+function getGlobalProgress() {
+  let totalDone = 0, totalAll = 0;
+  PHASES.forEach(p => {
+    const { done, total } = getPhaseProgress(p);
+    totalDone += done; totalAll += total;
+  });
+  return { done: totalDone, total: totalAll, pct: totalAll ? Math.round(totalDone / totalAll * 100) : 0 };
+}
+
+function phaseColor(phaseId) {
+  const colors = ['#7c6af7','#06b6d4','#22c55e','#f59e0b','#ec4899','#f97316','#a855f7','#14b8a6'];
+  return colors[phaseId] || '#7c6af7';
+}
+
+function statusLabel(pct) {
+  if (pct === 0)   return 'Empezando...';
+  if (pct < 25)    return 'En marcha 🚀';
+  if (pct < 50)    return 'Progresando bien';
+  if (pct < 75)    return 'Más de la mitad';
+  if (pct < 100)   return 'Casi listo!';
+  return '¡Canal LISTO! 🏆';
+}
+
+// ── Render ────────────────────────────────────────────────────────────────────
+
+function renderAll() {
+  renderNav();
+  renderPhases();
+  renderGlobal();
+}
+
+function renderNav() {
+  const nav = document.getElementById('phase-nav');
+  nav.innerHTML = PHASES.map(p => {
+    const { pct } = getPhaseProgress(p);
+    const color = phaseColor(p.id);
+    const style = pct > 0
+      ? `background:${color};color:#fff;border-color:${color}`
+      : '';
+    const cls = pct > 0 ? (pct === 100 ? 'done' : 'active') : '';
+    return `<div class="phase-dot ${cls}" style="${style}" onclick="scrollToPhase(${p.id})" title="Fase ${p.id}: ${p.name}">${p.id}</div>`;
+  }).join('');
+}
+
+function renderPhases() {
+  const container = document.getElementById('phases-container');
+  container.innerHTML = PHASES.map(p => renderPhase(p)).join('');
+  // attach task click handlers
+  PHASES.forEach(p => {
+    p.tasks.forEach((_, i) => {
+      const el = document.querySelector(`[data-task="${taskKey(p.id, i)}"]`);
+      if (el) el.addEventListener('click', () => toggleTask(p.id, i));
+    });
+    // prompt toggles
+    p.prompts.forEach((_, pi) => {
+      const el = document.querySelector(`[data-prompt="${p.id}-${pi}"]`);
+      if (el) el.querySelector('.prompt-header').addEventListener('click', () => togglePrompt(p.id, pi));
+      const copyBtn = el ? el.querySelector('.prompt-copy') : null;
+      if (copyBtn) copyBtn.addEventListener('click', (e) => { e.stopPropagation(); copyPrompt(p.id, pi, copyBtn); });
+    });
+    // phase header toggle
+    const phaseEl = document.getElementById(`phase-${p.id}`);
+    if (phaseEl) phaseEl.querySelector('.phase-header').addEventListener('click', () => togglePhase(p.id));
+    // tasks clear
+    const clearBtn = document.getElementById(`clear-${p.id}`);
+    if (clearBtn) clearBtn.addEventListener('click', (e) => { e.stopPropagation(); clearPhase(p.id); });
+  });
+}
+
+function renderPhase(p) {
+  const { done, total, pct } = getPhaseProgress(p);
+  const color = phaseColor(p.id);
+  const isOpen = document.getElementById(`phase-${p.id}`)?.classList.contains('open') || false;
+  const openClass = isOpen ? ' open' : '';
+
+  const kpisHtml = p.kpis.map(k => `
+    <div class="kpi">
+      <div class="kpi-val">${k.val}</div>
+      <div class="kpi-label">${k.label}</div>
+    </div>`).join('');
+
+  const promptsHtml = p.prompts.map((pr, pi) => {
+    const isPromptOpen = document.querySelector(`[data-prompt="${p.id}-${pi}"]`)?.classList.contains('open') || false;
+    const preview = pr.text.replace(/\n/g,' ').substring(0, 60) + '...';
+    return `
+    <div class="prompt-card${isPromptOpen ? ' open' : ''}" data-prompt="${p.id}-${pi}">
+      <div class="prompt-header">
+        <span class="prompt-icon">${pr.icon}</span>
+        <span class="prompt-label">${pr.label}</span>
+        <span class="prompt-preview">${preview}</span>
+        <span class="prompt-arrow">▼</span>
+      </div>
+      <div class="prompt-body">
+        <div class="prompt-text"><button class="prompt-copy">copiar</button>${escHtml(pr.text)}</div>
+      </div>
+    </div>`;
+  }).join('');
+
+  const tasksHtml = p.tasks.map((t, i) => {
+    const key = taskKey(p.id, i);
+    const done = state.tasks[key];
+    const tagClass = { ia:'tag-ia', make:'tag-make', yt:'tag-yt', neg:'tag-neg' }[t.tag] || '';
+    const tagLabel = { ia:'IA', make:'Make.com', yt:'YouTube', neg:'Negocio' }[t.tag] || t.tag;
+    return `
+    <div class="task-item${done ? ' done' : ''}" data-task="${key}" style="--phase-color:${color}">
+      <div class="task-check">
+        <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+          <polyline points="1.5,5 4,7.5 8.5,2.5" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="task-text">${t.text}</div>
+      <span class="task-tag ${tagClass}">${tagLabel}</span>
+    </div>`;
+  }).join('');
+
+  return `
+  <div class="phase${openClass}" id="phase-${p.id}" data-phase="${p.id}">
+    <div class="phase-header">
+      <div class="phase-num">FASE ${p.id}</div>
+      <div class="phase-meta">
+        <div class="phase-name">${p.name}</div>
+        <div class="phase-timeline">${p.timeline}</div>
+      </div>
+      <div class="phase-stats">
+        <div class="phase-badge">${done}/${total}</div>
+        <div class="phase-mini-bar"><div class="phase-mini-fill" style="width:${pct}%;background:${color}"></div></div>
+      </div>
+      <svg class="phase-chevron" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <polyline points="6 9 12 15 18 9"/>
+      </svg>
+    </div>
+    <div class="phase-body">
+      <div class="kpi-strip">${kpisHtml}</div>
+      <div class="prompts-section">
+        <div class="prompts-title">// prompts de IA</div>
+        ${promptsHtml}
+      </div>
+      <div class="tasks-section">
+        <div class="tasks-header">
+          <div class="tasks-title">// tareas</div>
+          <button class="tasks-clear" id="clear-${p.id}">limpiar fase</button>
+        </div>
+        ${tasksHtml}
+      </div>
+    </div>
+  </div>`;
+}
+
+function renderGlobal() {
+  const { done, total, pct } = getGlobalProgress();
+  const circumference = 188.5;
+  const offset = circumference - (pct / 100 * circumference);
+  const ring = document.getElementById('global-ring');
+  const pctEl = document.getElementById('global-pct');
+  const bar = document.getElementById('gp-bar');
+  const title = document.getElementById('gp-title-text');
+  const tasks = document.getElementById('gp-tasks');
+  if (ring) ring.style.strokeDashoffset = offset;
+  if (pctEl) pctEl.textContent = pct + '%';
+  if (bar) bar.style.width = pct + '%';
+  if (title) title.textContent = statusLabel(pct);
+  if (tasks) tasks.textContent = `${done} / ${total} tareas completadas`;
+}
+
+// ── Interactions ──────────────────────────────────────────────────────────────
+
+function togglePhase(phaseId) {
+  const el = document.getElementById(`phase-${phaseId}`);
+  if (!el) return;
+  el.classList.toggle('open');
+}
+
+function scrollToPhase(phaseId) {
+  const el = document.getElementById(`phase-${phaseId}`);
+  if (!el) return;
+  el.classList.add('open');
+  el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function toggleTask(phaseId, taskIdx) {
+  const key = taskKey(phaseId, taskIdx);
+  state.tasks[key] = !state.tasks[key];
+  saveState(state);
+  // update just this task item
+  const el = document.querySelector(`[data-task="${key}"]`);
+  if (el) el.classList.toggle('done', state.tasks[key]);
+  // update phase badge + bar
+  const phase = PHASES.find(p => p.id === phaseId);
+  const { done, total, pct } = getPhaseProgress(phase);
+  const phaseEl = document.getElementById(`phase-${phaseId}`);
+  if (phaseEl) {
+    const badge = phaseEl.querySelector('.phase-badge');
+    const fill = phaseEl.querySelector('.phase-mini-fill');
+    if (badge) badge.textContent = `${done}/${total}`;
+    if (fill) fill.style.width = pct + '%';
+  }
+  renderGlobal();
+  renderNav();
+}
+
+function clearPhase(phaseId) {
+  const phase = PHASES.find(p => p.id === phaseId);
+  if (!phase) return;
+  phase.tasks.forEach((_, i) => delete state.tasks[taskKey(phaseId, i)]);
+  saveState(state);
+  // re-render that phase body
+  const phaseEl = document.getElementById(`phase-${phaseId}`);
+  const wasOpen = phaseEl?.classList.contains('open');
+  const tempContainer = document.createElement('div');
+  tempContainer.innerHTML = renderPhase(phase);
+  const newPhase = tempContainer.firstElementChild;
+  if (wasOpen) newPhase.classList.add('open');
+  phaseEl.replaceWith(newPhase);
+  // re-attach handlers for this phase
+  phase.tasks.forEach((_, i) => {
+    const el = document.querySelector(`[data-task="${taskKey(phaseId, i)}"]`);
+    if (el) el.addEventListener('click', () => toggleTask(phaseId, i));
+  });
+  phase.prompts.forEach((_, pi) => {
+    const el = document.querySelector(`[data-prompt="${phaseId}-${pi}"]`);
+    if (el) el.querySelector('.prompt-header').addEventListener('click', () => togglePrompt(phaseId, pi));
+    const copyBtn = el ? el.querySelector('.prompt-copy') : null;
+    if (copyBtn) copyBtn.addEventListener('click', (e) => { e.stopPropagation(); copyPrompt(phaseId, pi, copyBtn); });
+  });
+  document.getElementById(`clear-${phaseId}`)?.addEventListener('click', (e) => { e.stopPropagation(); clearPhase(phaseId); });
+  renderGlobal();
+  renderNav();
+}
+
+function togglePrompt(phaseId, promptIdx) {
+  const el = document.querySelector(`[data-prompt="${phaseId}-${promptIdx}"]`);
+  if (el) el.classList.toggle('open');
+}
+
+function copyPrompt(phaseId, promptIdx, btn) {
+  const phase = PHASES.find(p => p.id === phaseId);
+  if (!phase) return;
+  const text = phase.prompts[promptIdx].text;
+  navigator.clipboard.writeText(text).then(() => {
+    btn.textContent = '✓ copiado';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'copiar'; btn.classList.remove('copied'); }, 2000);
+  }).catch(() => {
+    btn.textContent = 'error';
+    setTimeout(() => { btn.textContent = 'copiar'; }, 2000);
+  });
+}
+
+function toggleConfig() {
+  const body = document.getElementById('config-body');
+  const chev = document.getElementById('config-chev');
+  const open = body.style.display === 'block';
+  body.style.display = open ? 'none' : 'block';
+  chev.style.transform = open ? '' : 'rotate(180deg)';
+}
+
+function saveConfig() {
+  state.config = {
+    nombre: document.getElementById('cfg-nombre').value,
+    nicho:  document.getElementById('cfg-nicho').value,
+    tema:   document.getElementById('cfg-tema').value,
+    avatar: document.getElementById('cfg-avatar').value,
+    meta6:  document.getElementById('cfg-meta6').value,
+    meta12: document.getElementById('cfg-meta12').value,
+  };
+  saveState(state);
+  const saved = document.getElementById('config-saved');
+  saved.classList.add('show');
+  setTimeout(() => saved.classList.remove('show'), 2000);
+}
+
+function loadConfig() {
+  const c = state.config || {};
+  const set = (id, val) => { const el = document.getElementById(id); if (el && val) el.value = val; };
+  set('cfg-nombre', c.nombre);
+  set('cfg-nicho',  c.nicho);
+  set('cfg-tema',   c.tema);
+  set('cfg-avatar', c.avatar);
+  set('cfg-meta6',  c.meta6);
+  set('cfg-meta12', c.meta12);
+}
+
+function escHtml(str) {
+  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+// ── Init ──────────────────────────────────────────────────────────────────────
+
+document.addEventListener('DOMContentLoaded', () => {
+  renderAll();
+  loadConfig();
+  // open phase 0 by default if nothing is open
+  const first = document.getElementById('phase-0');
+  if (first && !first.classList.contains('open')) {
+    first.classList.add('open');
+  }
+});
+</script>
+</body>
+</html>

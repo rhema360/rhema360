@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IQ-DANIELPAZ — Protocolo Mental</title>
+<meta name="theme-color" content="#00FF87">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="SICOTRADING">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon-192.png">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap');
+
+  :root {
+    --black: #0A0A0F;
+    --surface: #111118;
+    --card: #16161F;
+    --border: #1E1E2E;
+    --green: #00FF87;
+    --red: #FF3D5A;
+    --yellow: #FFD166;
+    --blue: #4FC3F7;
+    --text: #E8E8F0;
+    --muted: #6B6B80;
+    --green-dim: rgba(0,255,135,0.08);
+    --red-dim: rgba(255,61,90,0.08);
+    --yellow-dim: rgba(255,209,102,0.08);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--black);
+    color: var(--text);
+    font-family: 'Space Grotesk', sans-serif;
+    min-height: 100vh;
+    padding: 20px 16px 80px;
+    max-width: 680px;
+    margin: 0 auto;
+  }
+
+  /* HEADER */
+  .header {
+    text-align: center;
+    padding: 36px 0 32px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 28px;
+  }
+  .header .eyebrow {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 4px;
+    color: var(--green);
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+  .header h1 {
+    font-size: clamp(26px, 6vw, 40px);
+    font-weight: 700;
+    letter-spacing: -1.5px;
+    line-height: 1.1;
+  }
+  .header h1 .accent { color: var(--green); }
+  .header .sub {
+    margin-top: 10px;
+    color: var(--muted);
+    font-size: 13px;
+    font-weight: 300;
+  }
+
+  /* CARDS */
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 24px;
+    margin-bottom: 16px;
+  }
+  .card.green-accent { border-left: 3px solid var(--green); }
+  .card.red-accent   { border-left: 3px solid var(--red); }
+  .card.yellow-accent{ border-left: 3px solid var(--yellow); }
+  .card.blue-accent  { border-left: 3px solid var(--blue); }
+
+  .section-tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 3px;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+  .card h2 {
+    font-size: 17px;
+    font-weight: 600;
+    margin-bottom: 16px;
+  }
+
+  /* CONTRATO */
+  .contrato-text {
+    font-size: 13px;
+    line-height: 1.8;
+    color: #C8C8D8;
+    background: rgba(0,255,135,0.04);
+    border-radius: 8px;
+    padding: 16px;
+    border: 1px solid rgba(0,255,135,0.1);
+    margin-bottom: 16px;
+    font-style: italic;
+  }
+  .contrato-text strong { color: var(--green); font-style: normal; }
+  .firma-row {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .firma-row input[type="text"] {
+    flex: 1;
+    min-width: 180px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text);
+    padding: 10px 14px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 13px;
+  }
+  .firma-row input[type="text"]:focus { outline: none; border-color: var(--green); }
+  .ts { font-size: 12px; color: var(--muted); min-width: 160px; }
+
+  /* BOTONES */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 11px 22px;
+    border-radius: 8px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: opacity .15s, transform .1s;
+    letter-spacing: .3px;
+  }
+  .btn:active { transform: scale(.97); }
+  .btn-green  { background: var(--green); color: #000; }
+  .btn-red    { background: var(--red); color: #fff; }
+  .btn-ghost  { background: transparent; border: 1px solid var(--border); color: var(--muted); }
+  .btn:hover  { opacity: .88; }
+  .btn:disabled { opacity: .35; cursor: not-allowed; }
+
+  /* CHECKLIST */
+  .check-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 13px 16px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    margin-bottom: 8px;
+    cursor: pointer;
+    user-select: none;
+    transition: border-color .15s, background .15s;
+  }
+  .check-item.checked {
+    border-color: var(--green);
+    background: var(--green-dim);
+  }
+  .check-box {
+    width: 22px; height: 22px;
+    border-radius: 6px;
+    border: 2px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    font-size: 13px;
+    transition: all .15s;
+  }
+  .check-item.checked .check-box {
+    background: var(--green);
+    border-color: var(--green);
+    color: #000;
+  }
+  .check-label { font-size: 13px; font-weight: 500; }
+  .check-sub   { font-size: 11px; color: var(--muted); margin-top: 2px; }
+
+  .rr-row {
+    display: flex; gap: 10px; align-items: center; flex-wrap: wrap;
+    margin-top: 14px;
+    padding: 14px 16px;
+    background: var(--surface);
+    border-radius: 10px;
+    border: 1px solid var(--border);
+  }
+  .rr-row label { font-size: 12px; color: var(--muted); white-space: nowrap; }
+  .rr-row input {
+    width: 80px;
+    background: var(--black);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--text);
+    padding: 7px 10px;
+    font-family: 'Space Mono', monospace;
+    font-size: 13px;
+    text-align: center;
+  }
+  .rr-row input:focus { outline: none; border-color: var(--green); }
+  .rr-result {
+    font-family: 'Space Mono', monospace;
+    font-size: 14px;
+    font-weight: 700;
+    padding: 7px 14px;
+    border-radius: 6px;
+    background: var(--black);
+    border: 1px solid var(--border);
+    min-width: 70px;
+    text-align: center;
+  }
+  .rr-result.ok   { color: var(--green); border-color: var(--green); }
+  .rr-result.fail { color: var(--red);   border-color: var(--red); }
+
+  .go-banner {
+    display: none;
+    margin-top: 14px;
+    padding: 14px 18px;
+    background: var(--green-dim);
+    border: 1px solid var(--green);
+    border-radius: 10px;
+    color: var(--green);
+    font-weight: 600;
+    font-size: 14px;
+    text-align: center;
+    letter-spacing: .3px;
+  }
+  .go-banner.show { display: block; }
+  .no-banner {
+    display: none;
+    margin-top: 14px;
+    padding: 14px 18px;
+    background: var(--red-dim);
+    border: 1px solid var(--red);
+    border-radius: 10px;
+    color: var(--red);
+    font-weight: 600;
+    font-size: 14px;
+    text-align: center;
+  }
+  .no-banner.show { display: block; }
+
+  /* RESPIRACIÓN */
+  .breath-circle-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 0 8px;
+  }
+  .breath-circle {
+    width: 110px; height: 110px;
+    border-radius: 50%;
+    border: 3px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Space Mono', monospace;
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--blue);
+    margin-bottom: 12px;
+    transition: transform .5s ease, border-color .5s ease, box-shadow .5s ease;
+  }
+  .breath-circle.inhale {
+    transform: scale(1.25);
+    border-color: var(--blue);
+    box-shadow: 0 0 32px rgba(79,195,247,0.25);
+  }
+  .breath-circle.exhale {
+    transform: scale(.85);
+    border-color: var(--muted);
+    box-shadow: none;
+  }
+  .breath-label {
+    font-size: 13px;
+    color: var(--muted);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-family: 'Space Mono', monospace;
+    margin-bottom: 6px;
+  }
+  .breath-count {
+    font-size: 12px;
+    color: var(--muted);
+  }
+  .breath-dots {
+    display: flex; gap: 8px; margin-top: 14px;
+  }
+  .breath-dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: var(--border);
+    transition: background .3s;
+  }
+  .breath-dot.active { background: var(--blue); }
+
+  /* CRONÓMETRO POSICIÓN */
+  .chrono-display {
+    font-family: 'Space Mono', monospace;
+    font-size: 48px;
+    font-weight: 700;
+    color: var(--text);
+    text-align: center;
+    letter-spacing: 2px;
+    padding: 24px 0 8px;
+  }
+  .hands-reminder {
+    text-align: center;
+    font-size: 32px;
+    margin: 8px 0;
+  }
+  .hands-text {
+    text-align: center;
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 18px;
+  }
+  .chrono-btns { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+
+  /* SL COUNTER */
+  .sl-track {
+    display: flex; gap: 14px; justify-content: center;
+    margin: 16px 0;
+  }
+  .sl-box {
+    width: 80px; height: 80px;
+    border-radius: 12px;
+    border: 2px solid var(--border);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    gap: 4px;
+    transition: all .2s;
+  }
+  .sl-box .sl-num { font-size: 28px; font-weight: 700; }
+  .sl-box.hit {
+    border-color: var(--red);
+    background: var(--red-dim);
+    color: var(--red);
+  }
+  .sl-box.hit .sl-num { color: var(--red); }
+
+  .emergencia {
+    display: none;
+    margin-top: 14px;
+    padding: 18px;
+    background: var(--red-dim);
+    border: 2px solid var(--red);
+    border-radius: 12px;
+    text-align: center;
+  }
+  .emergencia.show { display: block; }
+  .emergencia .em-title {
+    color: var(--red);
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .emergencia p { font-size: 13px; color: #C8C8D8; }
+
+  /* STATS ROW */
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+  .stat-cell { text-align: center; }
+  .stat-cell .s-label {
+    font-size: 10px;
+    color: var(--muted);
+    font-family: 'Space Mono', monospace;
+    letter-spacing: 1px;
+    margin-bottom: 6px;
+  }
+  .stat-input {
+    width: 100%;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text);
+    padding: 9px 6px;
+    font-family: 'Space Mono', monospace;
+    font-size: 16px;
+    font-weight: 700;
+    text-align: center;
+  }
+  .stat-input:focus { outline: none; border-color: var(--green); }
+  .stat-input.positive { color: var(--green); border-color: rgba(0,255,135,0.3); }
+  .stat-input.negative { color: var(--red);   border-color: rgba(255,61,90,0.3); }
+
+  textarea {
+    width: 100%;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    color: var(--text);
+    padding: 14px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 13px;
+    resize: vertical;
+    min-height: 90px;
+    line-height: 1.7;
+  }
+  textarea:focus { outline: none; border-color: var(--green); }
+  textarea::placeholder { color: var(--muted); }
+
+  /* TOAST */
+  .toast {
+    position: fixed;
+    bottom: 24px; left: 50%;
+    transform: translateX(-50%) translateY(80px);
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px 24px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text);
+    z-index: 999;
+    transition: transform .3s ease;
+    white-space: nowrap;
+    box-shadow: 0 8px 32px rgba(0,0,0,.4);
+  }
+  .toast.show { transform: translateX(-50%) translateY(0); }
+
+  hr.divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 20px 0;
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="eyebrow">Sistema IQ-DANIELPAZ v2.3</div>
+  <h1>PROTOCOLO <span class="accent">MENTAL</span></h1>
+  <p class="sub">Disciplina → Consistencia → Cuenta fondeada</p>
+</div>
+
+<!-- 1. CONTRATO DIARIO -->
+<div class="card green-accent">
+  <div class="section-tag">01 — Contrato diario</div>
+  <h2>📋 Firma antes de abrir la plataforma</h2>
+  <div class="contrato-text">
+    Hoy, <strong id="fecha-contrato"></strong>, yo, <strong>Daniel Paz</strong>, me comprometo a operar únicamente cuando mi sistema IQ-DANIELPAZ confirme los <strong>3 requisitos obligatorios</strong>: señal activa (B/S) + mínimo 4/5 filtros confirmados + vela cerrada.<br><br>
+    Máximo <strong>2 SL en el día</strong>. Si llego al 2do SL, <strong>cierro la plataforma sin excepciones</strong>.<br><br>
+    No opero por emoción, aburrimiento, ni para recuperar. Opero solo cuando el sistema dice SÍ.
+  </div>
+  <div class="firma-row">
+    <input type="text" id="firma-input" placeholder="Escribe tu nombre completo para firmar...">
+    <span class="ts" id="firma-ts">—</span>
+  </div>
+  <br>
+  <button class="btn btn-green" onclick="firmarContrato()">✍️ Firmar contrato</button>
+</div>
+
+<!-- 2. CHECKLIST DE ENTRADA -->
+<div class="card yellow-accent">
+  <div class="section-tag">02 — Checklist de entrada</div>
+  <h2>✅ Los 3 requisitos — todos o no entro</h2>
+
+  <div class="check-item" id="c1" onclick="toggleCheck('c1')">
+    <div class="check-box" id="cb1">✓</div>
+    <div>
+      <div class="check-label">Señal activa (B o S)</div>
+      <div class="check-sub">El dashboard muestra B (long) o S (short) — no expirada</div>
+    </div>
+  </div>
+
+  <div class="check-item" id="c2" onclick="toggleCheck('c2')">
+    <div class="check-box" id="cb2">✓</div>
+    <div>
+      <div class="check-label">Mínimo 4/5 filtros confirmados</div>
+      <div class="check-sub">F1 Dirección · F2 EMA · F3 VWAP · F4 ADX · F5 Vol — al menos 4</div>
+    </div>
+  </div>
+
+  <div class="check-item" id="c3" onclick="toggleCheck('c3')">
+    <div class="check-box" id="cb3">✓</div>
+    <div>
+      <div class="check-label">Vela de 5min cerrada</div>
+      <div class="check-sub">Entrée al open de la siguiente vela — nunca en vela abierta</div>
+    </div>
+  </div>
+
+  <div class="rr-row">
+    <label>Entrada</label>
+    <input type="number" id="rr-entry" placeholder="0.00" oninput="calcRR()">
+    <label>SL</label>
+    <input type="number" id="rr-sl" placeholder="0.00" oninput="calcRR()">
+    <label>TP</label>
+    <input type="number" id="rr-tp" placeholder="0.00" oninput="calcRR()">
+    <div class="rr-result" id="rr-display">R:R —</div>
+  </div>
+
+  <div class="go-banner" id="go-banner">🟢 SISTEMA CONFIRMADO — PUEDES ENTRAR</div>
+  <div class="no-banner" id="no-banner">🔴 FALTAN REQUISITOS — NO ENTRAR</div>
+</div>
+
+<!-- 3. PROTOCOLO DE RESPIRACIÓN -->
+<div class="card blue-accent">
+  <div class="section-tag">03 — Antes de ejecutar</div>
+  <h2>🌬️ 3 Respiraciones de box breathing</h2>
+  <p style="font-size:13px; color:var(--muted); margin-bottom:4px;">Para antes de cada trade. Inhala 4s → Hold 4s → Exhala 4s</p>
+
+  <div class="breath-circle-wrap">
+    <div class="breath-circle" id="breath-circle">—</div>
+    <div class="breath-label" id="breath-phase">Listo para comenzar</div>
+    <div class="breath-count" id="breath-count">Ciclo 0 / 3</div>
+    <div class="breath-dots">
+      <div class="breath-dot" id="bd1"></div>
+      <div class="breath-dot" id="bd2"></div>
+      <div class="breath-dot" id="bd3"></div>
+    </div>
+  </div>
+
+  <div style="text-align:center; margin-top:10px;">
+    <button class="btn btn-green" id="breath-btn" onclick="startBreath()">▶ Iniciar respiración</button>
+  </div>
+</div>
+
+<!-- 4. CRONÓMETRO DE POSICIÓN -->
+<div class="card red-accent">
+  <div class="section-tag">04 — Con posición abierta</div>
+  <h2>✋ Manos debajo de los muslos</h2>
+
+  <div class="chrono-display" id="chrono">00:00</div>
+  <div class="hands-reminder">✋🏽✋🏽</div>
+  <div class="hands-text">Manos bajo los muslos. Cero movimientos. El precio llega al SL o TP.</div>
+  <div class="chrono-btns">
+    <button class="btn btn-green" onclick="startChrono()">▶ Posición abierta</button>
+    <button class="btn btn-ghost" onclick="stopChrono()">⏸ Pause</button>
+    <button class="btn btn-ghost" onclick="resetChrono()">↺ Reset</button>
+  </div>
+</div>
+
+<!-- 5. TRACKER DEL DÍA -->
+<div class="card">
+  <div class="section-tag">05 — Tracker del día</div>
+  <h2>📊 Estadísticas de sesión</h2>
+
+  <div class="stats-row">
+    <div class="stat-cell">
+      <div class="s-label">TRADES</div>
+      <input class="stat-input" type="number" id="stat-trades" value="0">
+    </div>
+    <div class="stat-cell">
+      <div class="s-label">P&L ($)</div>
+      <input class="stat-input" type="number" id="stat-pnl" value="0" oninput="updatePnL()">
+    </div>
+    <div class="stat-cell">
+      <div class="s-label">WINS</div>
+      <input class="stat-input" type="number" id="stat-wins" value="0">
+    </div>
+    <div class="stat-cell">
+      <div class="s-label">SL HIT</div>
+      <input class="stat-input" type="number" id="stat-sl" value="0" oninput="checkSL()">
+    </div>
+  </div>
+
+  <div class="sl-track">
+    <div class="sl-box" id="sl1">
+      <span class="sl-num">1</span>
+      <span>SL</span>
+    </div>
+    <div class="sl-box" id="sl2">
+      <span class="sl-num">2</span>
+      <span>SL</span>
+    </div>
+  </div>
+
+  <div class="emergencia" id="emergencia-msg">
+    <div class="em-title">🚨 LÍMITE DIARIO ALCANZADO</div>
+    <p>2 SL en el día. <strong>Cierra la plataforma ahora.</strong><br>No hay nada más que discutir. Mañana es un nuevo día.</p>
+  </div>
+
+  <hr class="divider">
+
+  <div class="section-tag">Reflexión post-sesión</div>
+  <textarea id="reflexion" placeholder="¿Seguí el sistema? ¿Dónde fallé? ¿Qué haré diferente mañana?..."></textarea>
+  <br>
+  <button class="btn btn-ghost" onclick="resetDia()" style="margin-top:10px;">↺ Resetear día</button>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<!-- INSTALL BUTTON -->
+<button id="install-btn" class="btn btn-green" style="display:none; position:fixed; bottom:24px; right:20px; z-index:100; box-shadow:0 4px 20px rgba(0,255,135,0.3); gap:8px;">
+  ⬇️ Instalar app
+</button>
+
+<script>
+  // FECHA
+  const now = new Date();
+  document.getElementById('fecha-contrato').textContent = now.toLocaleDateString('es-US', {weekday:'long', year:'numeric', month:'long', day:'numeric'});
+
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2800);
+  }
+
+  // CONTRATO
+  function firmarContrato() {
+    const nombre = document.getElementById('firma-input').value.trim();
+    if (!nombre) { showToast('Escribe tu nombre para firmar'); return; }
+    const ts = new Date().toLocaleTimeString('es-US');
+    document.getElementById('firma-ts').textContent = '✅ Firmado ' + ts;
+    showToast('✅ Contrato firmado — que el sistema guíe cada trade');
+  }
+
+  // CHECKLIST
+  const checks = { c1: false, c2: false, c3: false };
+  function toggleCheck(id) {
+    checks[id] = !checks[id];
+    const el = document.getElementById(id);
+    el.classList.toggle('checked', checks[id]);
+    evaluarChecklist();
+  }
+  function evaluarChecklist() {
+    const todos = checks.c1 && checks.c2 && checks.c3;
+    document.getElementById('go-banner').classList.toggle('show', todos);
+    document.getElementById('no-banner').classList.toggle('show', !todos);
+  }
+
+  // R:R
+  function calcRR() {
+    const entry = parseFloat(document.getElementById('rr-entry').value);
+    const sl    = parseFloat(document.getElementById('rr-sl').value);
+    const tp    = parseFloat(document.getElementById('rr-tp').value);
+    const el = document.getElementById('rr-display');
+    if (!entry || !sl || !tp || sl === entry) { el.textContent = 'R:R —'; el.className = 'rr-result'; return; }
+    const risk   = Math.abs(entry - sl);
+    const reward = Math.abs(tp - entry);
+    const rr = (reward / risk).toFixed(2);
+    el.textContent = '1:' + rr;
+    el.className = 'rr-result ' + (reward >= risk * 2 ? 'ok' : 'fail');
+  }
+
+  // RESPIRACIÓN
+  let breathTimer = null, breathCycle = 0, breathPhaseIdx = 0, breathSecond = 0;
+  const PHASES = [
+    {label:'INHALA', dur:4, cls:'inhale'},
+    {label:'HOLD',   dur:4, cls:''},
+    {label:'EXHALA', dur:4, cls:'exhale'},
+  ];
+
+  function startBreath() {
+    if (breathTimer) return;
+    breathCycle = 0; breathPhaseIdx = 0; breathSecond = 0;
+    document.getElementById('breath-btn').disabled = true;
+    runBreathPhase();
+  }
+
+  function runBreathPhase() {
+    if (breathCycle >= 3) {
+      document.getElementById('breath-circle').textContent = '✓';
+      document.getElementById('breath-phase').textContent = 'Listo — ejecuta tu trade';
+      document.getElementById('breath-count').textContent = '3/3 completado';
+      document.getElementById('breath-btn').disabled = false;
+      updateDots(3);
+      breathTimer = null;
+      return;
+    }
+    const p = PHASES[breathPhaseIdx];
+    const circle = document.getElementById('breath-circle');
+    circle.className = 'breath-circle ' + p.cls;
+    document.getElementById('breath-phase').textContent = p.label;
+    breathSecond = p.dur;
+    circle.textContent = breathSecond;
+    breathTimer = setInterval(() => {
+      breathSecond--;
+      circle.textContent = breathSecond;
+      if (breathSecond <= 0) {
+        clearInterval(breathTimer); breathTimer = null;
+        breathPhaseIdx++;
+        if (breathPhaseIdx >= PHASES.length) {
+          breathPhaseIdx = 0;
+          breathCycle++;
+          document.getElementById('breath-count').textContent = 'Ciclo ' + breathCycle + ' / 3';
+          updateDots(breathCycle);
+        }
+        setTimeout(runBreathPhase, 200);
+      }
+    }, 1000);
+  }
+
+  function updateDots(n) {
+    for (let i = 1; i <= 3; i++) {
+      document.getElementById('bd'+i).classList.toggle('active', i <= n);
+    }
+  }
+
+  // CRONÓMETRO
+  let chronoTimer = null, chronoSecs = 0, chronoRunning = false;
+  function pad(n) { return String(n).padStart(2,'0'); }
+  function renderChrono() {
+    const m = Math.floor(chronoSecs / 60);
+    const s = chronoSecs % 60;
+    document.getElementById('chrono').textContent = pad(m) + ':' + pad(s);
+  }
+  function startChrono() {
+    if (chronoRunning) return;
+    chronoRunning = true;
+    chronoTimer = setInterval(() => { chronoSecs++; renderChrono(); }, 1000);
+    showToast('⏱ Posición abierta — manos bajo los muslos');
+  }
+  function stopChrono() {
+    chronoRunning = false;
+    clearInterval(chronoTimer);
+  }
+  function resetChrono() {
+    stopChrono(); chronoSecs = 0; renderChrono();
+  }
+
+  // SL COUNTER
+  let slCount = 0;
+  function checkSL() {
+    slCount = parseInt(document.getElementById('stat-sl').value) || 0;
+    for (let i = 1; i <= 2; i++) {
+      document.getElementById('sl'+i).className = 'sl-box' + (i <= slCount ? ' hit' : '');
+    }
+    if (slCount >= 2) {
+      document.getElementById('emergencia-msg').classList.add('show');
+      showToast('🚨 2 SL — CIERRA LA PLATAFORMA AHORA');
+    } else {
+      document.getElementById('emergencia-msg').classList.remove('show');
+    }
+  }
+
+  function updatePnL() {
+    const val = parseFloat(document.getElementById('stat-pnl').value) || 0;
+    const el  = document.getElementById('stat-pnl');
+    el.className = 'stat-input' + (val > 0 ? ' positive' : val < 0 ? ' negative' : '');
+  }
+
+  function resetDia() {
+    if (!confirm('¿Resetear todos los datos del día?')) return;
+    ['stat-trades','stat-pnl','stat-wins','stat-sl'].forEach(id => document.getElementById(id).value = 0);
+    document.getElementById('stat-pnl').className = 'stat-input';
+    slCount = 0;
+    [1,2].forEach(i => document.getElementById('sl'+i).className = 'sl-box');
+    document.getElementById('emergencia-msg').classList.remove('show');
+    document.getElementById('reflexion').value = '';
+    document.getElementById('go-banner').classList.remove('show');
+    document.getElementById('no-banner').classList.remove('show');
+    Object.keys(checks).forEach(k => { checks[k] = false; document.getElementById(k).classList.remove('checked'); });
+    document.getElementById('firma-input').value = '';
+    document.getElementById('firma-ts').textContent = '—';
+    showToast('✅ Día reseteado — nuevo día, nueva oportunidad');
+  }
+
+  // Init
+  evaluarChecklist();
+
+  // PWA — Service Worker
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('./sw.js').catch(() => {});
+  }
+
+  // PWA — Install prompt
+  let deferredPrompt = null;
+  const installBtn = document.getElementById('install-btn');
+
+  window.addEventListener('beforeinstallprompt', e => {
+    e.preventDefault();
+    deferredPrompt = e;
+    installBtn.style.display = 'flex';
+  });
+
+  installBtn.addEventListener('click', async () => {
+    if (!deferredPrompt) return;
+    deferredPrompt.prompt();
+    const { outcome } = await deferredPrompt.userChoice;
+    if (outcome === 'accepted') {
+      showToast('✅ App instalada en tu escritorio');
+      installBtn.style.display = 'none';
+    }
+    deferredPrompt = null;
+  });
+
+  window.addEventListener('appinstalled', () => {
+    installBtn.style.display = 'none';
+    showToast('🎯 IQ-DANIELPAZ instalado como app');
+  });
+</script>
+</body>
+</html>

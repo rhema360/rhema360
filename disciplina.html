@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="IQ · DANIELPAZ">
+  <meta name="theme-color" content="#0a0a0f">
+  <title>Disciplina · IQ DANIELPAZ</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0a0a0f;
+      --surface: #13131a;
+      --surface2: #1c1c26;
+      --border: #2a2a38;
+      --gold: #c8a96e;
+      --gold-dim: #8a7050;
+      --text: #f0ede8;
+      --text-dim: #9994a8;
+      --green: #4ade80;
+      --amber: #fb923c;
+      --red: #f87171;
+      --radius: 14px;
+    }
+
+    html, body {
+      height: 100%;
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      min-height: 100dvh;
+      padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+    }
+
+    /* ── HEADER ─────────────────────────────────────────── */
+    .header {
+      padding: 20px 20px 0;
+      text-align: center;
+    }
+
+    .names {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gold);
+      opacity: 0.85;
+    }
+
+    /* ── COUNTER ─────────────────────────────────────────── */
+    .counter-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 24px 20px 20px;
+    }
+
+    .counter-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-bottom: 10px;
+    }
+
+    .counter-display {
+      font-size: 64px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1;
+      color: var(--green);
+      transition: color 0.35s ease;
+    }
+
+    .counter-display.one  { color: var(--amber); }
+    .counter-display.two  { color: var(--red); }
+
+    .counter-sub {
+      font-size: 14px;
+      color: var(--text-dim);
+      margin-top: 6px;
+    }
+
+    /* ── TABS ─────────────────────────────────────────────── */
+    .tabs {
+      display: flex;
+      gap: 0;
+      margin: 0 20px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .tab-btn {
+      flex: 1;
+      padding: 12px 8px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      background: var(--surface);
+      color: var(--text-dim);
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .tab-btn.active {
+      background: var(--surface2);
+      color: var(--gold);
+    }
+
+    .tab-btn:first-child { border-right: 1px solid var(--border); }
+
+    /* ── CONTENT ─────────────────────────────────────────── */
+    .content {
+      flex: 1;
+      overflow-y: auto;
+      padding: 20px 20px 0;
+    }
+
+    .panel { display: none; }
+    .panel.active { display: block; }
+
+    .section-title {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold-dim);
+      margin-bottom: 14px;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 18px;
+      margin-bottom: 14px;
+    }
+
+    .card p {
+      font-size: 16px;
+      line-height: 1.65;
+      color: var(--text);
+    }
+
+    .card p + p {
+      margin-top: 14px;
+    }
+
+    .card p strong {
+      color: var(--gold);
+      font-weight: 600;
+    }
+
+    .checklist {
+      list-style: none;
+      padding: 0;
+    }
+
+    .checklist li {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 15px;
+      line-height: 1.5;
+      color: var(--text);
+    }
+
+    .checklist li:last-child { border-bottom: none; }
+
+    .check-icon {
+      flex-shrink: 0;
+      width: 22px;
+      height: 22px;
+      border: 2px solid var(--border);
+      border-radius: 6px;
+      margin-top: 1px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--surface2);
+      cursor: pointer;
+      transition: background 0.2s, border-color 0.2s;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .check-icon.checked {
+      background: var(--gold);
+      border-color: var(--gold);
+    }
+
+    .check-icon.checked::after {
+      content: '';
+      display: block;
+      width: 6px;
+      height: 10px;
+      border: 2px solid #0a0a0f;
+      border-top: none;
+      border-left: none;
+      transform: rotate(45deg) translateY(-1px);
+    }
+
+    .checklist li.checked-item span {
+      color: var(--text-dim);
+      text-decoration: line-through;
+      text-decoration-color: var(--gold-dim);
+    }
+
+    /* ── SL CONTROLS ─────────────────────────────────────── */
+    .sl-section {
+      padding: 20px;
+      flex-shrink: 0;
+    }
+
+    .sl-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      text-align: center;
+      margin-bottom: 14px;
+    }
+
+    .sl-buttons {
+      display: flex;
+      gap: 12px;
+    }
+
+    .btn-sl {
+      flex: 1;
+      padding: 16px;
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      border: none;
+      border-radius: var(--radius);
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+      transition: opacity 0.15s, transform 0.1s;
+    }
+
+    .btn-sl:active { transform: scale(0.97); opacity: 0.85; }
+
+    .btn-add {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      color: var(--text);
+    }
+
+    .btn-reset {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text-dim);
+    }
+
+    /* ── FOOTER ─────────────────────────────────────────── */
+    footer {
+      text-align: center;
+      padding: 12px 20px 20px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      opacity: 0.6;
+      flex-shrink: 0;
+    }
+
+    /* ── BLOCKED OVERLAY ─────────────────────────────────── */
+    .blocked-banner {
+      display: none;
+      margin: 0 20px 16px;
+      background: rgba(248,113,113,0.12);
+      border: 1px solid var(--red);
+      border-radius: var(--radius);
+      padding: 14px 16px;
+      font-size: 14px;
+      color: var(--red);
+      text-align: center;
+      line-height: 1.5;
+    }
+
+    .blocked-banner.visible { display: block; }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="names">Daniel Andrés &nbsp;·&nbsp; Diego &nbsp;·&nbsp; Sofía &nbsp;·&nbsp; Sarai</div>
+  </div>
+
+  <!-- COUNTER -->
+  <div class="counter-wrap">
+    <div class="counter-label">Stop Loss del día</div>
+    <div class="counter-display" id="counterDisplay">0</div>
+    <div class="counter-sub" id="counterSub">/ 2 SL máximo</div>
+  </div>
+
+  <!-- BLOCKED BANNER -->
+  <div class="blocked-banner" id="blockedBanner">
+    Límite alcanzado. Cierra la plataforma. Vuelve mañana.
+  </div>
+
+  <!-- TABS -->
+  <div class="tabs">
+    <button class="tab-btn active" onclick="switchTab('antes')" id="tab-antes">Antes de operar</button>
+    <button class="tab-btn" onclick="switchTab('despues')" id="tab-despues">Después de un SL</button>
+  </div>
+
+  <!-- CONTENT PANELS -->
+  <div class="content">
+
+    <!-- PANEL: ANTES DE OPERAR -->
+    <div class="panel active" id="panel-antes">
+      <br>
+      <div class="section-title">Antes de sentarte</div>
+      <div class="card">
+        <p>Hoy no estoy operando para tener un día positivo.<br><strong>Estoy operando para seguir el sistema.</strong></p>
+        <p>El día puede cerrar en rojo y sigue siendo un día bien hecho. Un SL dentro de la regla no afecta a nadie.</p>
+        <p>Pero si sobreopero buscando recuperar y quemo la cuenta, <strong>eso sí afecta a Daniel Andrés, Diego, Sofía y Sarai.</strong></p>
+      </div>
+
+      <div class="section-title">Checklist de entrada</div>
+      <div class="card">
+        <ul class="checklist" id="checklist-antes">
+          <li>
+            <div class="check-icon" onclick="toggleCheck(this)"></div>
+            <span>Revisé el contexto de mercado (bias del día)</span>
+          </li>
+          <li>
+            <div class="check-icon" onclick="toggleCheck(this)"></div>
+            <span>Sé cuál es mi zona de entrada y mi invalidación</span>
+          </li>
+          <li>
+            <div class="check-icon" onclick="toggleCheck(this)"></div>
+            <span>Tengo claro el tamaño de posición para este SL</span>
+          </li>
+          <li>
+            <div class="check-icon" onclick="toggleCheck(this)"></div>
+            <span>No estoy operando por aburrimiento ni por recuperar</span>
+          </li>
+          <li>
+            <div class="check-icon" onclick="toggleCheck(this)"></div>
+            <span>Acepto que el resultado de hoy no define el sistema</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- PANEL: DESPUÉS DE UN SL -->
+    <div class="panel" id="panel-despues">
+      <br>
+      <div class="section-title">Después de un Stop Loss</div>
+      <div class="card">
+        <p>El SL era parte del plan. <strong>No es un fallo — es el costo del trade.</strong></p>
+        <p>La cuenta sigue viva. El sistema sigue funcionando. Esto es exactamente lo que se supone que debe pasar.</p>
+      </div>
+
+      <div class="section-title">Reset mental</div>
+      <div class="card">
+        <ul class="checklist" id="checklist-despues">
+          <li>
+            <div class="check-icon" onclick="toggleCheck(this)"></div>
+            <span>Alejé la vista de la pantalla al menos 2 minutos</span>
+          </li>
+          <li>
+            <div class="check-icon" onclick="toggleCheck(this)"></div>
+            <span>El SL estuvo dentro de la regla de riesgo (no sobredimensioné)</span>
+          </li>
+          <li>
+            <div class="check-icon" onclick="toggleCheck(this)"></div>
+            <span>No voy a "recuperar" ese SL — eso no existe en el sistema</span>
+          </li>
+          <li>
+            <div class="check-icon" onclick="toggleCheck(this)"></div>
+            <span>Si ya llevo 2 SL de hoy, cierro la plataforma</span>
+          </li>
+          <li>
+            <div class="check-icon" onclick="toggleCheck(this)"></div>
+            <span>Anoté el trade en el diario (entrada, SL, razón)</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- SL CONTROLS -->
+  <div class="sl-section">
+    <div class="sl-label">SL de hoy</div>
+    <div class="sl-buttons">
+      <button class="btn-sl btn-add" onclick="addSL()" id="btnAdd">+ 1 SL</button>
+      <button class="btn-sl btn-reset" onclick="resetSL()">Reset</button>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>IQ · DANIELPAZ &mdash; disciplina, no perfección</footer>
+
+  <script>
+    const KEY = 'iq_danielpaz_sl';
+    const MAX = 2;
+
+    function getTodayKey() {
+      const d = new Date();
+      return `${d.getFullYear()}-${d.getMonth()}-${d.getDate()}`;
+    }
+
+    function loadState() {
+      try {
+        const raw = localStorage.getItem(KEY);
+        if (!raw) return { count: 0, day: getTodayKey() };
+        const state = JSON.parse(raw);
+        if (state.day !== getTodayKey()) return { count: 0, day: getTodayKey() };
+        return state;
+      } catch { return { count: 0, day: getTodayKey() }; }
+    }
+
+    function saveState(state) {
+      localStorage.setItem(KEY, JSON.stringify(state));
+    }
+
+    function render(count) {
+      const el = document.getElementById('counterDisplay');
+      el.textContent = count;
+      el.className = 'counter-display' + (count === 1 ? ' one' : count >= MAX ? ' two' : '');
+
+      const blocked = count >= MAX;
+      document.getElementById('blockedBanner').classList.toggle('visible', blocked);
+      document.getElementById('btnAdd').disabled = blocked;
+      document.getElementById('btnAdd').style.opacity = blocked ? '0.35' : '1';
+    }
+
+    function addSL() {
+      const state = loadState();
+      if (state.count >= MAX) return;
+      state.count += 1;
+      saveState(state);
+      render(state.count);
+      if (state.count >= MAX) switchTab('despues');
+    }
+
+    function resetSL() {
+      const state = { count: 0, day: getTodayKey() };
+      saveState(state);
+      render(0);
+    }
+
+    function switchTab(tab) {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+      document.getElementById('tab-' + tab).classList.add('active');
+      document.getElementById('panel-' + tab).classList.add('active');
+    }
+
+    function toggleCheck(icon) {
+      const li = icon.closest('li');
+      const checked = icon.classList.toggle('checked');
+      li.classList.toggle('checked-item', checked);
+    }
+
+    // Init
+    const state = loadState();
+    render(state.count);
+  </script>
+
+</body>
+</html>

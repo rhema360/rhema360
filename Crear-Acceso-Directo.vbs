@@ -1,13 +1,15 @@
-Dim ws, shortcut, desktopPath
+' Ejecuta este archivo desde la carpeta iq-danielpaz-server
+' Crea un acceso directo en el escritorio que arranca el servidor y abre el app.
 
-Set ws = WScript.CreateObject("WScript.Shell")
-desktopPath = ws.SpecialFolders("Desktop")
+Set WshShell = WScript.CreateObject("WScript.Shell")
+strDesktop = WshShell.SpecialFolders("Desktop")
+strCarpeta = WshShell.CurrentDirectory
 
-Set shortcut = ws.CreateShortcut(desktopPath & "\IQ Journal.lnk")
-shortcut.TargetPath = "C:\Users\pazde\iq-danielpaz-server\IniciarJournal.bat"
-shortcut.WorkingDirectory = "C:\Users\pazde\iq-danielpaz-server"
-shortcut.WindowStyle = 7
-shortcut.Description = "IQ Daniel Paz - Trade Journal"
-shortcut.Save
+Set oShortcut = WshShell.CreateShortcut(strDesktop & "\IQ-DANIELPAZ.lnk")
+oShortcut.TargetPath    = strCarpeta & "\IniciarJournal.bat"
+oShortcut.WorkingDirectory = strCarpeta
+oShortcut.Description  = "IQ-DANIELPAZ — Sistema de Trading"
+oShortcut.WindowStyle  = 1
+oShortcut.Save
 
-WScript.Echo "Acceso directo creado en el escritorio: IQ Journal"
+MsgBox "Acceso directo IQ-DANIELPAZ creado en el escritorio.", 64, "Listo"

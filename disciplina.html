@@ -210,6 +210,38 @@ tr:hover td{background:rgba(10,21,32,.5);}
   .fg4{grid-template-columns:repeat(2,1fr);}
   .fg3{grid-template-columns:repeat(2,1fr);}
 }
+
+/* SICOTRADING ENHANCEMENTS */
+.semaphore-bar{display:flex;gap:6px;margin-bottom:12px;}
+.sem-dot{flex:1;height:5px;border-radius:3px;background:var(--border);transition:background .3s;}
+.sem-dot.lit-g{background:var(--green);}
+.sem-dot.lit-y{background:var(--yellow);}
+.sem-dot.lit-r{background:var(--red);}
+.proto-lock{text-align:center;padding:28px 14px;}
+.proto-lock-icon{font-size:36px;margin-bottom:12px;}
+.proto-lock-title{font-size:16px;font-weight:700;margin-bottom:10px;}
+.proto-lock-body{font-size:13px;line-height:1.6;margin-bottom:14px;}
+.proto-lock-timer{font-family:'JetBrains Mono',monospace;font-size:40px;font-weight:700;letter-spacing:2px;color:var(--yellow);margin:12px 0;}
+.proto-lock-quote{font-size:11px;color:var(--muted);border-left:2px solid var(--border);padding-left:10px;text-align:left;line-height:1.6;margin-top:12px;}
+.revenge-q{background:rgba(255,34,68,.05);border:1px solid rgba(255,34,68,.18);border-radius:var(--r);padding:16px;margin-bottom:12px;}
+.revenge-q p{font-size:13px;line-height:1.5;margin-bottom:12px;}
+.yn-row{display:flex;gap:8px;}
+.yn-btn{flex:1;padding:10px 4px;border-radius:7px;border:1px solid var(--border);background:transparent;color:var(--text);font-family:'Space Grotesk',sans-serif;font-size:12px;cursor:pointer;transition:.15s;-webkit-tap-highlight-color:transparent;}
+.yn-btn:active{transform:scale(.97);}
+.yn-yes{border-color:var(--red)!important;color:var(--red)!important;}
+.yn-no{border-color:var(--green)!important;color:var(--green)!important;}
+.proto-status{font-size:13px;line-height:1.5;}
+.proto-status.green{color:var(--green);}
+.proto-status.yellow{color:var(--yellow);}
+.proto-status.red{color:var(--red);}
+.btn-confirm{width:100%;padding:14px;border-radius:9px;border:none;font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:700;cursor:pointer;margin-top:6px;transition:.15s;letter-spacing:.02em;-webkit-tap-highlight-color:transparent;}
+.btn-confirm.en{background:var(--green);color:#000;}
+.btn-confirm.dis{background:var(--border);color:var(--muted);cursor:not-allowed;}
+.rresult-row{display:flex;gap:8px;margin-top:8px;}
+.rresult-btn{flex:1;padding:11px 6px;border-radius:7px;border:1px solid var(--border);background:transparent;font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:600;cursor:pointer;transition:.15s;-webkit-tap-highlight-color:transparent;}
+.rresult-btn:active{transform:scale(.97);}
+.rr-sl{border-color:var(--red)!important;color:var(--red)!important;}
+.rr-win{border-color:var(--green)!important;color:var(--green)!important;}
 </style>
 </head>
 <body>
@@ -242,75 +274,163 @@ tr:hover td{background:rgba(10,21,32,.5);}
 <!-- ══ TAB: PROTOCOLO ════════════════════════════════════ -->
 <div class="tab-panel active" id="panel-p">
 
-  <!-- 01 CONTRATO -->
-  <div class="card ag">
-    <div class="stag">01 — Contrato diario</div>
-    <h2>Firma antes de abrir la plataforma</h2>
-    <div class="contrato-text">
-      Hoy, <strong id="fecha-contrato"></strong>, yo, <strong>Daniel Paz</strong>, me comprometo a operar únicamente cuando mi sistema IQ-DANIELPAZ confirme los <strong>3 requisitos obligatorios</strong>: señal activa (B/S) + mínimo 4/5 filtros confirmados + vela cerrada.<br><br>
-      Máximo <strong>2 SL en el día</strong>. Si llego al 2do SL, <strong>cierro la plataforma sin excepciones</strong>.<br><br>
-      No opero por emoción, aburrimiento, ni para recuperar. Opero solo cuando el sistema dice SÍ.
-    </div>
-    <div class="firma-row">
-      <input type="text" id="firma-input" placeholder="Escribe tu nombre completo para firmar...">
-      <span class="firma-ts" id="firma-ts">—</span>
-    </div>
-    <button class="btn btn-g" onclick="firmarContrato()">✍️ Firmar contrato</button>
+  <div class="semaphore-bar">
+    <div class="sem-dot" id="semG"></div>
+    <div class="sem-dot" id="semY"></div>
+    <div class="sem-dot" id="semR"></div>
   </div>
 
-  <!-- 02 CHECKLIST -->
-  <div class="card ay">
-    <div class="stag">02 — Checklist de entrada</div>
-    <h2>Los 3 requisitos — todos o no entro</h2>
-    <div class="check-item" id="c1" onclick="toggleProt('c1')">
-      <div class="check-box" id="cb1"></div>
-      <div><div class="check-label">Señal activa (B o S)</div><div class="check-sub">Dashboard muestra B (long) o S (short) — no expirada</div></div>
-    </div>
-    <div class="check-item" id="c2" onclick="toggleProt('c2')">
-      <div class="check-box" id="cb2"></div>
-      <div><div class="check-label">Mínimo 4/5 filtros confirmados</div><div class="check-sub">F1 Dirección · F2 EMA · F3 VWAP · F4 ADX · F5 Vol — al menos 4</div></div>
-    </div>
-    <div class="check-item" id="c3" onclick="toggleProt('c3')">
-      <div class="check-box" id="cb3"></div>
-      <div><div class="check-label">Vela de 5min cerrada</div><div class="check-sub">Entro al open de la siguiente vela — nunca en vela abierta</div></div>
-    </div>
-    <div class="rr-row">
-      <label>Entrada</label><input type="number" id="rr-e" placeholder="0.00" oninput="calcRR()">
-      <label>SL</label><input type="number" id="rr-s" placeholder="0.00" oninput="calcRR()">
-      <label>TP</label><input type="number" id="rr-t" placeholder="0.00" oninput="calcRR()">
-      <div class="rr-res" id="rr-disp">R:R —</div>
-    </div>
-    <div class="go-ban" id="go-ban">🟢 SISTEMA CONFIRMADO — PUEDES ENTRAR</div>
-    <div class="no-ban show" id="no-ban">🔴 FALTAN REQUISITOS — NO ENTRAR</div>
+  <!-- LOCK SCREEN — 2 SL -->
+  <div id="lockScreen" class="card ar proto-lock" style="display:none">
+    <div class="proto-lock-icon">⛔</div>
+    <div class="proto-lock-title" style="color:var(--red)">Cierre del día. Sin excepción.</div>
+    <div class="proto-lock-body">Ya tocaste 2 SL hoy. La regla la pusiste tú: máximo 2 SL/día.<br><br>No hay botón para saltarte esto. Si pudieras saltarlo, no serviría de nada.</div>
+    <div class="proto-lock-quote">"El semáforo en rojo significa: no se analiza ninguna entrada. No es negociable, no importa qué tan claro se vea el setup."</div>
   </div>
 
-  <!-- 03 RESPIRACIÓN -->
-  <div class="card ab">
-    <div class="stag">03 — Antes de ejecutar</div>
-    <h2>3 respiraciones de box breathing</h2>
-    <p style="font-size:12px;color:var(--muted);margin-bottom:2px;">Inhala 4s → Hold 4s → Exhala 4s — antes de cada trade</p>
-    <div class="breath-wrap">
-      <div class="breath-circle" id="bc">—</div>
-      <div class="breath-ph" id="bph">Listo para comenzar</div>
-      <div class="breath-cy" id="bcy">Ciclo 0 / 3</div>
-      <div class="breath-dots"><div class="breath-dot" id="bd1"></div><div class="breath-dot" id="bd2"></div><div class="breath-dot" id="bd3"></div></div>
-    </div>
-    <div style="text-align:center"><button class="btn btn-b" id="breath-btn" onclick="startBreath()">▶ Iniciar respiración</button></div>
+  <!-- PAUSE SCREEN — cooldown 15 min -->
+  <div id="pauseScreen" class="card ay proto-lock" style="display:none">
+    <div class="proto-lock-icon">⏳</div>
+    <div class="proto-lock-title" style="color:var(--yellow)">Pausa obligatoria — 1 SL</div>
+    <div class="proto-lock-body">Acabas de perder. Antes de ver el próximo setup, esperas el cooldown completo.<br><br>Esto no es para castigarte — es para que la próxima entrada la decida el sistema, no la pérdida.</div>
+    <div class="proto-lock-timer" id="cooldownTimer">15:00</div>
+    <div class="proto-lock-quote">"Después de 1 SL: pausa obligatoria antes del siguiente setup. Sin esto, la próxima entrada viene desde el querer recuperar, no desde la señal."</div>
   </div>
 
-  <!-- 04 CRONÓMETRO -->
-  <div class="card ar">
-    <div class="stag">04 — Con posición abierta</div>
-    <h2>✋ Manos debajo de los muslos</h2>
-    <div class="chrono" id="chrono">00:00</div>
-    <div class="hands-icon">✋🏽✋🏽</div>
-    <div class="hands-txt">Manos bajo los muslos. Cero movimientos. El precio llega al SL o TP.</div>
-    <div class="chrono-btns">
-      <button class="btn btn-g" onclick="startChrono()">▶ Posición abierta</button>
-      <button class="btn btn-ghost" onclick="stopChrono()">⏸ Pause</button>
-      <button class="btn btn-ghost" onclick="resetChrono()">↺ Reset</button>
+  <!-- MAIN PROTOCOL FLOW -->
+  <div id="mainProtocol">
+
+    <!-- 01 CONTRATO -->
+    <div class="card ag">
+      <div class="stag">01 — Contrato diario</div>
+      <h2>Firma antes de abrir la plataforma</h2>
+      <div class="contrato-text">
+        Hoy, <strong id="fecha-contrato"></strong>, yo, <strong>Daniel Paz</strong>, me comprometo a operar únicamente cuando mi sistema IQ-DANIELPAZ confirme los <strong>3 requisitos obligatorios</strong>: señal activa (B/S) + mínimo 4/5 filtros confirmados + vela cerrada.<br><br>
+        Máximo <strong>2 SL en el día</strong>. Si llego al 2do SL, <strong>cierro la plataforma sin excepciones</strong>.<br><br>
+        No opero por emoción, aburrimiento, ni para recuperar. Opero solo cuando el sistema dice SÍ.
+      </div>
+      <div class="firma-row">
+        <input type="text" id="firma-input" placeholder="Escribe tu nombre completo para firmar...">
+        <span class="firma-ts" id="firma-ts">—</span>
+      </div>
+      <button class="btn btn-g" onclick="firmarContrato()">✍️ Firmar contrato</button>
+    </div>
+
+    <!-- 02 PREGUNTA REVENGE -->
+    <div class="revenge-q" id="revengeCard">
+      <p><strong>Antes de seguir:</strong> ¿en este momento estás buscando recuperar algo — una pérdida de hoy, de ayer, o de otra cuenta?</p>
+      <div class="yn-row">
+        <button class="yn-btn yn-yes" onclick="answerRevenge(true)">Sí, honestamente sí</button>
+        <button class="yn-btn yn-no" onclick="answerRevenge(false)">No, vengo neutral</button>
+      </div>
+    </div>
+
+    <!-- 03 CHECKLIST COMPLETO -->
+    <div id="checklistGroup" style="display:none">
+
+      <div class="card ay">
+        <div class="stag">02 — Sesgo 4H</div>
+        <h2>Bias direccional</h2>
+        <div class="check-item" id="ck-bias" onclick="toggleSico('bias')">
+          <div class="check-box" id="cb-bias"></div>
+          <div><div class="check-label">Revisé el sesgo de 4H primero</div><div class="check-sub">Solo opero en esa dirección hoy</div></div>
+        </div>
+      </div>
+
+      <div class="card ay">
+        <div class="stag">03 — Filtros (mínimo 4/5)</div>
+        <h2>Los 5 filtros del sistema</h2>
+        <div class="check-item" id="ck-f1" onclick="toggleSico('f1')">
+          <div class="check-box" id="cb-f1"></div>
+          <div><div class="check-label">F1 — Dirección de mercado confirmada</div></div>
+        </div>
+        <div class="check-item" id="ck-f2" onclick="toggleSico('f2')">
+          <div class="check-box" id="cb-f2"></div>
+          <div><div class="check-label">F2 — EMA 21/50 alineadas</div></div>
+        </div>
+        <div class="check-item" id="ck-f3" onclick="toggleSico('f3')">
+          <div class="check-box" id="cb-f3"></div>
+          <div><div class="check-label">F3 — VWAP a favor</div></div>
+        </div>
+        <div class="check-item" id="ck-f4" onclick="toggleSico('f4')">
+          <div class="check-box" id="cb-f4"></div>
+          <div><div class="check-label">F4 — ADX confirma fuerza</div></div>
+        </div>
+        <div class="check-item" id="ck-f5" onclick="toggleSico('f5')">
+          <div class="check-box" id="cb-f5"></div>
+          <div><div class="check-label">F5 — Volumen UP/DN a favor</div></div>
+        </div>
+        <div class="rr-row" style="margin-top:12px">
+          <label>Entrada</label><input type="number" id="rr-e" placeholder="0.00" oninput="calcRR()">
+          <label>SL</label><input type="number" id="rr-s" placeholder="0.00" oninput="calcRR()">
+          <label>TP</label><input type="number" id="rr-t" placeholder="0.00" oninput="calcRR()">
+          <div class="rr-res" id="rr-disp">R:R —</div>
+        </div>
+      </div>
+
+      <div class="card ag">
+        <div class="stag">04 — Confirmación final</div>
+        <h2>Los 2 requisitos finales</h2>
+        <div class="check-item" id="ck-signal" onclick="toggleSico('signal')">
+          <div class="check-box" id="cb-signal"></div>
+          <div><div class="check-label">Señal activa (B o S)</div><div class="check-sub">Dashboard muestra B/S — no expirada</div></div>
+        </div>
+        <div class="check-item" id="ck-candle" onclick="toggleSico('candle')">
+          <div class="check-box" id="cb-candle"></div>
+          <div><div class="check-label">Vela de 5min cerrada</div><div class="check-sub">Entro al open de la siguiente — nunca en vela abierta</div></div>
+        </div>
+      </div>
+
+    </div><!-- /checklistGroup -->
+
+    <!-- ESTADO + CONFIRMAR -->
+    <div class="card" id="sicoStatusCard">
+      <div class="stag">Estado del semáforo</div>
+      <div class="proto-status" id="sicoStatusText">Responde la pregunta de arriba para empezar.</div>
+    </div>
+    <button class="btn-confirm dis" id="sicoEntryBtn" disabled onclick="confirmEntry()">Confirmar entrada</button>
+
+    <!-- 05 RESPIRACIÓN -->
+    <div class="card ab" style="margin-top:14px">
+      <div class="stag">05 — Antes de ejecutar</div>
+      <h2>3 respiraciones de box breathing</h2>
+      <p style="font-size:12px;color:var(--muted);margin-bottom:2px;">Inhala 4s → Hold 4s → Exhala 4s — antes de cada trade</p>
+      <div class="breath-wrap">
+        <div class="breath-circle" id="bc">—</div>
+        <div class="breath-ph" id="bph">Listo para comenzar</div>
+        <div class="breath-cy" id="bcy">Ciclo 0 / 3</div>
+        <div class="breath-dots"><div class="breath-dot" id="bd1"></div><div class="breath-dot" id="bd2"></div><div class="breath-dot" id="bd3"></div></div>
+      </div>
+      <div style="text-align:center"><button class="btn btn-b" id="breath-btn" onclick="startBreath()">▶ Iniciar respiración</button></div>
+    </div>
+
+    <!-- 06 CRONÓMETRO -->
+    <div class="card ar">
+      <div class="stag">06 — Con posición abierta</div>
+      <h2>✋ Manos debajo de los muslos</h2>
+      <div class="chrono" id="chrono">00:00</div>
+      <div class="hands-icon">✋🏽✋🏽</div>
+      <div class="hands-txt">Manos bajo los muslos. Cero movimientos. El precio llega al SL o TP.</div>
+      <div class="chrono-btns">
+        <button class="btn btn-g" onclick="startChrono()">▶ Posición abierta</button>
+        <button class="btn btn-ghost" onclick="stopChrono()">⏸ Pause</button>
+        <button class="btn btn-ghost" onclick="resetChrono()">↺ Reset</button>
+      </div>
     </div>
   </div>
+  <div class="sl-blocked" id="slBlocked">Límite alcanzado — cierra la plataforma. Vuelve mañana.</div>
+</div>
+
+    <!-- RESULTADO -->
+    <div class="card" style="margin-bottom:6px">
+      <div class="stag">Resultado del trade</div>
+      <div class="rresult-row">
+        <button class="rresult-btn rr-sl" onclick="logResult('sl')">Fue SL</button>
+        <button class="rresult-btn rr-win" onclick="logResult('win')">Fue Win / BE</button>
+      </div>
+    </div>
+
+  </div><!-- /mainProtocol -->
 
 </div><!-- /panel-p -->
 
@@ -466,10 +586,139 @@ function renderSL(n){
 function addSL(){
   const s=loadSL();if(s.n>=SL_MAX)return;
   s.n++;saveSL(s);renderSL(s.n);
-  if(s.n>=SL_MAX){switchTab('d');switchDisc('b');}
+  sicoState.slCount=s.n;
+  sicoState.checks={};sicoState.revengeAnswered=null;
+  if(s.n>=SL_MAX){sicoState.lockUntilNextDay=true;saveSico(sicoState);renderSicoProtocol();switchTab('d');switchDisc('b');}
+  else{sicoState.pauseUntil=Date.now()+15*60*1000;saveSico(sicoState);renderSicoProtocol();switchTab('d');switchDisc('b');}
 }
-function resetSL(){saveSL({n:0,d:todayKey()});renderSL(0);}
+function resetSL(){
+  saveSL({n:0,d:todayKey()});renderSL(0);
+  sicoState={slCount:0,lockUntilNextDay:false,pauseUntil:null,revengeAnswered:null,checks:{}};
+  saveSico(sicoState);renderSicoProtocol();
+}
 renderSL(loadSL().n);
+
+// ── SICOTRADING PROTOCOL ──────────────────────────────────
+const SICO_KEY='iq_sico_';
+function sicoTodayKey(){return SICO_KEY+todayKey();}
+function loadSico(){try{const r=localStorage.getItem(sicoTodayKey());if(!r)return{slCount:0,lockUntilNextDay:false,pauseUntil:null,revengeAnswered:null,checks:{}};return JSON.parse(r);}catch{return{slCount:0,lockUntilNextDay:false,pauseUntil:null,revengeAnswered:null,checks:{}};}}
+function saveSico(s){localStorage.setItem(sicoTodayKey(),JSON.stringify(s));}
+let sicoState=loadSico();
+let cdInterval=null;
+
+function answerRevenge(isRevenge){
+  sicoState.revengeAnswered=isRevenge?'yes':'no';
+  saveSico(sicoState);renderSicoProtocol();
+}
+
+function toggleSico(key){
+  sicoState.checks[key]=!sicoState.checks[key];
+  const cb=document.getElementById('cb-'+key);
+  const ci=document.getElementById('ck-'+key);
+  if(cb)cb.textContent=sicoState.checks[key]?'✓':'';
+  if(ci)ci.classList.toggle('checked',!!sicoState.checks[key]);
+  saveSico(sicoState);evaluateSicoStatus();
+}
+
+function setSemaphore(color){
+  const g=document.getElementById('semG'),y=document.getElementById('semY'),r=document.getElementById('semR');
+  if(!g)return;
+  [g,y,r].forEach(el=>el.className='sem-dot');
+  if(color==='green')g.classList.add('lit-g');
+  if(color==='yellow'){g.classList.add('lit-y');y.classList.add('lit-y');}
+  if(color==='red'){g.classList.add('lit-r');y.classList.add('lit-r');r.classList.add('lit-r');}
+}
+
+function evaluateSicoStatus(){
+  const c=sicoState.checks;
+  const filtersOn=['f1','f2','f3','f4','f5'].filter(k=>c[k]).length;
+  const biasOn=!!c.bias,signalOn=!!c.signal,candleOn=!!c.candle;
+  const st=document.getElementById('sicoStatusText');
+  const btn=document.getElementById('sicoEntryBtn');
+  if(!st||!btn)return;
+  if(sicoState.revengeAnswered==='yes'){
+    setSemaphore('red');st.className='proto-status red';
+    st.textContent='Rojo. Reconociste que buscas recuperar. No se analiza ninguna entrada — cierra la app y aléjate 15 minutos mínimo.';
+    btn.className='btn-confirm dis';btn.disabled=true;return;
+  }
+  if(!biasOn||filtersOn<4||!signalOn||!candleOn){
+    const partial=filtersOn>0||biasOn;
+    setSemaphore(partial?'yellow':'');
+    st.className='proto-status '+(partial?'yellow':'');
+    st.textContent='Filtros confirmados: '+filtersOn+'/5. Completa bias 4H, mínimo 4 filtros, señal activa y vela cerrada para habilitar.';
+    btn.className='btn-confirm dis';btn.disabled=true;return;
+  }
+  setSemaphore('green');st.className='proto-status green';
+  st.textContent='Verde. Bias 4H ✓ · '+filtersOn+'/5 filtros ✓ · Señal activa ✓ · Vela cerrada ✓ — Puedes confirmar la entrada.';
+  btn.className='btn-confirm en';btn.disabled=false;
+}
+
+function confirmEntry(){
+  if(document.getElementById('sicoEntryBtn').disabled)return;
+  toast('✅ Entrada confirmada — ejecuta y vuelve para registrar el resultado');
+  stopChrono();cSecs=0;renderChrono();startChrono();
+}
+
+function logResult(type){
+  if(type==='sl'){
+    sicoState.slCount=(sicoState.slCount||0)+1;
+    const s=loadSL();s.n=Math.min(sicoState.slCount,SL_MAX);saveSL(s);renderSL(s.n);
+    if(sicoState.slCount>=SL_MAX){sicoState.lockUntilNextDay=true;}
+    else{sicoState.pauseUntil=Date.now()+15*60*1000;}
+  }
+  sicoState.checks={};sicoState.revengeAnswered=null;
+  saveSico(sicoState);stopChrono();cSecs=0;renderChrono();
+  renderSicoProtocol();
+  if(type==='win')toast('✅ Win registrado — checklist reseteado para el siguiente trade');
+  if(type==='sl'&&sicoState.lockUntilNextDay){switchTab('d');switchDisc('b');}
+}
+
+function startCooldown(){
+  if(cdInterval)clearInterval(cdInterval);
+  cdInterval=setInterval(()=>{
+    const rem=sicoState.pauseUntil-Date.now();
+    if(rem<=0){clearInterval(cdInterval);cdInterval=null;sicoState.pauseUntil=null;saveSico(sicoState);renderSicoProtocol();return;}
+    const m=Math.floor(rem/60000),s=Math.floor((rem%60000)/1000);
+    const el=document.getElementById('cooldownTimer');
+    if(el)el.textContent=String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');
+  },1000);
+}
+
+function renderSicoProtocol(){
+  const lock=document.getElementById('lockScreen');
+  const pause=document.getElementById('pauseScreen');
+  const main=document.getElementById('mainProtocol');
+  if(!lock)return;
+  if(sicoState.lockUntilNextDay){
+    lock.style.display='block';pause.style.display='none';main.style.display='none';setSemaphore('red');return;
+  }
+  if(sicoState.pauseUntil&&sicoState.pauseUntil>Date.now()){
+    lock.style.display='none';pause.style.display='block';main.style.display='none';setSemaphore('yellow');startCooldown();return;
+  }
+  lock.style.display='none';pause.style.display='none';main.style.display='block';
+  const rc=document.getElementById('revengeCard');
+  const cg=document.getElementById('checklistGroup');
+  if(sicoState.revengeAnswered===null){
+    rc.style.display='block';cg.style.display='none';
+    setSemaphore('');
+    const st=document.getElementById('sicoStatusText');
+    if(st){st.className='proto-status';st.textContent='Responde la pregunta de arriba para empezar.';}
+    const btn=document.getElementById('sicoEntryBtn');
+    if(btn){btn.className='btn-confirm dis';btn.disabled=true;}
+    return;
+  }
+  rc.style.display='none';
+  if(sicoState.revengeAnswered==='yes'){cg.style.display='none';evaluateSicoStatus();return;}
+  cg.style.display='block';
+  ['bias','f1','f2','f3','f4','f5','signal','candle'].forEach(k=>{
+    const cb=document.getElementById('cb-'+k);
+    const ci=document.getElementById('ck-'+k);
+    if(cb)cb.textContent=sicoState.checks[k]?'✓':'';
+    if(ci)ci.classList.toggle('checked',!!sicoState.checks[k]);
+  });
+  evaluateSicoStatus();
+}
+renderSicoProtocol();
 
 // ── NAVIGATION ────────────────────────────────────────────
 function switchTab(t){
@@ -496,17 +745,6 @@ function firmarContrato(){
   if(!n){toast('Escribe tu nombre para firmar');return;}
   document.getElementById('firma-ts').textContent='✅ '+new Date().toLocaleTimeString('es-US');
   toast('✅ Contrato firmado — que el sistema guíe cada trade');
-}
-
-// ── PROTOCOLO: CHECKLIST ──────────────────────────────────
-const pc={c1:false,c2:false,c3:false};
-function toggleProt(id){
-  pc[id]=!pc[id];
-  document.getElementById(id).classList.toggle('checked',pc[id]);
-  document.getElementById('cb'+id.slice(1)).textContent=pc[id]?'✓':'';
-  const all=pc.c1&&pc.c2&&pc.c3;
-  document.getElementById('go-ban').classList.toggle('show',all);
-  document.getElementById('no-ban').classList.toggle('show',!all);
 }
 
 // ── PROTOCOLO: R:R ────────────────────────────────────────

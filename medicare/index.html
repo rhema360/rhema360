@@ -13,6 +13,8 @@
   <meta property="og:description" content="Asesoría Medicare gratuita en español. Medicare Advantage, Suplementos y Part D en Orlando, FL." />
   <meta property="og:url" content="https://www.rhema360.com/medicare/" />
   <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://www.rhema360.com/rhema-logo.png" />
+  <meta property="og:site_name" content="Rhema Insurance" />
 
   <!-- Meta Pixel -->
   <script>
@@ -26,6 +28,7 @@
   'https://connect.facebook.net/en_US/fbevents.js');
   fbq('init', '1334558204818640');
   fbq('track', 'PageView');
+  fbq('track', 'ViewContent', {content_name: 'Medicare', content_category: 'Insurance'});
   </script>
   <noscript><img height="1" width="1" style="display:none"
   src="https://www.facebook.com/tr?id=1334558204818640&ev=PageView&noscript=1"
@@ -571,7 +574,7 @@
       <a href="https://rhema360.com/#nosotros">Nosotros</a>
       <a href="https://rhema360.com/#contacto">Contacto</a>
     </div>
-    <a class="nav-cta" href="tel:+14076035896">📞 Llamar Ahora</a>
+    <a class="nav-cta" href="tel:+14076035896" onclick="fbq('track','Contact')">📞 Llamar Ahora</a>
   </nav>
 
   <!-- HERO -->
@@ -804,8 +807,8 @@
     <h2>¿Listo para entender tu Medicare?</h2>
     <p>Habla hoy con Daniel — tu consulta es gratuita, en español, y sin presión.</p>
     <div class="cta-btns">
-      <a class="btn-white" href="tel:+14076035896">📞 Llamar: (407) 603-5896</a>
-      <a class="btn-outline-white" href="https://wa.me/14076035896?text=Hola%2C%20quiero%20informaci%C3%B3n%20sobre%20Medicare">💬 WhatsApp</a>
+      <a class="btn-white" href="tel:+14076035896" onclick="fbq('track','Contact')">📞 Llamar: (407) 603-5896</a>
+      <a class="btn-outline-white" href="https://wa.me/14076035896?text=Hola%2C%20quiero%20informaci%C3%B3n%20sobre%20Medicare" onclick="fbq('track','Lead',{content_name:'Medicare CTA Final',content_category:'Insurance Lead',value:0,currency:'USD'})">💬 WhatsApp</a>
     </div>
   </section>
 

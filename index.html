@@ -12,6 +12,8 @@
 <meta property="og:url" content="https://www.rhema360.com/" />
 <meta property="og:type" content="website" />
 <meta property="og:locale" content="es_US" />
+<meta property="og:image" content="https://www.rhema360.com/rhema-logo.png" />
+<meta property="og:site_name" content="Rhema Insurance" />
 
 <!-- Meta Pixel -->
 <script>
@@ -25,6 +27,7 @@ s.parentNode.insertBefore(t,s)}(window, document,'script',
 'https://connect.facebook.net/en_US/fbevents.js');
 fbq('init', '1334558204818640');
 fbq('track', 'PageView');
+fbq('track', 'ViewContent', {content_name: 'Inicio', content_category: 'Insurance'});
 </script>
 <noscript><img height="1" width="1" style="display:none"
 src="https://www.facebook.com/tr?id=1334558204818640&ev=PageView&noscript=1"
@@ -979,7 +982,7 @@ footer { background:var(--navy-mid); border-top:1px solid var(--border); padding
     <span class="cd-box" id="cd-h">--</span> hrs
     <span class="cd-box" id="cd-m">--</span> min
   </div>
-  <a href="tel:+14076035896">📞 (407) 603-5896 · Llama ahora</a>
+  <a href="tel:+14076035896" onclick="fbq('track','Contact')">📞 (407) 603-5896 · Llama ahora</a>
 </div>
 
 <!-- NAV -->
@@ -1071,7 +1074,7 @@ footer { background:var(--navy-mid); border-top:1px solid var(--border); padding
       <p class="hero-sub">ACA, Medicare, vida, dental y más. Atención remota en español, <strong>sin costo de consultoría</strong>. Muchas familias califican para planes desde <strong>$0/mes.</strong></p>
       <div class="hero-actions">
         <a href="#cotizar" class="btn-primary"><span>💬 Cotiza en 5 Minutos</span></a>
-        <a href="tel:+14076035896" class="btn-secondary">📞 (407) 603-5896</a>
+        <a href="tel:+14076035896" class="btn-secondary" onclick="fbq('track','Contact')">📞 (407) 603-5896</a>
       </div>
       <div class="hero-stats">
         <div class="stat-item">
@@ -1520,7 +1523,7 @@ footer { background:var(--navy-mid); border-top:1px solid var(--border); padding
 <!-- WHATSAPP FLOAT -->
 <div class="wa-float">
   <div class="wa-label">¿Necesitas ayuda? Escríbenos 👋</div>
-  <a class="wa-btn" href="https://wa.me/14076035896?text=Hola!%20Vi%20su%20p%C3%A1gina%20y%20necesito%20informaci%C3%B3n%20sobre%20seguros" target="_blank"><img src="rhema-logo.png" alt="Rhema"></a>
+  <a class="wa-btn" href="https://wa.me/14076035896?text=Hola!%20Vi%20su%20p%C3%A1gina%20y%20necesito%20informaci%C3%B3n%20sobre%20seguros" target="_blank" onclick="fbq('track','Contact')"><img src="rhema-logo.png" alt="Rhema"></a>
 </div>
 
 <script>
@@ -1638,11 +1641,39 @@ document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 function submitQuote() {
   const nombre = document.getElementById('f-nombre').value;
   const tel = document.getElementById('f-tel').value;
+  const email = document.getElementById('f-email').value;
   const tipo = document.getElementById('f-tipo').value;
+  const fam = document.getElementById('f-fam').value;
   const btn = document.querySelector('.form-submit');
   btn.textContent = '✅ ¡Enviado! Daniel te contacta en 24h';
   btn.style.background = 'linear-gradient(135deg, #2ECC71, #27AE60)';
   btn.style.color = 'white';
+  fbq('track', 'Lead', {content_name: tipo, content_category: 'Insurance Lead', value: 0, currency: 'USD'});
+  fetch('https://formsubmit.co/ajax/rhema360insurance@gmail.com', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json', 'Accept': 'application/json'},
+    body: JSON.stringify({
+      _subject: `🛡️ Nueva cotización: ${tipo} — ${nombre || 'Cliente'}`,
+      Nombre: nombre || 'No proporcionado',
+      Teléfono: tel || 'No proporcionado',
+      Email: email || 'No proporcionado',
+      'Tipo de seguro': tipo,
+      'Personas en familia': fam,
+      _template: 'table'
+    })
+  }).catch(() => {});
+  fetch('https://hook.us2.make.com/r9nlep3ganv5jm09lta3ujg88f6ye8i7', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({
+      nombre: nombre || 'No proporcionado',
+      telefono: tel || 'No proporcionado',
+      email: email || 'No proporcionado',
+      tipo_seguro: tipo,
+      familia: fam,
+      fuente: 'Formulario Web - rhema360.com'
+    })
+  }).catch(() => {});
   const msg = `Hola! Vi su página y quiero una cotización de ${tipo}. Mi nombre es ${nombre || 'cliente'} y mi teléfono es ${tel || 'pendiente'}.`;
   setTimeout(() => {
     window.open(`https://wa.me/14076035896?text=${encodeURIComponent(msg)}`, '_blank');

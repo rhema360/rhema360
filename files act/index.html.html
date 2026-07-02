@@ -718,7 +718,7 @@ h1.hero-h1 em { color:var(--gold2); font-style:italic; }
         </div>
         <span class="ptag pt-year">Todo el año</span>
         <div class="pname">Suplementarios</div>
-        <div class="pdesc">Washington National — Accident, Critical Illness, Hospital Indemnity. Te pagan directamente cuando más lo necesitas.</div>
+        <div class="pdesc">Accidentes, enfermedades graves y hospitalización. Te pagan directamente cuando más lo necesitas.</div>
         <div class="pfeat">Pago directo al asegurado</div>
         <div class="pfeat">Complementa tu plan de salud</div>
         <div class="pfeat">Ideal para independientes</div>
@@ -849,7 +849,7 @@ h1.hero-h1 em { color:var(--gold2); font-style:italic; }
           <div class="cred"><span>📋</span>ACA Certified</div>
           <div class="cred"><span>👴</span>Medicare Certified</div>
           <div class="cred"><span>📍</span>Orlando, FL 32828</div>
-          <div class="cred"><span>🤝</span>Washington National</div>
+          <div class="cred"><span>🤝</span>Múltiples Aseguradoras</div>
         </div>
         <div class="abtns">
           <button class="btn btn-teal" onclick="scrollChat()">Hablar con Daniel →</button>
@@ -886,7 +886,7 @@ h1.hero-h1 em { color:var(--gold2); font-style:italic; }
       </div>
       <div class="tcard fade">
         <div class="tstars">★★★★★</div>
-        <p class="ttxt">"Trabajo por cuenta propia y no tenía cobertura. Daniel me ayudó con ACA y un suplementario de Washington National. Ahora duermo tranquilo. ¡Excelente servicio!"</p>
+        <p class="ttxt">"Trabajo por cuenta propia y no tenía cobertura. Daniel me ayudó con ACA y un seguro complementario. Ahora duermo tranquilo. ¡Excelente servicio!"</p>
         <div class="tauth">
           <div class="tav tav3">C</div>
           <div><div class="tname">Carlos Mendoza</div><div class="tloc">Tampa, FL</div><span class="tprod">ACA + Suplementario</span></div>
@@ -1208,7 +1208,7 @@ function cwGetNextQuestion(msg) {
       text = 'Excelente. El plan dental y vision es muy accesible. Es para ti solo o para toda la familia?';
       chips = ['Solo para mi', 'Para mi familia'];
     } else if (m.indexOf('suplementar') > -1 || m.indexOf('washington') > -1) {
-      cwState.product = 'Suplementario Washington National'; cwState.stage = 'age';
+      cwState.product = 'Seguro Complementario'; cwState.stage = 'age';
       text = 'Los planes suplementarios complementan tu seguro principal. Cuantos anos tienes?';
       chips = ['18-30', '31-40', '41-50', '51-60'];
     } else if (m.indexOf('revisar') > -1 || m.indexOf('ya tengo') > -1) {
@@ -1293,7 +1293,7 @@ async function cwCallAPI(msg) {
 
     var sys = 'Eres el asistente de cotizacion de Rhema Insurance en Orlando FL. ' +
       'Agente: Daniel Paz Galvis. Tel: (407) 603-5896. ' +
-      'PRODUCTOS: ACA Marketplace (subsidios hasta $0/mes), Medicare Advantage y Supplements (65+), Washington National suplementarios, Vida, Dental, Vision. ' +
+      'PRODUCTOS: ACA Marketplace (subsidios hasta $0/mes), Medicare Advantage y Supplements (65+), Seguros Complementarios, Vida, Dental, Vision. ' +
       'FLUJO DE CALIFICACION - recopila estos datos en orden: ' +
       '1) Tipo de producto buscado ' +
       '2) Edad del cliente ' +
@@ -1368,7 +1368,7 @@ setTimeout(function() {
     cwAdd('bot', 'Estoy aqui para ayudarte a encontrar el mejor plan de seguro para ti y tu familia. El proceso toma menos de 5 minutos.');
     setTimeout(function() {
       cwAdd('bot', 'Que tipo de seguro estas buscando hoy?');
-      cwChips(['Seguro de salud (ACA)', 'Medicare (65+)', 'Seguro de vida', 'Dental o vision', 'Suplementario Washington National', 'Ya tengo seguro, quiero revisarlo']);
+      cwChips(['Seguro de salud (ACA)', 'Medicare (65+)', 'Seguro de vida', 'Dental o vision', 'Seguro Complementario', 'Ya tengo seguro, quiero revisarlo']);
     }, 600);
   }, 800);
 }, 600);

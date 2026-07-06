@@ -22,26 +22,22 @@ Por defecto estudiamos la propia cuenta de Rhema360 (mismo @ en ambas redes):
 - Instagram: https://www.instagram.com/rhema360insurance
 - Facebook: https://www.facebook.com/rhema360insurance
 
-Pendiente de decidir con el dueño: si además queremos estudiar 2-3
-creadores de referencia del nicho de seguros/Medicare en español (para
-comparar patrones con cuentas más grandes). Agrégalos aquí cuando se
-definan — no inventes referentes:
+También estudiamos referentes del nicho (Medicare, ACA/Obamacare y
+suplementarios en español):
 
-- Referente 1: (pendiente)
-- Referente 2: (pendiente)
-- Referente 3: (pendiente)
+- Referente 1: @ivalagonell (Instagram) — agente de seguros médicos
+- Referente 2: @hispaseguros (TikTok) — contenido de seguros para hispanos
+- Referente 3: @influencerdelosseguros (TikTok) — marca personal de
+  agente/influencer de seguros
 
 ## Tono
 
-(Pendiente de confirmar con el dueño.) El sitio web usa un tono
-profesional, cercano y de confianza, dirigido a familias hispanas que
-buscan asesoría clara sobre seguros. Ajusta el tono de las piezas de
-redes cuando el dueño lo precise.
+Igual que el sitio web: profesional, cercano y de confianza, dirigido a
+familias hispanas que buscan asesoría clara sobre seguros.
 
 ## Piezas por semana
 
-(Pendiente de definir con el dueño.) Se necesita este número para armar
-el calendario de la rutina semanal.
+3 piezas por semana.
 
 ## Reglas fijas
 

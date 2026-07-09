@@ -86,22 +86,21 @@ nav {
 }
 @keyframes glowDrift { 0% { transform: translate(-50%,0) scale(1); opacity: 0.75; } 100% { transform: translate(-46%,14px) scale(1.18); opacity: 1; } }
 .hero > * { position: relative; z-index: 1; }
-.eyebrow { display: inline-block; font-size: 12px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); background: rgba(201,150,58,0.1); border: 1px solid rgba(201,150,58,0.25); padding: 6px 16px; border-radius: 100px; margin-bottom: 28px; }
-.hero h1 { font-family: 'Syne', sans-serif; font-size: clamp(28px, 5vw, 46px); font-weight: 800; line-height: 1.2; letter-spacing: -1px; margin-bottom: 24px; }
-.hero h1 .accent { color: var(--gold-light); }
-.hero .sub { font-family: 'Syne', sans-serif; font-size: clamp(15px, 2.2vw, 19px); font-weight: 700; color: var(--muted); line-height: 1.5; max-width: 620px; margin: 0 auto 36px; }
+.eyebrow { display: inline-block; font-size: 12px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); background: rgba(201,150,58,0.1); border: 1px solid rgba(201,150,58,0.25); padding: 6px 16px; border-radius: 100px; margin-bottom: 24px; }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+.hero-video-frame { width: min(300px, 78vw); aspect-ratio: 9 / 16; margin: 0 auto 28px; border-radius: 18px; overflow: hidden; border: 1px solid var(--border-hover); box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 40px var(--gold-glow); }
+.hero-video-frame video { width: 100%; height: 100%; object-fit: cover; display: block; }
 .hero-cta { display: inline-flex; align-items: center; gap: 10px; background: linear-gradient(135deg, var(--gold), var(--gold-light)); color: var(--navy); padding: 18px 36px; border-radius: 10px; font-weight: 800; font-size: 16px; text-decoration: none; border: none; cursor: pointer; box-shadow: 0 8px 32px var(--gold-glow); transition: filter 0.2s, transform 0.15s; }
 .hero-cta:hover { filter: brightness(1.05); }
 .hero-cta:active { transform: scale(0.97); }
 .trust-row { margin-top: 28px; font-size: 13px; color: var(--muted); }
 
 /* cinematic stagger-in, released once body.revealed is set */
-.hero .eyebrow, .hero h1, .hero .sub, .hero-cta, .hero .trust-row { opacity: 0; transform: translateY(18px); transition: opacity 0.7s ease, transform 0.7s ease; }
+.hero .eyebrow, .hero .hero-video-frame, .hero-cta, .hero .trust-row { opacity: 0; transform: translateY(18px); transition: opacity 0.7s ease, transform 0.7s ease; }
 body.revealed .hero .eyebrow { opacity: 1; transform: none; transition-delay: 0.05s; }
-body.revealed .hero h1 { opacity: 1; transform: none; transition-delay: 0.18s; }
-body.revealed .hero .sub { opacity: 1; transform: none; transition-delay: 0.32s; }
-body.revealed .hero-cta { opacity: 1; transform: none; transition-delay: 0.46s; }
-body.revealed .hero .trust-row { opacity: 1; transform: none; transition-delay: 0.58s; }
+body.revealed .hero .hero-video-frame { opacity: 1; transform: none; transition-delay: 0.2s; }
+body.revealed .hero-cta { opacity: 1; transform: none; transition-delay: 0.5s; }
+body.revealed .hero .trust-row { opacity: 1; transform: none; transition-delay: 0.62s; }
 
 /* QUIZ */
 .quiz-wrap { max-width: 560px; margin: 0 auto; padding: 0 24px 80px; }
@@ -174,8 +173,14 @@ footer { background:var(--navy-mid); border-top:1px solid var(--border); padding
 
 <section class="hero">
   <span class="eyebrow">Seguros suplementarios · Rhema Insurance</span>
-  <h1>Tu seguro médico no te protege como crees.<br><span class="accent">El deducible existe para que tú sigas pagando.</span></h1>
-  <p class="sub">LA NUEVA FORMA DE PROTEGERTE: EL SEGURO QUE TE PAGA A TI, NO AL HOSPITAL.</p>
+  <div class="hero-video-frame">
+    <video autoplay muted loop playsinline>
+      <source src="media/hero-video.webm" type="video/webm">
+      <source src="media/hero-video.mp4" type="video/mp4">
+    </video>
+  </div>
+  <h1 class="sr-only">Tu seguro médico no te protege como crees. El deducible existe para que tú sigas pagando.</h1>
+  <p class="sr-only">La nueva forma de protegerte: el seguro que te paga a ti, no al hospital.</p>
   <button class="hero-cta" onclick="document.getElementById('quiz').scrollIntoView({behavior:'smooth'})">Descubre cuánto te pagarían →</button>
   <p class="trust-row">💬 Agente licenciado · En español · Sin compromiso · Respuesta en minutos</p>
 </section>

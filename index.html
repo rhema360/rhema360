@@ -620,9 +620,29 @@ section { padding: 100px 40px; }
   margin-bottom: 22px;
   background: rgba(201,150,58,0.1);
   border: 1px solid rgba(201,150,58,0.15);
-  transition: transform 0.4s, box-shadow 0.4s;
+  transition: transform 0.4s, box-shadow 0.4s, background 0.3s, border-color 0.3s;
 }
 .product-card:hover .product-icon { transform: translateZ(20px) scale(1.1); box-shadow: 0 8px 24px rgba(201,150,58,0.2); }
+
+/* Tinte de categoría por producto — ayuda a escanear/reconocer el producto de un vistazo,
+   sin tocar el oro que sigue marcando CTA y borde de marca en hover. */
+.product-card.cat-aca .product-icon { background: rgba(46,204,113,0.12); border-color: rgba(46,204,113,0.28); }
+.product-card.cat-aca:hover .product-icon { box-shadow: 0 8px 24px rgba(46,204,113,0.22); }
+
+.product-card.cat-medicare .product-icon { background: rgba(74,144,217,0.12); border-color: rgba(74,144,217,0.28); }
+.product-card.cat-medicare:hover .product-icon { box-shadow: 0 8px 24px rgba(74,144,217,0.22); }
+
+.product-card.cat-supl .product-icon { background: rgba(232,130,90,0.12); border-color: rgba(232,130,90,0.28); }
+.product-card.cat-supl:hover .product-icon { box-shadow: 0 8px 24px rgba(232,130,90,0.22); }
+
+.product-card.cat-vida .product-icon { background: rgba(212,106,140,0.12); border-color: rgba(212,106,140,0.28); }
+.product-card.cat-vida:hover .product-icon { box-shadow: 0 8px 24px rgba(212,106,140,0.22); }
+
+.product-card.cat-dental .product-icon { background: rgba(47,182,166,0.12); border-color: rgba(47,182,166,0.28); }
+.product-card.cat-dental:hover .product-icon { box-shadow: 0 8px 24px rgba(47,182,166,0.22); }
+
+.product-card.cat-vision .product-icon { background: rgba(139,127,224,0.12); border-color: rgba(139,127,224,0.28); }
+.product-card.cat-vision:hover .product-icon { box-shadow: 0 8px 24px rgba(139,127,224,0.22); }
 .product-name { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 21px; margin-bottom: 10px; }
 .product-desc { font-size: 14px; color: var(--muted); line-height: 1.6; margin-bottom: 22px; }
 .product-features { list-style: none; display: flex; flex-direction: column; gap: 9px; margin-bottom: 26px; }
@@ -1160,7 +1180,7 @@ footer { background:var(--navy-mid); border-top:1px solid var(--border); padding
       <p class="section-sub">Desde planes de $0 al mes hasta cobertura Medicare — la mejor opción para ti.</p>
     </div>
     <div class="products-grid">
-      <a href="#aca" class="product-card reveal">
+      <a href="#aca" class="product-card cat-aca reveal">
         <div class="product-badge">Desde $0/mes</div>
         <div class="product-icon">🏥</div>
         <div class="product-name">ACA / Marketplace</div>
@@ -1173,7 +1193,7 @@ footer { background:var(--navy-mid); border-top:1px solid var(--border); padding
         </ul>
         <span class="product-link">Verificar elegibilidad →</span>
       </a>
-      <a href="#medicare" class="product-card reveal reveal-delay-1">
+      <a href="#medicare" class="product-card cat-medicare reveal reveal-delay-1">
         <div class="product-badge">65+ años</div>
         <div class="product-icon">👴</div>
         <div class="product-name">Medicare</div>
@@ -1186,7 +1206,7 @@ footer { background:var(--navy-mid); border-top:1px solid var(--border); padding
         </ul>
         <span class="product-link">Consultar opciones →</span>
       </a>
-      <a href="#cotizar" class="product-card reveal reveal-delay-2">
+      <a href="#cotizar" class="product-card cat-supl reveal reveal-delay-2">
         <div class="product-icon">🚑</div>
         <div class="product-name">Suplementarios</div>
         <p class="product-desc">Accidentes, enfermedades graves y hospitalización. Te pagan directamente a ti.</p>
@@ -1198,7 +1218,7 @@ footer { background:var(--navy-mid); border-top:1px solid var(--border); padding
         </ul>
         <span class="product-link">Conocer beneficios →</span>
       </a>
-      <a href="#cotizar" class="product-card reveal">
+      <a href="#cotizar" class="product-card cat-vida reveal">
         <div class="product-icon">❤️</div>
         <div class="product-name">Seguro de Vida</div>
         <p class="product-desc">Term life y whole life para proteger a tu familia — desde menos de lo que gastas en streaming.</p>
@@ -1210,7 +1230,7 @@ footer { background:var(--navy-mid); border-top:1px solid var(--border); padding
         </ul>
         <span class="product-link">Calcular cobertura →</span>
       </a>
-      <a href="#cotizar" class="product-card reveal reveal-delay-1">
+      <a href="#cotizar" class="product-card cat-dental reveal reveal-delay-1">
         <div class="product-icon">🦷</div>
         <div class="product-name">Dental</div>
         <p class="product-desc">Planes dentales individuales y familiares. Red amplia de dentistas en Florida y más.</p>
@@ -1222,7 +1242,7 @@ footer { background:var(--navy-mid); border-top:1px solid var(--border); padding
         </ul>
         <span class="product-link">Ver planes →</span>
       </a>
-      <a href="#cotizar" class="product-card reveal reveal-delay-2">
+      <a href="#cotizar" class="product-card cat-vision reveal reveal-delay-2">
         <div class="product-icon">👁️</div>
         <div class="product-name">Visión</div>
         <p class="product-desc">Agrega cobertura de visión a tu plan por tan solo $15/mes. Exámenes y lentes incluidos.</p>

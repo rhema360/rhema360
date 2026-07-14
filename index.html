@@ -88,6 +88,7 @@ src="https://www.facebook.com/tr?id=1334558204818640&ev=PageView&noscript=1"
   --navy-light: #152644;
   --gold: #C9963A;
   --gold-light: #E8B85A;
+  --gold-muted: #9C8560;
   --gold-glow: rgba(201,150,58,0.25);
   --cream: #F5F0E8;
   --white: #FFFFFF;
@@ -540,7 +541,7 @@ nav {
 /* ── SECTIONS ── */
 section { padding: 100px 40px; }
 .section-inner { max-width: 1200px; margin: 0 auto; }
-.section-tag { font-size: 11px; font-weight: 700; letter-spacing: 4px; text-transform: uppercase; color: var(--gold); margin-bottom: 14px; }
+.section-tag { font-size: 11px; font-weight: 700; letter-spacing: 4px; text-transform: uppercase; color: var(--gold-muted); margin-bottom: 14px; }
 .section-title {
   font-family: 'Syne', sans-serif;
   font-size: clamp(30px, 4vw, 52px);
@@ -549,7 +550,7 @@ section { padding: 100px 40px; }
   letter-spacing: -1px;
   margin-bottom: 16px;
 }
-.section-title em { font-style: normal; color: var(--gold); }
+.section-title em { font-style: normal; color: var(--gold-muted); }
 .section-sub { font-size: 17px; color: var(--muted); line-height: 1.7; max-width: 560px; font-weight: 300; }
 .section-head { margin-bottom: 60px; }
 
@@ -608,7 +609,7 @@ section { padding: 100px 40px; }
   font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
   padding: 5px 12px; border-radius: 100px;
   background: rgba(201,150,58,0.12);
-  color: var(--gold);
+  color: var(--gold-muted);
   border: 1px solid rgba(201,150,58,0.25);
 }
 .product-icon {
@@ -635,7 +636,8 @@ section { padding: 100px 40px; }
   font-size: 10px; color: var(--green);
   flex-shrink: 0;
 }
-.product-link { font-size: 13px; color: var(--gold); font-weight: 600; display: flex; align-items: center; gap: 6px; transition: gap 0.2s; }
+.product-link { font-size: 13px; color: var(--gold-muted); font-weight: 600; display: flex; align-items: center; gap: 6px; transition: gap 0.2s; }
+.product-card:hover .product-link { color: var(--gold); }
 .product-card:hover .product-link { gap: 12px; }
 
 /* ── IMAGE PLACEHOLDER SECTIONS ── */
@@ -663,7 +665,7 @@ section { padding: 100px 40px; }
   background: linear-gradient(135deg, rgba(201,150,58,0.03) 0%, transparent 60%);
 }
 .img-placeholder-icon { font-size: 48px; opacity: 0.5; }
-.img-placeholder-label { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 16px; color: var(--gold); opacity: 0.7; }
+.img-placeholder-label { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 16px; color: var(--gold-muted); opacity: 0.7; }
 .img-placeholder-sub { font-size: 12px; color: var(--muted); opacity: 0.6; }
 
 /* ── ACA ── */
@@ -718,7 +720,7 @@ section { padding: 100px 40px; }
   border: 1px solid rgba(201,150,58,0.25);
   border-radius: 12px;
   display: flex; align-items: center; justify-content: center;
-  font-family: 'Syne', sans-serif; font-weight: 800; color: var(--gold); font-size: 17px;
+  font-family: 'Syne', sans-serif; font-weight: 800; color: var(--gold-muted); font-size: 17px;
   flex-shrink: 0;
 }
 .point-content h4 { font-family:'Syne',sans-serif; font-weight:700; font-size:17px; margin-bottom:6px; }
@@ -787,10 +789,10 @@ section { padding: 100px 40px; }
 .step-num {
   width: 88px; height: 88px;
   background: var(--navy-mid);
-  border: 2px solid var(--gold);
+  border: 2px solid var(--gold-muted);
   border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
-  font-family: 'Syne', sans-serif; font-weight: 800; font-size: 28px; color: var(--gold);
+  font-family: 'Syne', sans-serif; font-weight: 800; font-size: 28px; color: var(--gold-muted);
   margin-bottom: 24px;
   position: relative;
   box-shadow: 0 0 0 0 var(--gold-glow);
@@ -842,7 +844,7 @@ section { padding: 100px 40px; }
   width: 100%; height: 100%; object-fit: cover; object-position: center top; display: block;
 }
 .bio-name { font-family:'Syne',sans-serif; font-weight:800; font-size:28px; margin-bottom:4px; }
-.bio-role { font-size:14px; color:var(--gold); font-weight:500; margin-bottom:20px; }
+.bio-role { font-size:14px; color:var(--gold-muted); font-weight:500; margin-bottom:20px; }
 .bio-text-p { font-size:15px; color:var(--muted); line-height:1.75; margin-bottom:24px; }
 .bio-certs { display:flex; flex-wrap:wrap; gap:10px; margin-bottom:28px; }
 .cert {
@@ -850,12 +852,12 @@ section { padding: 100px 40px; }
   padding: 7px 14px; border-radius: 100px;
   background: rgba(201,150,58,0.08);
   border: 1px solid rgba(201,150,58,0.2);
-  font-size: 12px; font-weight: 600; color: var(--gold);
+  font-size: 12px; font-weight: 600; color: var(--gold-muted);
   transition: all 0.2s;
 }
-.cert:hover { background: rgba(201,150,58,0.15); border-color: var(--gold); }
+.cert:hover { background: rgba(201,150,58,0.15); border-color: var(--gold); color: var(--gold); }
 .bio-stats { display: flex; flex-direction: column; gap: 32px; }
-.bio-stat { border-left: 3px solid var(--gold); padding-left: 24px; }
+.bio-stat { border-left: 3px solid var(--gold-muted); padding-left: 24px; }
 .bs-num { font-family:'Syne',sans-serif; font-size:44px; font-weight:800; line-height:1; background: linear-gradient(135deg,var(--gold),var(--gold-light)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
 .bs-label { font-size:12px; color:var(--muted); text-transform:uppercase; letter-spacing:2px; margin-top:4px; }
 .bs-desc { font-size:14px; color:var(--muted); margin-top:8px; line-height:1.6; }
@@ -920,7 +922,7 @@ footer { background:var(--navy-mid); border-top:1px solid var(--border); padding
 .footer-bottom { max-width:1200px; margin:0 auto; padding-top:28px; border-top:1px solid var(--border); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; }
 .footer-bottom p { font-size:12px; color:var(--muted); }
 .footer-badges { display:flex; gap:10px; }
-.lic-badge { padding:4px 12px; background:rgba(201,150,58,0.08); border:1px solid rgba(201,150,58,0.2); border-radius:100px; font-size:11px; font-weight:600; color:var(--gold); }
+.lic-badge { padding:4px 12px; background:rgba(201,150,58,0.08); border:1px solid rgba(201,150,58,0.2); border-radius:100px; font-size:11px; font-weight:600; color:var(--gold-muted); }
 
 /* ── WHATSAPP FLOAT ── */
 .wa-float { position:fixed; bottom:28px; right:28px; z-index:200; display:flex; flex-direction:column; align-items:flex-end; gap:10px; }

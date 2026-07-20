@@ -88,6 +88,7 @@ src="https://www.facebook.com/tr?id=1334558204818640&ev=PageView&noscript=1"
   --navy-light: #152644;
   --gold: #C9963A;
   --gold-light: #E8B85A;
+  --gold-muted: #9C8560;
   --gold-glow: rgba(201,150,58,0.25);
   --cream: #F5F0E8;
   --white: #FFFFFF;
@@ -540,7 +541,7 @@ nav {
 /* ── SECTIONS ── */
 section { padding: 100px 40px; }
 .section-inner { max-width: 1200px; margin: 0 auto; }
-.section-tag { font-size: 11px; font-weight: 700; letter-spacing: 4px; text-transform: uppercase; color: var(--gold); margin-bottom: 14px; }
+.section-tag { font-size: 11px; font-weight: 700; letter-spacing: 4px; text-transform: uppercase; color: var(--gold-muted); margin-bottom: 14px; }
 .section-title {
   font-family: 'Syne', sans-serif;
   font-size: clamp(30px, 4vw, 52px);
@@ -549,7 +550,7 @@ section { padding: 100px 40px; }
   letter-spacing: -1px;
   margin-bottom: 16px;
 }
-.section-title em { font-style: normal; color: var(--gold); }
+.section-title em { font-style: normal; color: var(--gold-muted); }
 .section-sub { font-size: 17px; color: var(--muted); line-height: 1.7; max-width: 560px; font-weight: 300; }
 .section-head { margin-bottom: 60px; }
 
@@ -608,7 +609,7 @@ section { padding: 100px 40px; }
   font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
   padding: 5px 12px; border-radius: 100px;
   background: rgba(201,150,58,0.12);
-  color: var(--gold);
+  color: var(--gold-muted);
   border: 1px solid rgba(201,150,58,0.25);
 }
 .product-icon {
@@ -619,9 +620,29 @@ section { padding: 100px 40px; }
   margin-bottom: 22px;
   background: rgba(201,150,58,0.1);
   border: 1px solid rgba(201,150,58,0.15);
-  transition: transform 0.4s, box-shadow 0.4s;
+  transition: transform 0.4s, box-shadow 0.4s, background 0.3s, border-color 0.3s;
 }
 .product-card:hover .product-icon { transform: translateZ(20px) scale(1.1); box-shadow: 0 8px 24px rgba(201,150,58,0.2); }
+
+/* Tinte de categoría por producto — ayuda a escanear/reconocer el producto de un vistazo,
+   sin tocar el oro que sigue marcando CTA y borde de marca en hover. */
+.product-card.cat-aca .product-icon { background: rgba(46,204,113,0.12); border-color: rgba(46,204,113,0.28); }
+.product-card.cat-aca:hover .product-icon { box-shadow: 0 8px 24px rgba(46,204,113,0.22); }
+
+.product-card.cat-medicare .product-icon { background: rgba(74,144,217,0.12); border-color: rgba(74,144,217,0.28); }
+.product-card.cat-medicare:hover .product-icon { box-shadow: 0 8px 24px rgba(74,144,217,0.22); }
+
+.product-card.cat-supl .product-icon { background: rgba(232,130,90,0.12); border-color: rgba(232,130,90,0.28); }
+.product-card.cat-supl:hover .product-icon { box-shadow: 0 8px 24px rgba(232,130,90,0.22); }
+
+.product-card.cat-vida .product-icon { background: rgba(212,106,140,0.12); border-color: rgba(212,106,140,0.28); }
+.product-card.cat-vida:hover .product-icon { box-shadow: 0 8px 24px rgba(212,106,140,0.22); }
+
+.product-card.cat-dental .product-icon { background: rgba(47,182,166,0.12); border-color: rgba(47,182,166,0.28); }
+.product-card.cat-dental:hover .product-icon { box-shadow: 0 8px 24px rgba(47,182,166,0.22); }
+
+.product-card.cat-vision .product-icon { background: rgba(139,127,224,0.12); border-color: rgba(139,127,224,0.28); }
+.product-card.cat-vision:hover .product-icon { box-shadow: 0 8px 24px rgba(139,127,224,0.22); }
 .product-name { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 21px; margin-bottom: 10px; }
 .product-desc { font-size: 14px; color: var(--muted); line-height: 1.6; margin-bottom: 22px; }
 .product-features { list-style: none; display: flex; flex-direction: column; gap: 9px; margin-bottom: 26px; }
@@ -635,7 +656,8 @@ section { padding: 100px 40px; }
   font-size: 10px; color: var(--green);
   flex-shrink: 0;
 }
-.product-link { font-size: 13px; color: var(--gold); font-weight: 600; display: flex; align-items: center; gap: 6px; transition: gap 0.2s; }
+.product-link { font-size: 13px; color: var(--gold-muted); font-weight: 600; display: flex; align-items: center; gap: 6px; transition: gap 0.2s; }
+.product-card:hover .product-link { color: var(--gold); }
 .product-card:hover .product-link { gap: 12px; }
 
 /* ── IMAGE PLACEHOLDER SECTIONS ── */
@@ -663,7 +685,7 @@ section { padding: 100px 40px; }
   background: linear-gradient(135deg, rgba(201,150,58,0.03) 0%, transparent 60%);
 }
 .img-placeholder-icon { font-size: 48px; opacity: 0.5; }
-.img-placeholder-label { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 16px; color: var(--gold); opacity: 0.7; }
+.img-placeholder-label { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 16px; color: var(--gold-muted); opacity: 0.7; }
 .img-placeholder-sub { font-size: 12px; color: var(--muted); opacity: 0.6; }
 
 /* ── ACA ── */
@@ -718,7 +740,7 @@ section { padding: 100px 40px; }
   border: 1px solid rgba(201,150,58,0.25);
   border-radius: 12px;
   display: flex; align-items: center; justify-content: center;
-  font-family: 'Syne', sans-serif; font-weight: 800; color: var(--gold); font-size: 17px;
+  font-family: 'Syne', sans-serif; font-weight: 800; color: var(--gold-muted); font-size: 17px;
   flex-shrink: 0;
 }
 .point-content h4 { font-family:'Syne',sans-serif; font-weight:700; font-size:17px; margin-bottom:6px; }
@@ -787,10 +809,10 @@ section { padding: 100px 40px; }
 .step-num {
   width: 88px; height: 88px;
   background: var(--navy-mid);
-  border: 2px solid var(--gold);
+  border: 2px solid var(--gold-muted);
   border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
-  font-family: 'Syne', sans-serif; font-weight: 800; font-size: 28px; color: var(--gold);
+  font-family: 'Syne', sans-serif; font-weight: 800; font-size: 28px; color: var(--gold-muted);
   margin-bottom: 24px;
   position: relative;
   box-shadow: 0 0 0 0 var(--gold-glow);
@@ -842,7 +864,7 @@ section { padding: 100px 40px; }
   width: 100%; height: 100%; object-fit: cover; object-position: center top; display: block;
 }
 .bio-name { font-family:'Syne',sans-serif; font-weight:800; font-size:28px; margin-bottom:4px; }
-.bio-role { font-size:14px; color:var(--gold); font-weight:500; margin-bottom:20px; }
+.bio-role { font-size:14px; color:var(--gold-muted); font-weight:500; margin-bottom:20px; }
 .bio-text-p { font-size:15px; color:var(--muted); line-height:1.75; margin-bottom:24px; }
 .bio-certs { display:flex; flex-wrap:wrap; gap:10px; margin-bottom:28px; }
 .cert {
@@ -850,12 +872,12 @@ section { padding: 100px 40px; }
   padding: 7px 14px; border-radius: 100px;
   background: rgba(201,150,58,0.08);
   border: 1px solid rgba(201,150,58,0.2);
-  font-size: 12px; font-weight: 600; color: var(--gold);
+  font-size: 12px; font-weight: 600; color: var(--gold-muted);
   transition: all 0.2s;
 }
-.cert:hover { background: rgba(201,150,58,0.15); border-color: var(--gold); }
+.cert:hover { background: rgba(201,150,58,0.15); border-color: var(--gold); color: var(--gold); }
 .bio-stats { display: flex; flex-direction: column; gap: 32px; }
-.bio-stat { border-left: 3px solid var(--gold); padding-left: 24px; }
+.bio-stat { border-left: 3px solid var(--gold-muted); padding-left: 24px; }
 .bs-num { font-family:'Syne',sans-serif; font-size:44px; font-weight:800; line-height:1; background: linear-gradient(135deg,var(--gold),var(--gold-light)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
 .bs-label { font-size:12px; color:var(--muted); text-transform:uppercase; letter-spacing:2px; margin-top:4px; }
 .bs-desc { font-size:14px; color:var(--muted); margin-top:8px; line-height:1.6; }
@@ -920,7 +942,7 @@ footer { background:var(--navy-mid); border-top:1px solid var(--border); padding
 .footer-bottom { max-width:1200px; margin:0 auto; padding-top:28px; border-top:1px solid var(--border); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; }
 .footer-bottom p { font-size:12px; color:var(--muted); }
 .footer-badges { display:flex; gap:10px; }
-.lic-badge { padding:4px 12px; background:rgba(201,150,58,0.08); border:1px solid rgba(201,150,58,0.2); border-radius:100px; font-size:11px; font-weight:600; color:var(--gold); }
+.lic-badge { padding:4px 12px; background:rgba(201,150,58,0.08); border:1px solid rgba(201,150,58,0.2); border-radius:100px; font-size:11px; font-weight:600; color:var(--gold-muted); }
 
 /* ── WHATSAPP FLOAT ── */
 .wa-float { position:fixed; bottom:28px; right:28px; z-index:200; display:flex; flex-direction:column; align-items:flex-end; gap:10px; }
@@ -1158,7 +1180,7 @@ footer { background:var(--navy-mid); border-top:1px solid var(--border); padding
       <p class="section-sub">Desde planes de $0 al mes hasta cobertura Medicare — la mejor opción para ti.</p>
     </div>
     <div class="products-grid">
-      <a href="#aca" class="product-card reveal">
+      <a href="#aca" class="product-card cat-aca reveal">
         <div class="product-badge">Desde $0/mes</div>
         <div class="product-icon">🏥</div>
         <div class="product-name">ACA / Marketplace</div>
@@ -1171,7 +1193,7 @@ footer { background:var(--navy-mid); border-top:1px solid var(--border); padding
         </ul>
         <span class="product-link">Verificar elegibilidad →</span>
       </a>
-      <a href="#medicare" class="product-card reveal reveal-delay-1">
+      <a href="#medicare" class="product-card cat-medicare reveal reveal-delay-1">
         <div class="product-badge">65+ años</div>
         <div class="product-icon">👴</div>
         <div class="product-name">Medicare</div>
@@ -1184,7 +1206,7 @@ footer { background:var(--navy-mid); border-top:1px solid var(--border); padding
         </ul>
         <span class="product-link">Consultar opciones →</span>
       </a>
-      <a href="#cotizar" class="product-card reveal reveal-delay-2">
+      <a href="#cotizar" class="product-card cat-supl reveal reveal-delay-2">
         <div class="product-icon">🚑</div>
         <div class="product-name">Suplementarios</div>
         <p class="product-desc">Accidentes, enfermedades graves y hospitalización. Te pagan directamente a ti.</p>
@@ -1196,7 +1218,7 @@ footer { background:var(--navy-mid); border-top:1px solid var(--border); padding
         </ul>
         <span class="product-link">Conocer beneficios →</span>
       </a>
-      <a href="#cotizar" class="product-card reveal">
+      <a href="#cotizar" class="product-card cat-vida reveal">
         <div class="product-icon">❤️</div>
         <div class="product-name">Seguro de Vida</div>
         <p class="product-desc">Term life y whole life para proteger a tu familia — desde menos de lo que gastas en streaming.</p>
@@ -1208,7 +1230,7 @@ footer { background:var(--navy-mid); border-top:1px solid var(--border); padding
         </ul>
         <span class="product-link">Calcular cobertura →</span>
       </a>
-      <a href="#cotizar" class="product-card reveal reveal-delay-1">
+      <a href="#cotizar" class="product-card cat-dental reveal reveal-delay-1">
         <div class="product-icon">🦷</div>
         <div class="product-name">Dental</div>
         <p class="product-desc">Planes dentales individuales y familiares. Red amplia de dentistas en Florida y más.</p>
@@ -1220,7 +1242,7 @@ footer { background:var(--navy-mid); border-top:1px solid var(--border); padding
         </ul>
         <span class="product-link">Ver planes →</span>
       </a>
-      <a href="#cotizar" class="product-card reveal reveal-delay-2">
+      <a href="#cotizar" class="product-card cat-vision reveal reveal-delay-2">
         <div class="product-icon">👁️</div>
         <div class="product-name">Visión</div>
         <p class="product-desc">Agrega cobertura de visión a tu plan por tan solo $15/mes. Exámenes y lentes incluidos.</p>

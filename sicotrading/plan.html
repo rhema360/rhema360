@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0b0e14">
+<title>Sicotrading — Plan Pre-Market</title>
+<style>
+  :root{
+    --bg:#0b0e14; --panel:#111827; --panel2:#0e1420; --line:#1f2a3d;
+    --txt:#dbe4f0; --mut:#7d8aa0; --dim:#4b586e;
+    --verde:#22c55e; --amarillo:#eab308; --rojo:#ef4444; --cian:#38bdf8;
+    --tag:#facc15; --tagtxt:#111111;
+    --mono:ui-monospace,'Cascadia Code','JetBrains Mono','SF Mono',Consolas,monospace;
+    --sans:'Segoe UI',system-ui,-apple-system,Roboto,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--txt);font-family:var(--sans);min-height:100vh;padding:14px;max-width:760px;margin:0 auto;font-size:15px}
+  header{display:flex;justify-content:space-between;align-items:center;padding:6px 2px 14px}
+  header h1{font-family:var(--mono);font-size:15px;letter-spacing:.12em;color:var(--cian)}
+  header h1 span{color:var(--mut)}
+  #reloj{font-family:var(--mono);font-size:13px;color:var(--tag);background:#1a1a1a;border:1px solid #333;padding:3px 9px;border-radius:4px}
+
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:10px;margin-bottom:14px;overflow:hidden}
+  .card>h2{font-family:var(--mono);font-size:12px;letter-spacing:.14em;padding:11px 14px;border-bottom:1px solid var(--line);color:var(--mut);display:flex;align-items:center;gap:8px}
+  .card>h2 .dot{width:8px;height:8px;border-radius:50%}
+  .cuerpo{padding:14px}
+
+  /* ── PLAN ── */
+  .fila{display:grid;grid-template-columns:130px 1fr;gap:8px;align-items:center;margin-bottom:9px}
+  .fila label{font-family:var(--mono);font-size:11px;letter-spacing:.06em;color:var(--mut)}
+  input[type=text],input[type=number],textarea,select{
+    background:var(--panel2);border:1px solid var(--line);border-radius:6px;color:var(--txt);
+    font-family:var(--mono);font-size:14px;padding:8px 10px;width:100%}
+  input:focus,textarea:focus,select:focus{outline:2px solid var(--cian);outline-offset:-1px}
+  .grupo3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+  .segment{display:flex;gap:6px}
+  .segment button{flex:1;background:var(--panel2);border:1px solid var(--line);border-radius:6px;color:var(--mut);font-family:var(--mono);font-size:12px;padding:8px 4px;cursor:pointer}
+  .segment button.on-long{background:#0a2e1a;border-color:var(--verde);color:var(--verde)}
+  .segment button.on-short{background:#331111;border-color:var(--rojo);color:var(--rojo)}
+  .segment button.on-lateral{background:#2e2708;border-color:var(--amarillo);color:var(--amarillo)}
+  .segment button.on-riesgo-v{background:#0a2e1a;border-color:var(--verde);color:var(--verde)}
+  .segment button.on-riesgo-a{background:#2e2708;border-color:var(--amarillo);color:var(--amarillo)}
+  .segment button.on-riesgo-r{background:#331111;border-color:var(--rojo);color:var(--rojo)}
+
+  .lema{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-align:center;color:var(--dim);padding:10px 0 2px}
+
+  .btn-sellar{width:100%;margin-top:12px;background:#0a2e1a;border:1px solid var(--verde);color:var(--verde);
+    font-family:var(--mono);font-size:14px;letter-spacing:.14em;padding:13px;border-radius:8px;cursor:pointer}
+  .btn-sellar:active{transform:scale(.99)}
+
+  /* plan sellado */
+  #plan-sellado{display:none}
+  .sello-banner{background:linear-gradient(90deg,#0a2e1a,#07230f);border-bottom:1px solid var(--verde);
+    font-family:var(--mono);font-size:12px;letter-spacing:.14em;color:var(--verde);padding:10px 14px;
+    display:flex;justify-content:space-between;align-items:center}
+  .plan-linea{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px dashed var(--line);font-family:var(--mono);font-size:13px}
+  .plan-linea:last-child{border-bottom:none}
+  .plan-linea b{color:var(--mut);font-weight:400;font-size:11px;letter-spacing:.06em}
+  .plan-linea span{color:var(--txt)}
+  .plan-linea span.v-tag{background:var(--tag);color:var(--tagtxt);padding:1px 8px;border-radius:3px;font-weight:600}
+  .btn-romper{margin-top:12px;width:100%;background:transparent;border:1px dashed #4a2020;color:#8a5555;
+    font-family:var(--mono);font-size:11px;letter-spacing:.1em;padding:9px;border-radius:8px;cursor:pointer}
+
+  /* ── RITUAL ── */
+  .resp-zona{display:flex;flex-direction:column;align-items:center;padding:8px 0 4px}
+  #circulo{width:120px;height:120px;border-radius:50%;border:2px solid var(--cian);
+    display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:12px;
+    color:var(--cian);transition:transform 1s ease,border-color 1s ease;letter-spacing:.06em;text-align:center;line-height:1.4}
+  #circulo.inhala{transform:scale(1.35);border-color:var(--verde);color:var(--verde)}
+  #circulo.exhala{transform:scale(1.0);border-color:var(--cian)}
+  @media (prefers-reduced-motion:reduce){#circulo{transition:none}}
+  #btn-respirar{margin-top:14px;background:var(--panel2);border:1px solid var(--cian);color:var(--cian);
+    font-family:var(--mono);font-size:12px;letter-spacing:.1em;padding:10px 22px;border-radius:8px;cursor:pointer}
+  #ciclos{font-family:var(--mono);font-size:11px;color:var(--mut);margin-top:8px}
+
+  .check3{list-style:none;margin-top:14px}
+  .check3 li{display:flex;align-items:center;gap:11px;background:var(--panel2);border:1px solid var(--line);
+    border-radius:8px;padding:12px;margin-bottom:8px;cursor:pointer;font-family:var(--mono);font-size:13px}
+  .check3 li .caja{width:20px;height:20px;border:2px solid var(--dim);border-radius:5px;flex-shrink:0;
+    display:flex;align-items:center;justify-content:center;color:transparent;font-size:13px}
+  .check3 li.ok{border-color:var(--verde)}
+  .check3 li.ok .caja{border-color:var(--verde);background:#0a2e1a;color:var(--verde)}
+  .check3 li.bloqueado{opacity:.4;pointer-events:none}
+  #veredicto{margin-top:10px;text-align:center;font-family:var(--mono);font-size:14px;letter-spacing:.14em;
+    padding:13px;border-radius:8px;border:1px solid var(--line);color:var(--dim)}
+  #veredicto.go{border-color:var(--verde);color:var(--verde);background:#0a2e1a}
+  #veredicto.no{border-color:var(--rojo);color:var(--rojo);background:#331111}
+
+  /* ── REGISTRO ── */
+  .emo-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:9px}
+  .rango-zona{margin:6px 0 12px}
+  .rango-zona label{font-family:var(--mono);font-size:11px;color:var(--mut);display:flex;justify-content:space-between}
+  input[type=range]{width:100%;accent-color:var(--cian);margin-top:6px}
+  #nivel-val{color:var(--tag)}
+  .btn-emo{width:100%;background:var(--panel2);border:1px solid var(--cian);color:var(--cian);
+    font-family:var(--mono);font-size:13px;letter-spacing:.1em;padding:11px;border-radius:8px;cursor:pointer}
+  #emo-lista{list-style:none;margin-top:13px;max-height:230px;overflow-y:auto}
+  #emo-lista li{display:flex;justify-content:space-between;align-items:center;font-family:var(--mono);font-size:12px;
+    padding:8px 4px;border-bottom:1px dashed var(--line);color:var(--mut)}
+  #emo-lista li .pal{color:var(--txt)}
+  #emo-lista li .niv-alto{color:var(--rojo)}
+  #emo-lista li .niv-medio{color:var(--amarillo)}
+  #emo-lista li .niv-bajo{color:var(--verde)}
+  #emo-alerta{display:none;margin-top:10px;background:#331111;border:1px solid var(--rojo);color:#f0a0a0;
+    font-family:var(--mono);font-size:12px;padding:11px;border-radius:8px;line-height:1.55}
+
+  /* ── PROTOCOLO 1 PÁGINA ── */
+  .proto{font-size:13.5px;line-height:1.65;color:var(--mut)}
+  .proto b{color:var(--txt);font-weight:600}
+  .proto .paso{border-left:2px solid var(--line);padding:2px 0 2px 12px;margin-bottom:11px}
+  .proto .paso.p-verde{border-color:var(--verde)}
+  .proto .paso.p-cian{border-color:var(--cian)}
+  .proto .paso.p-amarillo{border-color:var(--amarillo)}
+  .proto .paso.p-rojo{border-color:var(--rojo)}
+
+  footer{text-align:center;font-family:var(--mono);font-size:10px;color:var(--dim);letter-spacing:.1em;padding:6px 0 20px}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>SICOTRADING <span>· PLAN</span></h1>
+  <div id="reloj">--:-- ET</div>
+</header>
+
+<!-- ═══════════ 1. PLAN PRE-MARKET ═══════════ -->
+<section class="card" id="card-plan">
+  <h2><span class="dot" style="background:var(--verde)"></span>PLAN PRE-MARKET · ANTES DE 9:30</h2>
+
+  <div class="cuerpo" id="plan-form">
+    <div class="fila"><label>BIAS MACRO</label>
+      <div class="segment" data-campo="biasMacro">
+        <button data-v="RISK-ON" data-c="on-long">RISK-ON</button>
+        <button data-v="MIXTO" data-c="on-lateral">MIXTO</button>
+        <button data-v="RISK-OFF" data-c="on-short">RISK-OFF</button>
+      </div>
+    </div>
+    <div class="fila"><label>SESGO 4H</label>
+      <div class="segment" data-campo="sesgo4h">
+        <button data-v="ALCISTA" data-c="on-long">ALCISTA ▲</button>
+        <button data-v="LATERAL" data-c="on-lateral">LATERAL —</button>
+        <button data-v="BAJISTA" data-c="on-short">BAJISTA ▼</button>
+      </div>
+    </div>
+    <div class="fila"><label>RIESGO DEL DÍA</label>
+      <div class="segment" data-campo="riesgo">
+        <button data-v="🟢 NORMAL" data-c="on-riesgo-v">🟢</button>
+        <button data-v="🟡 CAUTELA" data-c="on-riesgo-a">🟡</button>
+        <button data-v="🔴 PELIGRO" data-c="on-riesgo-r">🔴</button>
+      </div>
+    </div>
+    <div class="fila"><label>ZONA DE ENTRADA</label><input type="text" id="f-zona" placeholder="ej: 28.505 – 28.545 (Equilibrium + supply)"></div>
+    <div class="grupo3" style="margin-bottom:9px">
+      <div><label style="font-family:var(--mono);font-size:11px;color:var(--mut)">ENTRY</label><input type="number" id="f-entry" placeholder="28510" step="0.25"></div>
+      <div><label style="font-family:var(--mono);font-size:11px;color:var(--rojo)">SL (pts)</label><input type="number" id="f-sl" placeholder="60"></div>
+      <div><label style="font-family:var(--mono);font-size:11px;color:var(--verde)">TP1 / TP2</label><input type="text" id="f-tp" placeholder="28425 / 28360"></div>
+    </div>
+    <div class="fila"><label>CONTRATOS</label>
+      <select id="f-size">
+        <option value="">— según ATR —</option>
+        <option>1 MNQ (ATR alto &gt;50)</option>
+        <option>2 MNQ (ATR normal)</option>
+        <option>3-4 MNQ (ATR bajo, día A+)</option>
+      </select>
+    </div>
+    <div class="fila"><label>HORARIOS A EVITAR</label><input type="text" id="f-evitar" placeholder="ej: 9:40–9:55 (PMI) · datos 8:30"></div>
+    <div class="fila" style="grid-template-columns:1fr"><textarea id="f-nota" rows="2" placeholder="Condición extra del día (opcional): ej. 'solo shorts', 'si ATR>60 → 1 MNQ'"></textarea></div>
+
+    <div class="lema">▓ SI NO ESTÁ ESCRITO AQUÍ, NO EXISTE ▓</div>
+    <button class="btn-sellar" id="btn-sellar">🔒 SELLAR PLAN</button>
+  </div>
+
+  <div id="plan-sellado">
+    <div class="sello-banner"><span>🔒 PLAN SELLADO</span><span id="sello-hora"></span></div>
+    <div class="cuerpo" id="plan-vista"></div>
+    <div class="cuerpo" style="padding-top:0">
+      <button class="btn-romper" id="btn-romper">romper sello (queda registrado)</button>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 2. RITUAL DE ENTRADA ═══════════ -->
+<section class="card">
+  <h2><span class="dot" style="background:var(--cian)"></span>RITUAL DE ENTRADA · ANTES DE CADA CLIC</h2>
+  <div class="cuerpo">
+    <div class="resp-zona">
+      <div id="circulo">PASO 0<br>RESPIRAR</div>
+      <button id="btn-respirar">INICIAR · 3 CICLOS</button>
+      <div id="ciclos">doble inhalación nasal + exhalación larga</div>
+    </div>
+    <ul class="check3" id="check3">
+      <li data-i="0" class="bloqueado"><span class="caja">✓</span>¿SEÑAL B/S ACTIVA EN EL CUADRO? <em style="color:var(--dim);font-size:10px;margin-left:auto">(cuadro, no chart)</em></li>
+      <li data-i="1" class="bloqueado"><span class="caja">✓</span>¿4/5 FILTROS + BIAS 4H ALINEADO?</li>
+      <li data-i="2" class="bloqueado"><span class="caja">✓</span>¿VELA CERRADA + DENTRO DE ZONA DEL PLAN?</li>
+    </ul>
+    <div id="veredicto">COMPLETA EL PASO 0</div>
+  </div>
+</section>
+
+<!-- ═══════════ 3. REGISTRO EMOCIONAL ═══════════ -->
+<section class="card">
+  <h2><span class="dot" style="background:var(--amarillo)"></span>REGISTRO EMOCIONAL · CADA TRADE Y NO-TRADE</h2>
+  <div class="cuerpo">
+    <div class="emo-grid">
+      <input type="text" id="emo-palabra" placeholder="una palabra: calma / fomo / revancha…" maxlength="20">
+      <select id="emo-tipo">
+        <option>NO-TRADE (resistido)</option>
+        <option>TRADE tomado</option>
+        <option>SL tocado</option>
+        <option>TP logrado</option>
+      </select>
+    </div>
+    <div class="rango-zona">
+      <label>INTENSIDAD <span id="nivel-val">5</span>/10</label>
+      <input type="range" id="emo-nivel" min="1" max="10" value="5">
+    </div>
+    <button class="btn-emo" id="btn-emo">＋ REGISTRAR</button>
+    <div id="emo-alerta">⚠ INTENSIDAD ≥8 — no se opera en este estado. Cooldown 15 min, respiración, y regresa cuando baje de 6. El registro quedó guardado.</div>
+    <ul id="emo-lista"></ul>
+  </div>
+</section>
+
+<!-- ═══════════ 4. PROTOCOLO · 1 PÁGINA ═══════════ -->
+<section class="card">
+  <h2><span class="dot" style="background:var(--mut)"></span>PROTOCOLO MENTAL · 1 PÁGINA</h2>
+  <div class="cuerpo proto">
+    <div class="paso p-verde"><b>8:45 — Macro con Claude.</b> Semáforo del día + zona + entry/SL/TP + horarios a evitar. Todo al formulario de arriba y <b>sellar antes de 9:30</b>. Lo no escrito no se opera.</div>
+    <div class="paso p-cian"><b>Antes de cada clic — Ritual.</b> Paso 0: respiración (doble inhalación + exhalación larga ×3). Luego checklist de 3. Los 3 en ✓ o no hay trade. La fila ► SEÑAL del cuadro manda sobre las letras del chart.</div>
+    <div class="paso p-amarillo"><b>Durante — El cuerpo primero.</b> P&L fuera de la vista. Semáforo parpadeando entre estados = ruido, apártate. ATR &gt;50 = mitad de contratos. Sensación de urgencia = el mercado abre mañana también.</div>
+    <div class="paso p-rojo"><b>Tras un SL — Sicotrading.</b> Plataforma cerrada, cooldown 15 min, journaling de 3 preguntas, 20 sentadillas o caminata. 2 SL = día terminado sin apelación. Cierre 11:30 ET siempre.</div>
+    <div class="paso"><b>Cada registro cuenta.</b> Un NO-trade resistido y anotado es una repetición del músculo. Proceso &gt; Resultado | Sin deudas con el trade anterior | Si dudas, es NO.</div>
+  </div>
+</section>
+
+<footer>IQ-DANIELPAZ · RHEMA TRADING · v1.0</footer>
+
+<script>
+(function(){
+  'use strict';
+  var $=function(s){return document.querySelector(s)};
+  var $$=function(s){return Array.prototype.slice.call(document.querySelectorAll(s))};
+  var hoy=new Date().toISOString().slice(0,10);
+  var K_PLAN='sico_plan_'+hoy, K_EMO='sico_emo_'+hoy;
+
+  /* reloj ET */
+  function tick(){
+    try{
+      var et=new Intl.DateTimeFormat('es-US',{timeZone:'America/New_York',hour:'2-digit',minute:'2-digit',hour12:false}).format(new Date());
+      $('#reloj').textContent=et+' ET';
+      var hm=et.split(':'), m=parseInt(hm[0],10)*60+parseInt(hm[1],10);
+      $('#reloj').style.color = (m>=690)?'var(--rojo)':(m>=570?'var(--verde)':'var(--tag)');
+    }catch(e){ $('#reloj').textContent=new Date().toTimeString().slice(0,5); }
+  }
+  tick(); setInterval(tick,15000);
+
+  /* ── segments ── */
+  var seg={};
+  $$('.segment').forEach(function(s){
+    var campo=s.getAttribute('data-campo');
+    s.querySelectorAll('button').forEach(function(b){
+      b.addEventListener('click',function(){
+        s.querySelectorAll('button').forEach(function(x){x.className=''});
+        b.className=b.getAttribute('data-c');
+        seg[campo]=b.getAttribute('data-v');
+      });
+    });
+  });
+
+  /* ── sellar / restaurar plan ── */
+  function pintarSellado(p){
+    var v=$('#plan-vista'); v.innerHTML='';
+    var filas=[
+      ['BIAS MACRO',p.biasMacro],['SESGO 4H',p.sesgo4h],['RIESGO',p.riesgo],
+      ['ZONA',p.zona,'tag'],['ENTRY',p.entry],['SL',p.sl?p.sl+' pts':''],
+      ['TP1 / TP2',p.tp],['CONTRATOS',p.size],['EVITAR',p.evitar],['CONDICIÓN',p.nota]
+    ];
+    filas.forEach(function(f){
+      if(!f[1])return;
+      var d=document.createElement('div'); d.className='plan-linea';
+      d.innerHTML='<b>'+f[0]+'</b><span class="'+(f[2]==='tag'?'v-tag':'')+'"></span>';
+      d.querySelector('span').textContent=f[1];
+      v.appendChild(d);
+    });
+    $('#plan-form').style.display='none';
+    $('#plan-sellado').style.display='block';
+    $('#sello-hora').textContent=p.hora||'';
+  }
+  var guardado=null;
+  try{guardado=JSON.parse(localStorage.getItem(K_PLAN)||'null')}catch(e){}
+  if(guardado&&guardado.sellado) pintarSellado(guardado);
+
+  $('#btn-sellar').addEventListener('click',function(){
+    var p={
+      biasMacro:seg.biasMacro||'', sesgo4h:seg.sesgo4h||'', riesgo:seg.riesgo||'',
+      zona:$('#f-zona').value.trim(), entry:$('#f-entry').value, sl:$('#f-sl').value,
+      tp:$('#f-tp').value.trim(), size:$('#f-size').value, evitar:$('#f-evitar').value.trim(),
+      nota:$('#f-nota').value.trim(), sellado:true,
+      hora:$('#reloj').textContent
+    };
+    if(!p.sesgo4h||!p.riesgo||!p.zona){ alert('Mínimo obligatorio: SESGO 4H + RIESGO + ZONA.\n\nSi no está escrito, no existe.'); return; }
+    localStorage.setItem(K_PLAN,JSON.stringify(p));
+    pintarSellado(p);
+  });
+
+  $('#btn-romper').addEventListener('click',function(){
+    if(!confirm('¿Romper el sello del plan?\n\nQueda registrado en el journal emocional como evento. Cambiar el plan a media sesión es la definición de trade emocional.'))return;
+    var lista=[]; try{lista=JSON.parse(localStorage.getItem(K_EMO)||'[]')}catch(e){}
+    lista.unshift({t:$('#reloj').textContent,pal:'SELLO ROTO',tipo:'⚠ plan modificado',niv:9});
+    localStorage.setItem(K_EMO,JSON.stringify(lista));
+    localStorage.removeItem(K_PLAN);
+    location.reload();
+  });
+
+  /* ── respiración ── */
+  var respirando=false;
+  $('#btn-respirar').addEventListener('click',function(){
+    if(respirando)return; respirando=true;
+    var c=$('#circulo'), ciclo=0, btn=this; btn.style.opacity=.4;
+    function fase(nombre,clase,ms,fin){
+      c.textContent=''; c.innerHTML=nombre;
+      c.className=clase;
+      setTimeout(fin,ms);
+    }
+    function unCiclo(){
+      ciclo++;
+      $('#ciclos').textContent='ciclo '+ciclo+' de 3';
+      fase('INHALA','inhala',1600,function(){
+        fase('INHALA<br>MÁS','inhala',900,function(){
+          fase('EXHALA<br>LARGO…','exhala',5000,function(){
+            if(ciclo<3){unCiclo()}
+            else{
+              c.innerHTML='✓ LISTO'; c.className=''; c.style.borderColor='var(--verde)'; c.style.color='var(--verde)';
+              $('#ciclos').textContent='sistema nervioso abajo — ahora el checklist';
+              btn.style.opacity=1; respirando=false;
+              $$('#check3 li').forEach(function(li){li.classList.remove('bloqueado')});
+              $('#veredicto').textContent='CHECKLIST DE 3 — MARCA LO QUE SEA VERDAD';
+            }
+          });
+        });
+      });
+    }
+    unCiclo();
+  });
+
+  /* ── checklist de 3 ── */
+  var checks=[false,false,false];
+  $$('#check3 li').forEach(function(li){
+    li.addEventListener('click',function(){
+      var i=+li.getAttribute('data-i');
+      checks[i]=!checks[i];
+      li.classList.toggle('ok',checks[i]);
+      var n=checks.filter(Boolean).length;
+      var v=$('#veredicto');
+      if(n===3){v.textContent='✓ 3/3 — ENTRADA VÁLIDA · EJECUTA EL PLAN';v.className='go'}
+      else{v.textContent='✗ '+n+'/3 — NO HAY TRADE';v.className='no'}
+    });
+  });
+
+  /* ── registro emocional ── */
+  $('#emo-nivel').addEventListener('input',function(){$('#nivel-val').textContent=this.value});
+  function pintarEmo(){
+    var lista=[]; try{lista=JSON.parse(localStorage.getItem(K_EMO)||'[]')}catch(e){}
+    var ul=$('#emo-lista'); ul.innerHTML='';
+    lista.forEach(function(r){
+      var li=document.createElement('li');
+      var cls=r.niv>=8?'niv-alto':(r.niv>=5?'niv-medio':'niv-bajo');
+      li.innerHTML='<span>'+r.t+' · <span class="pal"></span> · '+r.tipo+'</span><span class="'+cls+'">'+r.niv+'/10</span>';
+      li.querySelector('.pal').textContent=r.pal;
+      ul.appendChild(li);
+    });
+  }
+  pintarEmo();
+  $('#btn-emo').addEventListener('click',function(){
+    var pal=$('#emo-palabra').value.trim();
+    if(!pal){alert('Una palabra. La que sea, pero honesta.');return}
+    var niv=+$('#emo-nivel').value;
+    var lista=[]; try{lista=JSON.parse(localStorage.getItem(K_EMO)||'[]')}catch(e){}
+    lista.unshift({t:$('#reloj').textContent,pal:pal,tipo:$('#emo-tipo').value,niv:niv});
+    localStorage.setItem(K_EMO,JSON.stringify(lista));
+    $('#emo-palabra').value='';
+    $('#emo-alerta').style.display = niv>=8 ? 'block' : 'none';
+    pintarEmo();
+  });
+})();
+</script>
+</body>
+</html>

@@ -45,6 +45,17 @@
 
   .lema{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-align:center;color:var(--dim);padding:10px 0 2px}
 
+  /* importar plan de Claude */
+  .importar{border:1px dashed var(--cian);border-radius:8px;padding:10px;margin-bottom:14px;background:#0c1520}
+  .importar>button{width:100%;background:transparent;border:none;color:var(--cian);font-family:var(--mono);
+    font-size:12px;letter-spacing:.1em;cursor:pointer;padding:2px}
+  #import-zona{display:none;margin-top:10px}
+  #import-txt{width:100%;min-height:90px;background:var(--panel2);border:1px solid var(--line);border-radius:6px;
+    color:var(--txt);font-family:var(--mono);font-size:12px;padding:9px;resize:vertical}
+  #btn-importar{width:100%;margin-top:8px;background:#0c2233;border:1px solid var(--cian);color:var(--cian);
+    font-family:var(--mono);font-size:12px;letter-spacing:.12em;padding:10px;border-radius:6px;cursor:pointer}
+  #import-msg{font-family:var(--mono);font-size:11px;margin-top:7px;text-align:center;color:var(--verde);display:none}
+
   .btn-sellar{width:100%;margin-top:12px;background:#0a2e1a;border:1px solid var(--verde);color:var(--verde);
     font-family:var(--mono);font-size:14px;letter-spacing:.14em;padding:13px;border-radius:8px;cursor:pointer}
   .btn-sellar:active{transform:scale(.99)}
@@ -129,6 +140,14 @@
   <h2><span class="dot" style="background:var(--verde)"></span>PLAN PRE-MARKET · ANTES DE 9:30</h2>
 
   <div class="cuerpo" id="plan-form">
+    <div class="importar">
+      <button id="btn-toggle-import" type="button">📋 PEGAR PLAN DE CLAUDE</button>
+      <div id="import-zona">
+        <textarea id="import-txt" placeholder='Pega aquí el bloque PLAN-JSON que Claude te da al final del pre-market:&#10;{"biasMacro":"RISK-OFF","sesgo4h":"BAJISTA", ...}'></textarea>
+        <button id="btn-importar" type="button">↓ LLENAR FORMULARIO</button>
+        <div id="import-msg">✓ Plan cargado — revisa y SELLA</div>
+      </div>
+    </div>
     <div class="fila"><label>BIAS MACRO</label>
       <div class="segment" data-campo="biasMacro">
         <button data-v="RISK-ON" data-c="on-long">RISK-ON</button>
@@ -227,13 +246,13 @@
   <div class="cuerpo proto">
     <div class="paso p-verde"><b>8:45 — Macro con Claude.</b> Semáforo del día + zona + entry/SL/TP + horarios a evitar. Todo al formulario de arriba y <b>sellar antes de 9:30</b>. Lo no escrito no se opera.</div>
     <div class="paso p-cian"><b>Antes de cada clic — Ritual.</b> Paso 0: respiración (doble inhalación + exhalación larga ×3). Luego checklist de 3. Los 3 en ✓ o no hay trade. La fila ► SEÑAL del cuadro manda sobre las letras del chart.</div>
-    <div class="paso p-amarillo"><b>Durante — El cuerpo primero.</b> P&L fuera de la vista. Semáforo parpadeando entre estados = ruido, apártate. ATR &gt;50 = mitad de contratos. Sensación de urgencia = el mercado abre mañana también.</div>
+    <div class="paso p-amarillo"><b>Durante — El cuerpo primero.</b> P&amp;L fuera de la vista. Semáforo parpadeando entre estados = ruido, apártate. ATR &gt;50 = mitad de contratos. Sensación de urgencia = el mercado abre mañana también.</div>
     <div class="paso p-rojo"><b>Tras un SL — Sicotrading.</b> Plataforma cerrada, cooldown 15 min, journaling de 3 preguntas, 20 sentadillas o caminata. 2 SL = día terminado sin apelación. Cierre 11:30 ET siempre.</div>
     <div class="paso"><b>Cada registro cuenta.</b> Un NO-trade resistido y anotado es una repetición del músculo. Proceso &gt; Resultado | Sin deudas con el trade anterior | Si dudas, es NO.</div>
   </div>
 </section>
 
-<footer>IQ-DANIELPAZ · RHEMA TRADING · v1.0</footer>
+<footer>IQ-DANIELPAZ · RHEMA TRADING · v2.0</footer>
 
 <script>
 (function(){
@@ -265,6 +284,50 @@
         seg[campo]=b.getAttribute('data-v');
       });
     });
+  });
+
+  /* ── importar plan de Claude ── */
+  $('#btn-toggle-import').addEventListener('click',function(){
+    var z=$('#import-zona');
+    z.style.display = z.style.display==='block' ? 'none' : 'block';
+  });
+  function marcarSegmento(campo,valor){
+    if(!valor)return;
+    var cont=document.querySelector('.segment[data-campo="'+campo+'"]');
+    if(!cont)return;
+    var botones=cont.querySelectorAll('button'), mejor=null;
+    botones.forEach(function(b){
+      var v=b.getAttribute('data-v');
+      if(v===valor || valor.indexOf(v)===0 || v.indexOf(valor)===0 ||
+         v.toUpperCase().indexOf(valor.toUpperCase())>-1 ||
+         valor.toUpperCase().indexOf(v.replace(/[^A-ZÁÉÍÓÚ\- ]/gi,'').trim().toUpperCase())>-1) mejor=b;
+    });
+    if(mejor) mejor.click();
+  }
+  $('#btn-importar').addEventListener('click',function(){
+    var raw=$('#import-txt').value.trim();
+    if(!raw){alert('Pega primero el bloque PLAN-JSON.');return}
+    var ini=raw.indexOf('{'), fin=raw.lastIndexOf('}');
+    if(ini<0||fin<0){alert('No encuentro un bloque {...} válido.');return}
+    var p;
+    try{p=JSON.parse(raw.slice(ini,fin+1))}catch(e){alert('El bloque no es JSON válido. Cópialo completo, de { a }.');return}
+    marcarSegmento('biasMacro',p.biasMacro||'');
+    marcarSegmento('sesgo4h',p.sesgo4h||'');
+    marcarSegmento('riesgo',p.riesgo||'');
+    if(p.zona)  $('#f-zona').value=p.zona;
+    if(p.entry!==undefined) $('#f-entry').value=p.entry;
+    if(p.sl!==undefined)    $('#f-sl').value=p.sl;
+    if(p.tp)    $('#f-tp').value=p.tp;
+    if(p.evitar)$('#f-evitar').value=p.evitar;
+    if(p.nota)  $('#f-nota').value=p.nota;
+    if(p.size){
+      var sel=$('#f-size');
+      Array.prototype.forEach.call(sel.options,function(o){
+        if(o.value && (o.value.indexOf(String(p.size).charAt(0))===0 || o.value.toUpperCase().indexOf(String(p.size).toUpperCase())>-1)) sel.value=o.value;
+      });
+    }
+    $('#import-msg').style.display='block';
+    $('#import-zona').style.display='none';
   });
 
   /* ── sellar / restaurar plan ── */

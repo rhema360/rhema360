@@ -325,6 +325,7 @@ footer { border-top: 1px solid var(--border); padding: 48px 0 32px; background: 
       <div class="step" data-step="2">
         <h3>2. What surface needs cleaning?</h3>
         <div class="opt-grid cols-4" id="opt-surface">
+          <div class="opt" data-value="general">General Facility Cleaning</div>
           <div class="opt" data-value="carpet">Carpet</div>
           <div class="opt" data-value="windows">Windows</div>
           <div class="opt" data-value="tile">Tile Floors</div>
@@ -464,6 +465,7 @@ footer { border-top: 1px solid var(--border); padding: 48px 0 32px; background: 
   // Base ranges per surface (USD), multiplied by size and adjusted by type.
   // TODO: replace with real Rhema 360 Cleaning Services pricing.
   const BASE = {
+    general: [220, 480],
     carpet:  [120, 260],
     windows: [90, 200],
     tile:    [150, 320],
@@ -479,8 +481,9 @@ footer { border-top: 1px solid var(--border); padding: 48px 0 32px; background: 
     if (state.type === 'commercial') { rangeLo = Math.round(rangeLo * 1.15 / 10) * 10; rangeHi = Math.round(rangeHi * 1.15 / 10) * 10; }
     document.getElementById('result-range').textContent = `$${rangeLo} – $${rangeHi}`;
 
+    const SURFACE_LABEL = { general: 'general facility', carpet: 'carpet', windows: 'window', tile: 'tile floor', vct: 'VCT floor' };
     const typeLabel = state.type === 'commercial' ? 'commercial' : 'residential';
-    const msg = encodeURIComponent(`Hi, I did the estimate on the website: ${typeLabel} ${state.surface} cleaning, ${state.size} size. It gave me a range of $${rangeLo}-$${rangeHi}. I'd like to confirm the price.`);
+    const msg = encodeURIComponent(`Hi, I did the estimate on the website: ${typeLabel} ${SURFACE_LABEL[state.surface]} cleaning, ${state.size} size. It gave me a range of $${rangeLo}-$${rangeHi}. I'd like to confirm the price.`);
     document.getElementById('result-whatsapp').href = `https://wa.me/14076924342?text=${msg}`;
     showStep(4);
   }

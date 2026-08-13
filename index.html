@@ -457,31 +457,32 @@ h1.hero-h1 em { color:var(--gold2); font-style:italic; }
 .abtns { display:flex; gap:12px; flex-wrap:wrap; }
 
 /* ── TESTIMONIALS ── */
-.testi-sec { padding:96px 0; background:#ffffff; }
-.ttag { display:inline-block; font-size:10px; font-weight:700; letter-spacing:2px; text-transform:uppercase; padding:5px 17px; border-radius:20px; background:rgba(0,184,154,.15); color:var(--teal2); border:1px solid rgba(0,184,154,.22); margin-bottom:14px; }
-.th2 { font-family:var(--display); font-size:clamp(28px,4vw,46px); color:#fff; line-height:1.1; margin-bottom:48px; }
+.testi-sec { padding:96px 0; background:#f8f6f1; }
+.ttag { display:inline-block; font-size:10px; font-weight:700; letter-spacing:2px; text-transform:uppercase; padding:5px 17px; border-radius:20px; background:rgba(0,184,154,.12); color:var(--teal); border:1px solid rgba(0,184,154,.25); margin-bottom:14px; }
+.th2 { font-family:var(--display); font-size:clamp(28px,4vw,46px); color:var(--ink); line-height:1.1; margin-bottom:48px; }
 .tgrid { display:grid; grid-template-columns:repeat(3,1fr); gap:22px; }
 .tcard {
-  background:rgba(255,255,255,.045); border:1px solid rgba(255,255,255,.1);
+  background:#ffffff; border:1px solid #e8e4dc;
   border-radius:24px; padding:32px 28px; transition:all .3s; position:relative; overflow:hidden;
+  box-shadow:0 4px 20px rgba(0,0,0,.06);
 }
-.tcard::before { content:'"'; position:absolute; top:14px; right:20px; font-size:84px; color:rgba(0,184,154,.07); font-family:Georgia,serif; line-height:1; }
-.tcard:hover { background:rgba(255,255,255,.08); transform:translateY(-6px); border-color:rgba(0,184,154,.28); box-shadow:0 24px 64px rgba(0,0,0,.35); }
+.tcard::before { content:'"'; position:absolute; top:14px; right:20px; font-size:84px; color:rgba(0,184,154,.08); font-family:Georgia,serif; line-height:1; }
+.tcard:hover { transform:translateY(-6px); border-color:rgba(0,184,154,.3); box-shadow:0 24px 48px rgba(0,0,0,.1); }
 /* BIG GOLDEN STARS */
 .tstars {
   font-size:24px; letter-spacing:4px; margin-bottom:18px;
   background:linear-gradient(90deg, var(--gold), var(--gold2));
   -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
 }
-.ttxt { font-size:15px; color:rgba(255,255,255,.72); line-height:1.8; margin-bottom:24px; font-style:italic; }
+.ttxt { font-size:15px; color:#4a5568; line-height:1.8; margin-bottom:24px; font-style:italic; }
 .tauth { display:flex; align-items:center; gap:14px; }
 .tav { width:54px; height:54px; border-radius:50%; flex-shrink:0; display:flex; align-items:center; justify-content:center; font-family:var(--display); font-size:24px; font-weight:700; color:#fff; box-shadow:0 4px 16px rgba(0,0,0,.3); }
 .tav1{background:linear-gradient(135deg,#1878c8,#40a8f0);}
 .tav2{background:linear-gradient(135deg,#0d7a6b,#1ab09a);}
 .tav3{background:linear-gradient(135deg,#7038b0,#a870e8);}
-.tname { font-size:15px; font-weight:700; color:#fff; }
-.tloc { font-size:12px; color:rgba(255,255,255,.36); margin-top:2px; }
-.tprod { display:inline-block; font-size:10px; font-weight:700; letter-spacing:1px; padding:3px 10px; border-radius:10px; background:rgba(0,184,154,.15); color:var(--teal2); margin-top:5px; text-transform:uppercase; }
+.tname { font-size:15px; font-weight:700; color:var(--ink); }
+.tloc { font-size:12px; color:#718096; margin-top:2px; }
+.tprod { display:inline-block; font-size:10px; font-weight:700; letter-spacing:1px; padding:3px 10px; border-radius:10px; background:rgba(0,184,154,.12); color:var(--teal); margin-top:5px; text-transform:uppercase; }
 
 /* ── CTA ── */
 .cta-sec {
@@ -718,7 +719,7 @@ h1.hero-h1 em { color:var(--gold2); font-style:italic; }
         </div>
         <span class="ptag pt-year">Todo el año</span>
         <div class="pname">Suplementarios</div>
-        <div class="pdesc">Washington National — Accident, Critical Illness, Hospital Indemnity. Te pagan directamente cuando más lo necesitas.</div>
+        <div class="pdesc">Planes suplementarios — Accident, Critical Illness, Hospital Indemnity. Te pagan directamente cuando más lo necesitas.</div>
         <div class="pfeat">Pago directo al asegurado</div>
         <div class="pfeat">Complementa tu plan de salud</div>
         <div class="pfeat">Ideal para independientes</div>
@@ -851,7 +852,7 @@ h1.hero-h1 em { color:var(--gold2); font-style:italic; }
         </div>
         <div style="text-align:center;">
           <div style="font-size:13px;font-weight:700;color:var(--teal);letter-spacing:1px;text-transform:uppercase;">FL Licensed Agent</div>
-          <div style="font-size:12px;color:var(--muted);margin-top:4px;">ACA · Medicare · Washington National</div>
+          <div style="font-size:12px;color:var(--muted);margin-top:4px;">ACA · Medicare · Suplementarios</div>
         </div>
       </div>
       <div class="fade-r">
@@ -865,7 +866,7 @@ h1.hero-h1 em { color:var(--gold2); font-style:italic; }
           <div class="cred"><span>📋</span>ACA Certified</div>
           <div class="cred"><span>👴</span>Medicare Certified</div>
           <div class="cred"><span>📍</span>Orlando, FL 32828</div>
-          <div class="cred"><span>🤝</span>Washington National</div>
+          <div class="cred"><span>🤝</span>Suplementarios</div>
         </div>
         <div class="abtns">
           <button class="btn btn-teal" onclick="scrollChat()">Hablar con Daniel →</button>
